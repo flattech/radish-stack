@@ -1,2 +1,2 @@
-# radish-cms
+# Radish Stack
 Manage web projects
