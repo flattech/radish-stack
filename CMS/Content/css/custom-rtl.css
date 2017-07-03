@@ -1,0 +1,39 @@
+/* here you can put your own css to customize and override the theme */
+
+/***
+Rounded Portlets
+***/
+/*
+.portlet {
+	border-radius: 4px !important;
+}
+
+.portlet .portlet-title {
+	border-radius: 4px 4px 0px 0px !important;
+}
+
+.portlet .portlet-body,
+.portlet .portlet-body .form-actions  {
+	border-radius: 0px 0px 4px 4px !important;
+}
+*/
+.k-grid-content tr td {
+    border-left-width: 1px;
+}
+.k-grid-content tr:last-child td {
+    border-bottom-width:  1px;
+}
+.k-rtl .k-button-icontext .k-icon, .k-rtl .k-button-icontext .k-image {
+    margin-right: -.2rem;
+    margin-left: .8rem;
+}
+
+@font-face {
+    font-family: 'droid-sans';
+    src: url('//www.fontstatic.com/fonts/droid-sans/droid-sans.eot?#iefix');
+    src: local('droid-sans'),local('droid-sans'),url('//www.fontstatic.com/fonts/droid-sans/droid-sans.woff') format('woff');
+}
+
+body {
+    font-family: 'droid-sans';
+}

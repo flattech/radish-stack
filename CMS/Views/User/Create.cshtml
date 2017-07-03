@@ -1,0 +1,52 @@
+﻿@using CMS.Helpers
+@model CMS.Models.UserForm
+<h3 class="page-title">
+    Users <small></small>
+</h3>
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a href="/">Home</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="#">Users</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="#">Create</a>
+        </li>
+    </ul>
+</div>
+<!-- END PAGE HEADER-->
+@Html.AlertMessage()
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet box blue" id="form_wizard_1">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gift"></i> Create New  User- <span class="step-title">
+                        Step 1 of 4
+                    </span>
+                </div>
+                <div class="tools hidden-xs">
+                    <a href="javascript:;" class="collapse">
+                    </a>
+                    <a href="#portlet-config" data-toggle="modal" class="config">
+                    </a>
+                    <a href="javascript:;" class="reload">
+                    </a>
+                    <a href="javascript:;" class="remove">
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <form action="/User/Create" class="form-horizontal" id="submit_form" method="POST" enctype="multipart/form-data">
+                    @Html.AntiForgeryToken()
+                    @Html.Partial("_form", Model)
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

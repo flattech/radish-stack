@@ -1,0 +1,16 @@
+﻿@using CMS.Helpers
+@model PostForm
+
+<h3 class="page-title" data-url="@Url.Action("Edit",new{id=Model.Id})">
+    <small></small>
+ @AppResources.Instance.Get(Model.PostType.Title) - @Model.Title
+</h3>
+
+@Html.AlertMessage()
+
+@using (Html.BeginForm("Edit", "Post", FormMethod.Post, new
+{ @class = "form-bordered form-label-stripped" }))
+{
+    @Html.Partial("_form")
+}
+

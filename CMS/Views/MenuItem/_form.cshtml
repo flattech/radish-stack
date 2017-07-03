@@ -1,0 +1,88 @@
+﻿@using CMS.Models
+@using Core.Repositories.Enums
+@model CMS.Models.MenuItemForm
+@Html.AntiForgeryToken()
+<div class="form-body">
+    <div class="form-group">
+        @Html.MetronicLabelFor(model => model.Title)
+        <div class="col-md-9">
+            @Html.MetronicTextBoxFor(model => model.Title)
+            @Html.HiddenFor(model => model.Id)
+            @Html.ValidationMessageFor(model => model.Title)
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-3" for="ParentId">Parent Menu </label>
+        <div class="col-md-9">
+            @Html.DropDownListFor(model => model.ParentId, Model.AvailableMenuItems, new { style = "direction:rtl", @class = "form-control input-xlarge " })
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-3" for="EntityName">Source </label>
+        <div class="col-md-9">
+            <select name="EntityName" id="EntityName">
+                @foreach (var e in Enum.GetValues(typeof(MenuTypeEnum)))
+                {
+                    <option value="@(e)" selected="@(e.ToString()==Model.EntityName)">@e.ToString()</option>
+                }
+            </select>
+
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-3" for="EnityId">EntityId</label>
+        <div class="col-md-9">
+            @Html.MetronicTextBoxFor(model => model.EntityId)
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.MetronicLabelFor(model => model.Url)
+        <div class="col-md-9">
+            @Html.MetronicTextBoxFor(model => model.Url)
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.MetronicLabelFor(model => model.DisplayOrder)
+        <div class="col-md-9">
+            @Html.MetronicTextBoxFor(model => model.DisplayOrder)
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.MetronicLabelFor(model => model.IsActive)
+        <div class="col-md-9">
+            @Html.CheckBoxFor(model => model.IsActive)
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.MetronicLabelFor(model => model.IncludeInFooter)
+        <div class="col-md-9">
+            @Html.CheckBoxFor(model => model.IncludeInFooter)
+        </div>
+    </div><div class="form-group">
+              @Html.MetronicLabelFor(model => model.IncludeInHeader)
+              <div class="col-md-9">
+                  @Html.CheckBoxFor(model => model.IncludeInHeader)
+              </div>
+          </div>
+    <div class="form-group">
+        @Html.MetronicLabelFor(model => model.EnableMedia)
+        <div class="col-md-9">
+            @Html.CheckBoxFor(model => model.EnableMedia)
+        </div>
+    </div>
+    
+</div>
+<div class="form-actions fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-offset-3 col-md-9">
+                @Html.MetronicBackButton(Url.Action("Index", "MenuItem"))
+                @Html.MetronicSaveButton()
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

@@ -1,0 +1,38 @@
+﻿@model CMS.Models.WidgetForm
+
+@{
+    ViewBag.Title = "Create";
+}
+<div class="row">
+    <div class="col-md-12">
+        <h3 class="page-title">
+           @Model.Title
+        </h3>
+       
+    </div>
+</div>
+@Html.AlertMessage()
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet box green ">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-reorder"></i>Create 
+                </div>
+            </div>
+            <div class="portlet-body form">
+                @using (Html.BeginForm("Create", "Widget", FormMethod.Post, new
+                {
+                    @enctype = "multipart/form-data",
+                    @class = "form-horizontal " +
+                             "form-bordered " +
+                             "form-label-stripped"
+
+                }))
+                {
+                   @Html.Partial("_form")
+                }
+            </div>
+        </div>
+    </div>
+</div>

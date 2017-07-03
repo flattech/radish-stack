@@ -1,0 +1,159 @@
+﻿[
+  {
+    "Key": "Home",
+    "Value": "Home"
+  },
+  {
+    "Key": "PostTypes",
+    "Value": "Post Types"
+  },
+  {
+    "Key": "HelloInYourCMS",
+    "Value": "Hello In Your CMS"
+  },
+  {
+    "Key": "Pages",
+    "Value": "Pages"
+  },
+  {
+    "Key": "News",
+    "Value": "News"
+  },
+  {
+    "Key": "Widgets",
+    "Value": "Widgets"
+  },
+  {
+    "Key": "Admin",
+    "Value": "Admin"
+  },
+  {
+    "Key": "Users",
+    "Value": "Users"
+  },
+  {
+    "Key": "Create",
+    "Value": "Create"
+  },
+  {
+    "Key": "Edit",
+    "Value": "Edit"
+  },
+  {
+    "Key": "Delete",
+    "Value": "Delete"
+  },
+  {
+    "Key": "Save",
+    "Value": "Save"
+  },
+  {
+    "Key": "Category",
+    "Value": "Category"
+  },
+  {
+    "Key": "Categories",
+    "Value": "Categories"
+  },
+  {
+    "Key": "Tags",
+    "Value": "Tags"
+  },
+  {
+    "Key": "Tag",
+    "Value": "Tag"
+  },
+  {
+    "Key": "All",
+    "Value": "All"
+  },
+  {
+    "Key": "AddNew",
+    "Value": "Add New"
+  },
+  {
+    "Key": "Photo",
+    "Value": "Photo"
+  },
+  {
+    "Key": "Title",
+    "Value": "Title"
+  },
+  {
+    "Key": "Date",
+    "Value": "Date"
+  },
+  {
+    "Key": "Search",
+    "Value": "Search"
+  },
+  {
+    "Key": "ThereAreNoItems",
+    "Value": "There Are No Items!"
+  },
+  {
+    "Key": "Menu",
+    "Value": "Menu"
+  }
+    ,
+  {
+    "Key": "Refresh",
+    "Value": "Refresh"
+  }
+    ,
+  {
+    "Key": "LogOff",
+    "Value": "LogOff"
+  },
+  {
+    "Key": "DisplayOrder",
+    "Value": "Display Order"
+  }
+    ,
+  {
+    "Key": "Back",
+    "Value": "Back"
+  }
+    ,
+  {
+    "Key": "Publishing",
+    "Value": "Publishing"
+  }
+    ,
+  {
+    "Key": "FeaturedImage",
+    "Value": "Featured Image"
+  }
+    ,
+  {
+    "Key": "Upload",
+    "Value": "Upload"
+  },
+  {
+    "Key": "Details",
+    "Value": "Details"
+  }
+    ,
+  {
+    "Key": "AddNewCategory",
+    "Value": "Add New Category"
+  },
+  {
+    "Key": "Drop",
+    "Value": "Drop"
+  }
+    ,
+  {
+    "Key": "Upload",
+    "Value": "Upload"
+  }
+    ,
+  {
+    "Key": "Remove",
+    "Value": "Remove"
+  },
+  {
+    "Key": "EnterTitleHere",
+    "Value": "Enter Title Here"
+  }
+]

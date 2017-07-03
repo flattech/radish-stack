@@ -1,0 +1,77 @@
+﻿@using Mentis.AlRassoul.CMS.Models.Localization
+@using Mentis.AlRassoul.Core.Infrastructure
+@{
+    var defaultGridPageSize =10;
+    var gridPageSizes = "10,20,50,100";
+    //page title
+    ViewBag.Title = T("Admin.Configuration.Languages.Localization").Text;
+}
+@Html.AntiForgeryToken()
+
+<div class="row">
+    <div class="col-md-12">
+        <h3 class="page-title" data-url="@Url.Action("Resources", "Language", new {languageid= ViewBag.LanguageId })">
+            <small></small>
+            اللغة - @ViewBag.LanguageName
+        </h3>
+    </div>
+</div>
+
+@*@if (ViewBag.AllLanguages != null)
+{
+    <table class="adminContent" style="margin-bottom: 10px;">
+        <tr>
+            <td class="adminTitle">
+                @T("Admin.Configuration.Languages.Select")
+            </td>
+            <td class="adminData">
+                @Html.DropDownList("localeresource-language", (IEnumerable<SelectListItem>)ViewBag.AllLanguages, new { onchange = "onLocaleResourceLanguageSelected(this.value);" })
+                <script type="text/javascript">
+                    function onLocaleResourceLanguageSelected(languageid) {
+                        window.location = '@(Url.Action("Resources") + "?languageId=")' + languageid;
+                    }
+                </script>
+            </td>
+        </tr>
+    </table>
+}*@
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="k-rtl">
+            @(Html.Kendo().Grid<LanguageResourceModel>()
+                  .Name("grid")
+                  .Columns(columns =>
+                  {
+                      columns.Bound(p => p.Id).Visible(false);
+                      columns.Bound(p => p.ResourceName).Filterable(f => f.Cell(cell => cell.Operator("contains").SuggestionOperator(FilterType.Contains)
+                          .ShowOperators(false)));
+                      columns.Bound(p => p.languageId).Visible(false);
+                      columns.Bound(p => p.ResourceValue).Filterable(f => f.Cell(cell => cell.Operator("contains").SuggestionOperator(FilterType.Contains)
+                          .ShowOperators(false)));
+                      columns.Command(command =>{
+                                                    command.Edit().UpdateText("حفظ").CancelText("إلغاء").Text("تعديل");
+                                                    command.Destroy().Text("حذف");
+                      }).Width(300);
+                  })
+                  .ToolBar(toolbar => toolbar.Create().Text("إضافة جديد"))
+                  .Editable(editable => editable.Mode(GridEditMode.InLine))
+                  .Pageable()
+                  .Sortable()
+                  .Scrollable()
+                  //.Groupable()
+                  .Filterable(x=>x.Mode(GridFilterMode.Row	))
+                  .Scrollable(s => s.Height("auto"))
+                  .DataSource(dataSource => dataSource
+                      .Ajax()
+                      .PageSize(20)
+                      .Events(events => events.Error("error_handler"))
+                      .Model(model => model.Id(p => p.Id))
+                      .Create(update => update.Action("ResourceAdd", "Language", new { lid = ViewBag.LanguageId }))
+                      .Read(read => read.Action("ResourceRead", "Language", new { languageId = ViewBag.LanguageId }))
+                      .Update(update => update.Action("ResourceUpdate", "Language"))
+                      .Destroy(update => update.Action("ResourceDelete", "Language"))
+                  ))
+        </div>
+    </div>
+</div>

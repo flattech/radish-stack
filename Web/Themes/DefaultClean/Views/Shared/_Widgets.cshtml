@@ -1,0 +1,34 @@
+﻿@using Core.Repositories.Enums
+@model Web.Models.PageViewModel
+
+
+@if (Model.Widgets != null && Model.Widgets.Any())
+{
+    foreach (var widget in Model.Widgets.Where(x => x.Location == (int)WidgetLocationEnum.OneColumnTop))
+    {
+        @Html.Partial("~/Themes/Kassem/Views/Widgets/"+widget.ViewPath +".cshtml", widget)
+    }
+    @*<section class="latest-news">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    @foreach (var widget in Model.Widgets.Where(x => x.Location == (int)WidgetLocationEnum.TwoColumnMiddle))
+                    {
+                        @Html.Partial(widget.ViewPath, widget)
+                    }
+
+                </div>
+                <aside class="col-md-4">
+                    @foreach (var widget in Model.Widgets.Where(x => x.Location == (int)WidgetLocationEnum.TwoColumnMiddleSidebar))
+                    {
+                        @Html.Partial(widget.ViewPath, widget)
+                    }
+                </aside>
+            </div>
+        </div>
+    </section>*@
+    foreach (var widget in Model.Widgets.Where(x => x.Location == (int)WidgetLocationEnum.OneColumnMiddleBottom))
+    {
+        @Html.Partial(widget.ViewPath, widget)
+    }
+}

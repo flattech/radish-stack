@@ -1,0 +1,81 @@
+﻿@using DevExpress.Web.Mvc.UI
+@using DevExpress.Utils
+@using DevExpress.Web
+@using DevExpress.Web.ASPxHtmlEditor
+@model string
+@Html.DevExpress().HtmlEditor(settings =>
+{
+    settings.Name = "htmlEditor"  +Model;
+    settings.CallbackRouteValues = new { Controller = "Post", Action = "HtmlEditorPartial" };
+    settings.SettingsImageSelector.UploadCallbackRouteValues = new { Controller = "Post", Action = "ImageUpload" };
+    settings.SettingsImageUpload.UploadCallbackRouteValues = new { Controller = "Post", Action = "ImageUpload" };
+
+    settings.SettingsImageUpload.UploadImageFolder = HtmlEditorHelper.UploadDirectory;
+    settings.SettingsImageUpload.ValidationSettings.Assign(HtmlEditorHelper.ImageUploadValidationSettings);
+
+    settings.SettingsImageSelector.CommonSettings.RootFolder = HtmlEditorHelper.RootFolder;
+    settings.SettingsImageSelector.CommonSettings.ThumbnailFolder = HtmlEditorHelper.ThumbnailFolder;
+
+    //iabyudasydaisgyhdiyas
+    settings.SettingsImageSelector.Enabled = true;
+    settings.SettingsImageSelector.EditingSettings.AllowCreate = true;
+    settings.SettingsImageSelector.EditingSettings.AllowDelete = true;
+    settings.SettingsImageSelector.EditingSettings.AllowMove = true;
+    settings.SettingsImageSelector.EditingSettings.AllowRename = true;
+    settings.SettingsImageSelector.UploadSettings.Enabled = true;
+    if (ViewData["Html"] != null)
+        settings.Html = (string)ViewData["Html"];
+    settings.SettingsHtmlEditing.AllowScripts = false;
+    settings.SettingsHtmlEditing.AllowIFrames = true;
+    settings.SettingsHtmlEditing.AllowFormElements = true;
+    settings.SettingsHtmlEditing.UpdateDeprecatedElements = true;
+    settings.SettingsHtmlEditing.UpdateBoldItalic = true;
+    settings.SettingsHtmlEditing.EnterMode = HtmlEditorEnterMode.Default;
+    settings.Settings.AllowContextMenu = DefaultBoolean.Default;
+    settings.Settings.AllowDesignView = true;
+    settings.Settings.AllowHtmlView = true;
+    settings.Settings.AllowPreview = true;
+    settings.PreRender = (sender, e) =>
+        {
+            var editor = (ASPxHtmlEditor)sender;
+            editor.Toolbars["StandardToolbar2"].Items.RemoveAt(0);
+           // editor.Toolbars["StandardToolbar2"].Items.RemoveAt(0);
+            //editor.Width = "100%";
+        };
+    Action<object, FileManagerActionEventArgsBase> editHandler = (sender, e) =>
+        {
+            var args = (FileManagerItemDeleteEventArgs)e;
+            string fullPath = args.Item.FullName.Replace(args.Item.RelativeName, "");
+            if (fullPath.EndsWith("\\Upload\\"))
+            {
+                args.Cancel = true;
+                args.ErrorText = "You cannot delete child folders and files for the root folder";
+            }
+        };
+
+    Action<object, FileManagerItemDeleteEventArgs> deleteHandler = (sender, e) =>
+        {
+            FileManagerItemDeleteEventArgs args = e;
+            string fullPath = args.Item.FullName.Replace(args.Item.RelativeName, "");
+            if (fullPath.EndsWith("\\Upload\\"))
+            {
+                args.Cancel = true;
+                args.ErrorText = "You cannot delete child folders and files for the root folder";
+            }
+        };
+
+    settings.ImageSelectorItemDeleting = (sender, e) => editHandler(sender, e);
+    settings.ImageSelectorFolderCreating = (sender, e) => editHandler(sender, e);
+    settings.ImageSelectorFileUploading = (sender, e) => editHandler(sender, e);
+    settings.ImageSelectorItemMoving = (sender, e) => editHandler(sender, e);
+    settings.ImageSelectorItemRenaming = (sender, e) => editHandler(sender, e);
+    settings.Toolbars.CreateDefaultToolbars();
+}).GetHtml()
+@*@Html.DevExpress().HtmlEditor(settings => {
+            settings.Name = "he";
+            settings.CallbackRouteValues = new { Controller = "Home", Action = "HtmlEditorPartial" };
+            settings.Width = 550;
+
+            settings.Settings.AllowHtmlView = false;
+            settings.Settings.AllowPreview = false;
+    }).GetHtml()*@

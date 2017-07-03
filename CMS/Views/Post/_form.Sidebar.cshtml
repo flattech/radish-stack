@@ -1,0 +1,185 @@
+﻿@using CMS
+@using Core.Repositories.Enums
+
+@model CMS.Models.PostForm
+
+@{ var area = Site.AreaName;}
+<style>
+    #categoryTree {
+        min-height: 42px;
+        max-height: 200px;
+        overflow: auto;
+        padding: 0 .9em;
+        border: 1px solid #dfdfdf;
+        background-color: #fdfdfd;
+        direction: ltr;
+    }
+
+        #categoryTree ul {
+            list-style-type: none;
+            padding-left: 0px;
+        }
+
+        #categoryTree > ul {
+            padding-right: 0;
+            margin-top: 10px;
+        }
+
+        #categoryTree ul li {
+                margin: 0;
+                padding: 0;
+                line-height: 22px;
+                word-wrap: break-word;
+            }
+        #categoryTree ul li input {
+            cursor: pointer;
+        }
+        #categoryTree ul  ul {
+           margin-left: 20px;
+        }
+</style>
+<div class="panel-group accordion" id="accordion1">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a class="accordion-toggle accordion-toggle-styled" data-toggle="collapse" data-parent="#accordion1" href="#collapse_1">
+                    @AppResources.Instance.Get("Publishing")
+                </a>
+            </h4>
+        </div>
+        <div id="collapse_1" class="panel-collapse">
+            <div class="panel-body">
+                <p>
+                    <div >
+                        <select name="Status" id="Status">
+                            @foreach (var e in Enum.GetValues(typeof (PostSatusEnum)))
+                            {
+                                <option value="@((int) e)" selected="@((int) e == Model.Status)">@e.ToString()</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="margin-bottom-10"></div>
+
+                    <div>
+                    </div>
+                    <div class="margin-bottom-10"></div>
+                    @Html.MetronicSaveButton()
+
+
+                </p>
+            </div>
+        </div>
+    </div>
+
+</div>
+    <div class="panel-group accordion" id="accordion4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a class="accordion-toggle accordion-toggle-styled" data-toggle="collapse" data-parent="#accordion4" href="#collapse_4">
+                    @AppResources.Instance.Get("FeaturedImage")
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse_4" class="panel-collapse in">
+                <div class="panel-body">
+                   @Html.EditorFor(model => model.Photo, "Picture")
+                </div>
+            </div>
+        </div>
+    </div>
+
+@if (Model.PostType.EnableCategories)
+{
+    <div class="panel-group accordion" id="accordion2">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a class="accordion-toggle accordion-toggle-styled" data-toggle="collapse" data-parent="#accordion2" href="#collapse_2">
+                        @AppResources.Instance.Get("Categories")
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse_2" class="panel-collapse in">
+                <div class="panel-body">
+                    <div id="categoryTree">
+                        @Html.RenderTreeCheckBoxes(Model.AvailableTerms, Model.SelectedTerms)
+                    </div>
+                    <div id="category-adder">
+                        <h4 style="font-size: 1em;">
+                            <a style="color: #0073aa;" id="category-add-toggle"
+                                href="/term/create?taxonomyid=10&posttypeid=@Model.PostType.Id" target="_blank" class="notajax">
+                                @AppResources.Instance.Get("AddNewCategory")
+                            </a>
+                        </h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+}
+@if (Model.PostType.EnableTags)
+{
+    <div class="panel-group accordion" id="accordion3">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a class="accordion-toggle accordion-toggle-styled" data-toggle="collapse" data-parent="#accordion3" href="#collapse_3">
+                        @AppResources.Instance.Get("Tags")
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse_3" class="panel-collapse in">
+                <div class="panel-body">
+                    <input class="select2_tags input-large" data-tagslist="@Newtonsoft.Json.JsonConvert.SerializeObject(Model.AvailableTags)" id="select2_sample5" name="SelectedTags" type="text" value="@Model.SelectedTags">
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+}
+
+   
+    @if (Model.PostAttachments.ContainsKey("Big"))
+    {
+        <div class="panel-group accordion" id="accordionattachmentbig">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a class="accordion-toggle accordion-toggle-styled" data-toggle="collapse" data-parent="#accordionattachmentbig" href="#collapse_attachmentbig">
+                            @AppResources.Instance.Get("SliderImage")
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse_attachmentbig" class="panel-collapse in">
+                    <div class="panel-body">
+                        @Html.Partial("PostAttachment", Model.PostAttachments["Big"])
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+
+
+@if (Model.PostType.EnableGallery)
+{
+    <div class="panel-group accordion" id="accordionattachmentbig">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordionattachmentbig" href="#collapse_attachmentbig">
+                        @AppResources.Instance.Get("Gallery")
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse_attachmentbig" class="panel-collapse collapse">
+                <div class="panel-body">
+                    @Html.Partial("PostGallery", Model.MediaGallery)
+                </div>
+            </div>
+        </div>
+    </div>
+}

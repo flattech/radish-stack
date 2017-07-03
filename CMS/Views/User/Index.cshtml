@@ -1,0 +1,93 @@
+﻿@using CMS.Helpers
+@using Core.Repositories.Enums
+@model List<Core.Repositories.User>
+
+<h3 class="page-title">
+    Users <small></small>
+</h3>
+
+<!-- END PAGE HEADER-->
+<!-- BEGIN PAGE CONTENT-->
+@Html.AlertMessage()
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box blue">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-globe"></i>Users
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="table-toolbar">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="btn-group">
+                                <a id="sample_editable_1_new" class="btn btn-success" href="@Url.Action("Create")">
+                                    Add New <i class="fa fa-plus"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            
+                        </div>
+                    </div>
+                </div>
+                <table class="table  table-bordered table-hover" id="sample_1">
+                    <thead>
+                        <tr>
+                           
+                            <th>
+                                Full Name
+                            </th>
+                            <th>
+                                Role
+                            </th>
+                            <th>
+                                
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                  
+                        @foreach (var g in Model)
+                        {
+                            <tr class="odd gradeX">
+                               
+                                <td>
+                                    <a href="@Url.Action("Edit", new {id = g.Id})">
+                                        @(g.Name)
+                                    </a>
+                                </td>
+                                <td>
+                                    @if (g.RoleEnum == UserRoleEnum.Admin)
+                                    {
+                                        <span class="label label-sm label-success">
+                                            Admin
+                                        </span>
+                                    }
+                                    else if (g.RoleEnum == UserRoleEnum.DataEntry)
+                                    {
+                                        <span class="label label-sm label-warning">
+                                            DataEntry
+                                        </span>
+                                    }
+                                    else if (g.RoleEnum == UserRoleEnum.Reporter)
+                                    {
+                                        <span class="label label-sm label-info">
+                                            Reporter
+                                        </span>
+                                    }
+                                </td>
+                                <td>
+                                    <a href="@Url.Action("Delete",new{id=g.Id})" class="btn btn-danger btn-sm">Delete </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>

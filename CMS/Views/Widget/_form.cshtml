@@ -1,0 +1,120 @@
+﻿@model WidgetForm
+@{ var area = Site.AreaName;}
+@Html.AntiForgeryToken()
+
+<div class="form-body" id="itemkocontainer">
+    <div class="form-group">
+        <label class="control-label col-md-3" for="Title">Title</label>
+        <div class="col-md-9">
+            @Html.MetronicTextBoxFor(model => model.Title)
+            @Html.ValidationMessageFor(model => model.Title)
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-3" for="PostType">Post Type</label>
+        <div class="col-md-9">
+            @Html.DropDownListFor(model => model.PostType, Model.AvailablePostTypes,
+                new { @class = "form-control input-xlarge select2me "})
+            <div style="margin-top: 10px">
+                @Html.CheckBoxFor(model => model.ReturnTags, new { @class = "form-control" })
+                <label for="ReturnTags">ReturnTags </label>
+
+                &nbsp;&nbsp;
+                @Html.CheckBoxFor(model => model.ReturnCategories, new { @class = "form-control" })
+                <label for="ReturnCategorys">ReturnCategorys </label>
+
+                &nbsp;&nbsp;
+                @Html.CheckBoxFor(model => model.ReturnPosts, new { @class = "form-control" })
+                <label for="ReturnPosts">ReturnPosts </label>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-3" for="SourceTags">Tags</label>
+        <div class="col-md-9">
+            @Html.ListBoxFor(model => model.SourceTags, Model.AvailableTags,
+                new { @class = "form-control input-xlarge select2me "})
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label class="control-label col-md-3" for="Categories">Categories </label>
+        <div class="col-md-9">
+            @Html.ListBoxFor(model => model.SourceCategories, Model.AvailableTerms,
+            new { @class = "form-control input-xlarge select2me " })
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-3" for="SourcePosts">Posts</label>
+        <div class="col-md-9">
+            <div class="clearfix">
+                <ul class="media-list list-group" data-bind="sortable: list">
+                    <li class="media list-group-item row">
+                        <a class="pull-left" href="javascript:;">
+                            <img class="media-object" data-bind="attr:{ src:  image}" src="" alt="no image" style="width: 64px; height: 64px;">
+                        </a>
+                        <div class="media-body">
+                            <h4 data-bind="text: title" class="media-heading"></h4>
+                        </div>
+                        <span class="badge badge-danger" data-bind="click:$parent.removeSlide" style="cursor: pointer">
+                                Delete
+                            </span>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <input type="hidden" name="SourcePosts" data-bind="attr: {value:  getIds }"/>
+                <a style="margin-top: 3px" data-popuptitle="Choose Post" href="@Url.Action("mini", "post",new {posttypeid=Model.PostType})"
+                   class="btn btn-success btn-sm" data-loadtype="popup"><i class="fa fa-plus-square"></i> Add Post</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label class="control-label col-md-3" for="ViewPath">ViewPath </label>
+        <div class="col-md-9">
+            @Html.MetronicTextBoxFor(model => model.ViewPath)
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-3" for="IsActive">IsActive </label>
+        <div class="col-md-9">
+            @Html.CheckBoxFor(model => model.IsActive)
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-3" for="PostCount">PostCount </label>
+        <div class="col-md-9">
+            @Html.MetronicTextBoxFor(model => model.PostCount)
+        </div>
+    </div>
+    
+</div>
+<div class="form-actions fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div>
+                <div style="float: left">
+                    @Html.MetronicBackButton(Url.Action("Index", "Widget"))
+                </div>
+                <div style="float: right">
+                    @Html.MetronicSaveButton()
+                    @Html.HiddenFor(x => x.Id)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@if (Request.IsAjaxRequest())
+{
+    <script>
+        Metronic.handleSelect2();
+    </script>
+}
+<script src="@area/Content/js/widget/widget.js"></script>
+<script>
+    window.back.widgets.init(@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.AvailablePosts)))
+</script>
+

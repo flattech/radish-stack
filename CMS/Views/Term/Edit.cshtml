@@ -1,0 +1,38 @@
+﻿@model TermForm
+
+@{
+    ViewBag.Title = "Edit";
+}
+<div class="row">
+    <div class="col-md-12">
+        <h3 class="page-title">
+            <small></small>
+            @AppResources.Instance.Get(Model.PostType.Title) - @AppResources.Instance.Get(Model.Taxonomy.ToString()) - @Model.Title
+        </h3>
+
+    </div>
+</div>
+@Html.AlertMessage()
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet box green ">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-reorder"></i>@AppResources.Instance.Get("Edit") @Model.Title 
+                </div>
+            </div>
+            <div class="portlet-body form">
+                @using (Html.BeginForm("Edit", "Term", FormMethod.Post, new
+                {
+                    @enctype = "multipart/form-data",
+                    @class = "form-horizontal " +
+                              "form-bordered " +
+                              "form-label-stripped"
+                }))
+                {
+                    @Html.Partial("_form")
+                }
+            </div>
+        </div>
+    </div>
+</div>

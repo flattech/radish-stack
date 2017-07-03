@@ -1,0 +1,57 @@
+﻿@using Core.Repositories.Enums
+@model TermForm
+@Html.AntiForgeryToken()
+<div class="form-body">
+    <div class="form-group">
+        @Html.MetronicLabelFor(model => model.Title)
+        @Html.HiddenFor(model => model.TaxonomyId)
+        @Html.HiddenFor(model => model.PostTypeId)
+        @Html.HiddenFor(model => model.Id)
+        <div class="col-md-9">
+            @Html.MetronicTextBoxFor(model => model.Title)
+            @Html.ValidationMessageFor(model => model.Title)
+            @if (ViewBag.ParentId != null)
+            {
+                @Html.Hidden("ParentId", ((int)ViewBag.ParentId).ToString())
+            }
+        </div>
+    </div>
+    @if (Model.TaxonomyId != ((int)TermTypeEnum.Tag))
+    {
+        <div class="form-group">
+            <label class="control-label col-md-3" for="ParentId">Parent Term </label>
+            <div class="col-md-9">
+                @Html.DropDownListFor(model => model.ParentId, Model.AvailableTerms, new { @class = "form-control input-xlarge " })
+            </div>
+        </div>
+    }
+    <div class="form-group">
+        @Html.MetronicLabelFor(model => model.IsActive)
+        <div class="col-md-9">
+            @Html.CheckBoxFor(model => model.IsActive)
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.MetronicLabelFor(model => model.IsPublic)
+        <div class="col-md-9">
+            @Html.CheckBoxFor(model => model.IsPublic)
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.MetronicLabelFor(model => model.DisplayOrder)
+        <div class="col-md-9">
+            @Html.MetronicTextBoxFor(model => model.DisplayOrder)
+        </div>
+    </div>
+ </div>
+<div class="form-actions fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-offset-3 col-md-9">
+                @Html.MetronicBackButton(Url.Action("Index", "Term", new { posttypeid = Model.PostTypeId, taxonomyid = Model.TaxonomyId }))
+                @Html.MetronicSaveButton()
+            </div>
+        </div>
+    </div>
+</div>
+

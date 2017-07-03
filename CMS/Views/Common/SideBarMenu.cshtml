@@ -1,0 +1,59 @@
+﻿@using Core.Repositories.Enums
+@model CMS.Controllers.CommonController.MenuModel
+
+
+
+@{
+    string actionName = this.Request.RequestContext.RouteData.Values["action"].ToString().ToLower();
+    string controllerName = this.Request.RequestContext.RouteData.Values["controller"].ToString().ToLower();
+    var posttypeid = Request.QueryString["posttypeid"] == null ? Guid.Empty : Guid.Parse(Request.QueryString["posttypeid"]);
+    var taxonomyid = Request.QueryString["taxonomyid"] == null ? 0 : Convert.ToInt32(Request.QueryString["taxonomyid"]);
+}
+@foreach (var item in Model.PostTypes.Where(x => x.IsActive))
+{
+    var selected = posttypeid == item.Id;
+    <li class="sidemenuli @( selected ? "active open" : "") ">
+        <a href="javascript:;" class="sidemenu mainlevel">
+            <i class="icon-@(!string.IsNullOrEmpty(item.Icon)?item.Icon:"tag")"></i>
+            <span class="title">@AppResources.Instance.Get(item.Title) </span>
+            @*@if (selected)
+                {
+                    <span class="selected"></span>
+                }*@
+            <span class="arrow "></span>
+        </a>
+        <ul class="sub-menu">
+            <li class="sidemenuli @(selected && controllerName == "post" && actionName == "index" ? "active" : "")">
+                <a href="@Url.Action("Index", "Post", new {posttypeid = item.Id})" class="sidemenu">
+                    <i class="icon-list"></i>
+                    <span class="title">@AppResources.Instance.Get("All")</span>
+                </a>
+            </li>
+            <li class="sidemenuli @(selected && controllerName == "post" && actionName == "create" ? "active" : "")">
+                <a href="@Url.Action("Create", "Post", new {posttypeid = item.Id})" class="sidemenu">
+                    <i class="icon-plus"></i>
+                    <span class="title">@AppResources.Instance.Get("AddNew")</span>
+
+                </a>
+            </li>
+            @if (item.EnableCategories)
+            {
+                <li class="sidemenuli @(selected && controllerName == "term" && taxonomyid == (int)TermTypeEnum.Category ? "active" : "")">
+                    <a class="sidemenu" href="@Url.Action("Index", "Term", new {posttypeid = item.Id, taxonomyid = (int) TermTypeEnum.Category})">
+                        <i class="icon-anchor"></i>
+                        <span class="title">@AppResources.Instance.Get("Categories")</span>
+                    </a>
+                </li>
+            }
+            @if (item.EnableTags)
+            {
+                <li class="sidemenuli @(selected && controllerName == "term" && taxonomyid == (int)TermTypeEnum.Tag ? "active" : "")">
+                    <a class="sidemenu" href="@Url.Action("Index", "Term", new {posttypeid = item.Id, taxonomyid = (int) TermTypeEnum.Tag})">
+                        <i class="icon-tag"></i>
+                        <span class="title">@AppResources.Instance.Get("Tags")</span>
+                    </a>
+                </li>
+            }
+        </ul>
+    </li>
+}

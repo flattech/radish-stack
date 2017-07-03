@@ -1,0 +1,99 @@
+﻿@using CMS.Controllers
+@using CMS.Helpers
+@using Core.Extentions
+@model PostTypeModel
+
+<div class="row">
+    <div class="col-md-12">
+        <h3 class="page-title">
+            <small></small>
+            @AppResources.Instance.Get("PostTypes")
+        </h3>
+    </div>
+</div>
+
+@Html.AlertMessage()
+
+<div class="margin-top-10"></div>
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box blue">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-globe"></i>@AppResources.Instance.Get("PostTypes")
+                </div>
+                <div class="tools">
+
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="table-toolbar">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="btn-group mygroup">
+                                @Html.MetronicLink(Url.Action("Create", "PostType"), AppResources.Instance.Get("Create"), "plus", "green", "")
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="btn-group pull-right">
+                                <form method="GET" action="@Url.Action("Index")">
+                                    <div class="input-group input-large">
+                                        <input type="text" class="form-control" value="@Model.query" name="query">
+                                        <span class="input-group-btn">
+                                            <button class="btn blue" type="submit"><i class="fa fa-search"></i> @AppResources.Instance.Get("Search")</button>
+                                        </span>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </div>
+                @if (Model != null && (Model.List.Any() || Model.query.IsNotNullOrEmpty()))
+                {
+                    <table class="table table-bordered table-striped table-condensed flip-content">
+                        <thead class="flip-content">
+                            <tr>
+                                <th>@AppResources.Instance.Get("DisplayOrder")</th>
+                                <th>@AppResources.Instance.Get("Title")</th>
+                                <th>@AppResources.Instance.Get("Date")</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.List)
+                            {
+                                <tr>
+                                    <td style="padding: 10px">
+                                        #@item.DisplayOrder
+                                </td>
+                                <td style="padding: 10px">
+                                    <a href="@Url.Action("Edit", new {id = item.Id})" style="font-size: 18px; font-weight: 300">@item.Title</a>
+                                </td>
+                                <td style="padding: 10px">
+                                    @item.CreationDate.ToString("yyyy-MM-dd")
+                                </td>
+                                <td style="padding: 10px">
+                                    @Html.MetronicEditLink(Url.Action("Edit", new { id = item.Id }))
+                                    @Html.MetronicDeleteLink(Url.Action("Delete", new { id = item.Id }))
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                    @Html.Pager(Model.page, Model.size, Model.total, new { Model.query })
+                }
+                else
+                {
+                    <div class="alert alert-info">
+                        <strong>@AppResources.Instance.Get("ThereAreNoItems") </strong>
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>

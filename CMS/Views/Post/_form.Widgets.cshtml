@@ -1,0 +1,105 @@
+﻿@using CMS
+
+@model CMS.Models.PostForm
+@{ var area = Site.AreaName;}
+@if (Model.PostType.EnableWidgets)
+{
+    <div class="panel-group accordion" id="accordionwidget">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordionwidget" href="#collapse_widget">
+                        @AppResources.Instance.Get("Widgets")
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse_widget" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <p>
+                        <div>
+                            <a style="margin-top: 3px" data-popuptitle="@AppResources.Instance.Get("ChooseWidget")" href="@Url.Action("mini", "widget")"
+                               class="btn btn-success btn-sm" data-loadtype="popup"><i class="fa fa-plus-square"></i>@AppResources.Instance.Get("Add")</a>
+                        </div>
+                        <br/>
+                        <div id="itemkocontainer">
+                            <div class="ko_container" style="border: 5px solid lightgrey">
+                                <ul class="list-group" data-bind="sortable: list1" style="margin: 0; padding: 0;">
+                                    <li class="list-group-item">
+                                        <div class="media-body">
+                                            <h4 data-bind="text: title" class="media-heading"></h4>
+                                            <span class="badge badge-danger" data-bind="click:$parent.removelist1" style="cursor: pointer">
+                                            حذف
+                                        </span>
+                                            <input type="hidden" data-bind="attr:{name:$parent.nameForInput1($index(), 'Id'),value:id}"/>
+                                            <input type="hidden" data-bind="attr: { name: $parent.nameForInput1($index(), 'DisplayOrder') , value: $index }"/>
+                                            <input type="hidden" data-bind="attr:{name:$parent.nameForInput1($index(), 'WidgetId'),value:widgetid}"/>
+                                            <input type="hidden" data-bind="attr:{name:$parent.nameForInput1($index(), 'Location'),value:10}"/>
+
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="row" style="margin: 0">
+                                <div class="col-md-9 ko_container" style="border: 5px solid lightgrey; padding: 0;">
+                                    <ul class="list-group " data-bind="sortable: list2" style="margin: 0; padding: 0;">
+                                        <li class="list-group-item">
+                                            <div class="media-body">
+                                                <h4 data-bind="text: title" class="media-heading"></h4>
+                                                <span class="badge badge-danger" data-bind="click:$parent.removelist2" style="cursor: pointer">
+                                                حذف
+                                            </span>
+                                                <input type="hidden" data-bind="attr:{name:$parent.nameForInput2($index(), 'Id'),value:id}"/>
+                                                <input type="hidden" data-bind="attr: { name: $parent.nameForInput2($index(), 'DisplayOrder') , value: $index }"/>
+                                                <input type="hidden" data-bind="attr:{name:$parent.nameForInput2($index(), 'WidgetId'),value:widgetid}"/>
+                                                <input type="hidden" data-bind="attr:{name:$parent.nameForInput2($index(), 'Location'),value:20}"/>
+                                            </div>
+
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-3 ko_container" style="border: 5px solid lightgrey; padding: 0;">
+                                    <ul class="list-group " data-bind="sortable: list3" style="margin: 0; padding: 0;">
+                                        <li class="list-group-item">
+                                            <div class="media-body">
+                                                <h4 data-bind="text: title" class="media-heading"></h4>
+                                                <span class="badge badge-danger" data-bind="click:$parent.removelist3" style="cursor: pointer">
+                                                @AppResources.Instance.Get("Delete")
+                                            </span>
+                                                <input type="hidden" data-bind="attr:{name:$parent.nameForInput3($index(), 'Id'),value:id}"/>
+                                                <input type="hidden" data-bind="attr: { name: $parent.nameForInput3($index(), 'DisplayOrder') , value: $index }"/>
+                                                <input type="hidden" data-bind="attr:{name:$parent.nameForInput3($index(), 'WidgetId'),value:widgetid}"/>
+                                                <input type="hidden" data-bind="attr:{name:$parent.nameForInput3($index(), 'Location'),value:30}"/>
+                                            </div>
+
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="ko_container" style="border: 5px solid lightgrey">
+                                <ul class="list-group" data-bind="sortable: list4" style="margin: 0; padding: 0;">
+                                    <li class="list-group-item">
+                                        <div class="media-body">
+                                            <h4 data-bind="text: title" class="media-heading"></h4>
+                                            <span class="badge badge-danger" data-bind="click:$parent.removelist4" style="cursor: pointer">
+                                                @AppResources.Instance.Get("Delete")
+                                        </span>
+                                            <input type="hidden" data-bind="attr:{name:$parent.nameForInput4($index(), 'Id'),value:id}"/>
+                                            <input type="hidden" data-bind="attr: { name: $parent.nameForInput4($index(), 'DisplayOrder') , value: $index }"/>
+                                            <input type="hidden" data-bind="attr:{name:$parent.nameForInput4($index(), 'WidgetId'),value:widgetid}"/>
+                                            <input type="hidden" data-bind="attr:{name:$parent.nameForInput4($index(), 'Location'),value:40}"/>
+
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="@area/Content/js/widget/postwidget.js"></script>
+    <script>
+        window.back.postwidget.init(@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.PostWidgetsModel)))
+    </script>
+}

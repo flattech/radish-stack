@@ -1,0 +1,82 @@
+﻿@using System.Configuration
+@using CMS
+@using Mentis.AlRassoul.CMS.Models.Localization
+@using Mentis.AlRassoul.Core.Domain.Posts
+@{
+    var area = Site.EnableArea ? "/admin" : "";
+    var frontlink = ConfigurationManager.AppSettings["FrontUrl"];
+}
+<script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.min.js"></script>
+<div class="row">
+    <div class="col-md-12">
+        <h3 class="page-title" data-url="@Url.Action("Index", "FormData")">
+            <small></small>
+            Form
+        </h3>
+    </div>
+</div>
+@Html.AlertMessage()
+<div class="row">
+    <div class="col-md-12">
+        <div class="k-rtl">
+            @(Html.Kendo().Grid<FormDataController.FormView>()
+                  .Name("grid")
+                  .ToolBar(tools => tools.Excel())
+                  .Columns(columns =>
+                  {
+                      columns.Bound(p => p.Id).Visible(false);
+                      columns.Bound(p => p.FirstName);
+                      columns.Bound(p => p.LastName);
+                      columns.Bound(p => p.Email);
+                      columns.Bound(p => p.Message);
+                      columns.Bound(p => p.DateChoosen);
+                      columns.Bound(p => p.Phone);
+                      columns.Bound(p => p.Media)
+                        .ClientTemplate("#=getMediaLinks(Media)#");
+                  }).Resizable(resize => resize.Columns(true))
+                  .Filterable()
+                  .Pageable(pageable => pageable
+                      .Refresh(true)
+                      .PageSizes(true)
+
+                      .ButtonCount(5))
+                          .Sortable().ClientDetailTemplateId("template")
+                  .Scrollable(s => s.Height("auto"))
+                  .DataSource(dataSource => dataSource
+                      .Ajax()
+                      .Sort(sort => sort.Add("Id").Descending()) //
+                      .PageSize(10)
+                      .Read(read => read.Action("Read", "FormData", new {type = ViewBag.Type}))
+                  ))
+        </div>
+    </div>
+</div>
+<script>
+    function getMediaLinks(str) {
+        var hrefs = "";
+        if (str) {
+            var a = str.split(",");
+             for (var i = 0; i < a.length; i++) {
+                hrefs += '<li><a class="notajax" target="_blank"  href="' + a[i] + '">' + a[i].substring(a[i].indexOf(".")) + '</a></li>';
+        }}
+        return hrefs;
+    }
+</script>
+<script id="template" type="text/kendo-tmpl">
+    @(Html.Kendo().TabStrip()
+            .Name("tabStrip_#=Id#")
+            .SelectedIndex(0)
+            //.Animation(animation => animation.Open(open => open.Fade(FadeDirection.In)))
+            .Items(items =>
+            {
+                items.Add().Text("Message").Content("<div style='padding:20px'>#= Message #</div>");
+                items.Add().Text("Attachments").Content(
+                    "<div style='padding:20px'>" +
+                        "<ul>" +
+                            "#= getMediaLinks(Media) #" +
+                        "</ul>" +
+                    "</div>"
+                );
+            })
+                                    .ToClientTemplate())
+</script>

@@ -1,0 +1,25 @@
+﻿@using CMS.Helpers
+@model CMS.Models.PostForm
+
+<div class="row">
+    <div class="col-md-12">
+        <h3 class="page-title">
+            <small></small>
+            @AppResources.Instance.Get(Model.PostType.Title) - @AppResources.Instance.Get("Create")
+        </h3>
+    </div>
+</div>
+
+@Html.AlertMessage()
+
+@using (Html.BeginForm("Create", "Post", FormMethod.Post, new
+        {
+            @enctype = "multipart/form-data",
+            @class = " " +
+                     "form-bordered " +
+                     "form-label-stripped"
+        }))
+{
+    @Html.Partial("_form")
+}
+

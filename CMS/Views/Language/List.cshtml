@@ -1,0 +1,141 @@
+﻿@using CMS
+@using Mentis.AlRassoul.CMS.Models.Localization
+@{
+    var area = Site.EnableArea ? "/admin" : "";
+}
+<div class="row">
+    <div class="col-md-12">
+        <h3 class="page-title" data-url="@Url.Action("List", "Language")">
+            <small></small>
+            اللغات
+        </h3>
+    </div>
+</div>
+@Html.AlertMessage()
+<div class="row">
+    <div class="col-md-12">
+       
+        <div class="k-rtl">
+            @(Html.Kendo().Grid<LanguageModel>()
+                  .Name("grid")
+                  .Columns(columns =>
+                  {
+                      columns.Bound(p => p.Id).Visible(false);
+                      columns.Bound(p => p.Name).ClientTemplate("<a href=\"" + area + "/language/resources?languageid=#=Id#\" class=\"\">#=Name#</a>").Width(200);
+                      columns.Bound(p => p.LanguageCulture).Width(200);
+                      columns.Bound(p => p.UniqueSeoCode).Width(200);
+                      columns.Bound(p => p.DisplayOrder).Width(200);
+                      columns.Bound(p => p.Published).Width(200);
+                      columns.Bound(p => p.Rtl).Width(200);
+                      columns.Command(command =>
+                      {
+                          command.Edit().UpdateText("حفظ").CancelText("إلغاء").Text("تعديل");
+                          command.Destroy().Text("حذف");
+                      }).Width(300);
+                  })
+                  .ToolBar(toolbar => toolbar.Create().Text("إضافة لغة جديدة"))
+                  .Editable(editable => editable.Mode(GridEditMode.InLine))
+                  .Pageable()
+                  .Sortable()
+                  .Scrollable(s => s.Height("auto"))
+                  .Filterable()
+                 // .HtmlAttributes(new {style = "height:309px;"})
+                  .DataSource(dataSource => dataSource
+                      
+                      .Ajax()
+                      .PageSize(10)
+                      .Events(events => events.Error("error_handler"))
+                      .Model(model => model.Id(p => p.Id))
+                      .Create(update => update.Action("EditingInline_Create", "Language"))
+                      .Read(read => read.Action("List_Read", "Language"))
+                      .Update(update => update.Action("EditingInline_Update", "Language"))
+                      .Destroy(update => update.Action("EditingInline_Destroy", "Language"))
+                  )
+                  //.DataSource(dataSource => dataSource
+                  //.Ajax()
+                  //.PageSize(5)
+                  //        .Read(read => read.Action("List_Read", "Language"))
+                  // )
+                  )
+        </div>
+    </div>
+</div>
+
+
+@*<table class="adminContent">
+        <tr>
+            <td>
+                <div id="languages-grid"></div>
+                <script>
+                    $(document).ready(function () {
+                        $("#languages-grid").kendoGrid({
+                            dataSource: {
+                                type: "json",
+                                transport: {
+                                    read: {
+                                        url: "@Html.Raw(Url.Action("List", "Language"))",
+                                        type: "POST",
+                                        dataType: "json"
+                                        //,// data: addAntiForgeryToken
+                                    }
+                                },
+                                schema: {
+                                    data: "Data",
+                                    total: "Total",
+                                    errors: "Errors"
+                                },
+                                error: function(e) {
+                                  //  display_kendoui_grid_error(e);
+                                    // Cancel the changes
+                                    this.cancelChanges();
+                                },
+                                serverPaging: true,
+                                serverFiltering: true,
+                                serverSorting: true
+                            },
+                            pageable: {
+                                refresh: true,
+                                numeric: false,
+                                previousNext: false,
+                                info: false
+                            },
+                            editable: {
+                                confirmation: false,
+                                mode: "inline"
+                            },
+                            scrollable: false,
+                            columns: [{
+                                field: "Name",
+                                title: "@T("Admin.Configuration.Languages.Fields.Name")"
+                            }, {
+                                field: "LanguageCulture",
+                                title: "@T("Admin.Configuration.Languages.Fields.LanguageCulture")",
+                                width: 200
+                            },{
+                                field: "Id",
+                                title: "@T("Admin.Configuration.Languages.Resources.View")",
+                                template: '<a href="@Url.Content("~/Admin/Language/Resources")?languageId=#=Id#">@T("Admin.Configuration.Languages.Resources.View")</a>',
+                                width: 200
+                            },{
+                                field: "DisplayOrder",
+                                title: "@T("Admin.Configuration.Languages.Fields.DisplayOrder")",
+                                width: 100
+                            }, {
+                                field: "Published",
+                                title: "@T("Admin.Configuration.Languages.Fields.Published")",
+                                width: 100,
+                                headerAttributes: { style: "text-align:center" },
+                                attributes: { style: "text-align:center" },
+                                template: '<img src="@Url.Content("~/Administration/Content/images/")active-#=Published#.gif" />'
+                            },{
+                                field: "Id",
+                                title: "@T("Admin.Common.Edit")",
+                                width: 100,
+                                template: '<a href="Edit/#=Id#">@T("Admin.Common.Edit")</a>'
+                            }]
+                        });
+                    });
+                </script>
+            </td>
+        </tr>
+    </table>*@

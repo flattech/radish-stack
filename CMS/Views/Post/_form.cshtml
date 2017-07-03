@@ -1,0 +1,82 @@
+﻿
+@model CMS.Models.PostForm
+@Html.AntiForgeryToken()
+@{ var area = Site.AreaName;}
+<div>
+   @Html.MetronicBackButton(Url.Action("Index", "Post",new{posttypeid=Model.PostType.Id}))
+</div>
+<div class="margin-bottom-10"> </div>
+<div class="row">
+    <div class="col-md-9">
+        <div class="form-body">
+            <div class="form-group">
+                <input class="form-control" placeholder="@AppResources.Instance.Get("EnterTitleHere")" id="Title" name="Title" type="text" value="@Model.Title">
+            </div>
+            <div class="panel-group accordion" id="accordiondetails">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a class="accordion-toggle accordion-toggle-styled " data-toggle="collapse" data-parent="#accordiondetails" href="#collapse_details">
+                                @AppResources.Instance.Get("Details")
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapse_details" class="panel-collapse collapse in ">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                @Html.HiddenFor(x => x.PostTypeId)
+                                @Html.HiddenFor(x => x.Id)
+                                @Html.EditorFor(model => model.Detail, "RichEditor")
+                                @if (!string.IsNullOrEmpty(Model.PostType.PostMetaFields))
+                                {
+                                    for (int i = 0; i < Model.PostFields.Count; i++)
+                                    {
+                                        <div class="form-group">
+                                            <label class="">@Model.PostFields[i].Key</label>
+                                            @Html.TextBox("PostFields[" + @i + "].PostMetaValues[" + Model.PostFields[i].Key + "]", Model.PostFields[i].Value, new { @class = "form-control" })
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            @Html.Partial("_form.Widgets2")
+        </div>
+        @if (Model.PostType.EnableViewPath)
+        {
+            <div class="form-group">
+                <input class="form-control" placeholder="Enter View Path here" id="ViewPath" name="ViewPath" type="text" value="@Model.ViewPath">
+            </div>
+        }
+    </div>
+    <div class="col-md-3">
+      @Html.Partial("_form.Sidebar")
+    </div>
+</div>
+
+
+@if (Request.IsAjaxRequest())
+{
+    <script>
+        Metronic.handleSelect2();
+    </script>
+}
+
+<style>
+    /*.ui-sortable-helper {
+       width: 400px !important;
+    }*/
+    .ui-sortable-placeholder {
+        background-color: yellow;
+        min-height: 65px;
+    }
+
+    .ko_container {
+        min-height: 43px;
+        /*padding-bottom: 10px;*/
+    }
+</style>

@@ -1,0 +1,87 @@
+﻿<div class="page-sidebar-wrapper">
+    <div class="page-sidebar navbar-collapse collapse">
+        <ul class="page-sidebar-menu" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
+            <li class="sidebar-toggler-wrapper">
+                <div class="sidebar-toggler">
+                </div>
+            </li>
+            <li class="sidebar-search-wrapper">
+                <form class="sidebar-search " action="/" method="POST">
+                    <a href="javascript:;" class="remove">
+                        <i class="icon-close"></i>
+                    </a>
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search...">
+                        <span class="input-group-btn">
+                            <a href="javascript:;" class="btn submit"><i class="icon-magnifier"></i></a>
+                        </span>
+                    </div>
+                </form>
+            </li>
+            <li class="start  sidemenuli @(ViewBag.Current == "Home" ? "active" : "")">
+                <a href="@Url.Action("Index", "Home")" class="sidemenu mainlevel">
+                    <i class="icon-screen-desktop"></i>
+                    <span class="title"> @AppResources.Instance.Get("Home") </span>
+                    @if (ViewBag.Current == "Home")
+                   {
+                <span class="selected"></span>
+                   }
+                </a>
+            </li>
+            @Html.Action("SideBarMenu", "Common")
+            <li class="sidemenuli @(ViewBag.Current == "Widget"  ? "active" : "")">
+                <a href="@Url.Action("Index", "Widget")" class="sidemenu mainlevel ">
+                    <i class="icon-wrench"></i> <span class="title">@AppResources.Instance.Get("Widgets") </span>
+                    @if (ViewBag.Current == "Widget")
+                    {
+                        <span class="selected"></span>
+                    }
+                </a>
+            </li>
+            
+            @if (ViewBag.IsAdmin)
+            {
+
+                <li class="sidemenuli @(ViewBag.CurrentSection == "Admin" ? "active" : "")">
+                    <a href="javascript:;" class="sidemenu mainlevel">
+                        <i class="icon-settings"></i>
+                        <span class="title">@AppResources.Instance.Get("Admin")</span>
+                        @if (ViewBag.Current == "Admin")
+                        {
+                            <span class="selected"></span>
+                        }
+                        <span class="arrow "></span>
+                    </a>
+                    <ul class="sub-menu">
+                        <li class="sidemenuli">
+                            <a href="@Url.Action("Index", "PostType")" class="sidemenu">
+                                <span class="title">@AppResources.Instance.Get("PostTypes")</span>
+                            </a>
+                        </li>
+                        @*<li class="sidemenuli">
+                            <a href="@Url.Action("Index", "MenuItem")" class="sidemenu ">
+                                <span class="title">@AppResources.Instance.Get("Menu")</span>
+                            </a>
+                        </li>*@
+
+                        <li class="sidemenuli @(ViewBag.Current == "User" ? "active" : "")">
+                            <a href="@Url.Action("Index", "User")" class="sidemenu">
+                                <span class="title">@AppResources.Instance.Get("Users")</span>
+                            </a>
+                        </li>
+                        @*<li class="sidemenuli @(ViewBag.Current == "ActivityLogging" ? "active" : "")">
+                            <a href="@Url.Action("Index", "ActivityLogging")" class="sidemenu">
+                                <span class="title">Activity Log</span>
+                            </a>
+                        </li>
+                        <li class="sidemenuli @(ViewBag.Current == "Logging" ? "active" : "")">
+                            <a href="@Url.Action("Index", "Logging")" class="sidemenu">
+                                <span class="title">System Log</span>
+                            </a>
+                        </li>*@
+                    </ul>
+                </li>
+            }
+        </ul>
+    </div>
+</div>

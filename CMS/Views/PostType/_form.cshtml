@@ -1,0 +1,106 @@
+﻿@model Core.Repositories.PostType
+@Html.AntiForgeryToken()
+<div class="form-body">
+    <div class="form-group">
+        <label class="control-label col-md-3" for="Title">Title</label>
+        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.CreationDate)
+        <div class="col-md-9">
+            @Html.MetronicTextBoxFor(model => model.Title)
+            @Html.ValidationMessageFor(model => model.Title)
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.MetronicLabelFor(model => model.ViewPath)
+        <div class="col-md-9">
+            @Html.MetronicTextBoxFor(model => model.ViewPath)
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.MetronicLabelFor(model => model.TermViewPath)
+        <div class="col-md-9">
+            @Html.MetronicTextBoxFor(model => model.TermViewPath)
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.MetronicLabelFor(model => model.IsActive)
+        <div class="col-md-9">
+            @Html.CheckBoxFor(model => model.IsActive)
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.MetronicLabelFor(model => model.EnableCategories)
+        <div class="col-md-9">
+            @Html.CheckBoxFor(model => model.EnableCategories)
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.MetronicLabelFor(model => model.EnableSummary)
+        <div class="col-md-9">
+            @Html.CheckBoxFor(model => model.EnableSummary)
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.MetronicLabelFor(model => model.EnableDescription)
+        <div class="col-md-9">
+            @Html.CheckBoxFor(model => model.EnableDescription)
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.MetronicLabelFor(model => model.EnableTags)
+        <div class="col-md-9">
+            @Html.CheckBoxFor(model => model.EnableTags)
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.MetronicLabelFor(model => model.EnableFeatureImage)
+        <div class="col-md-9">
+            @Html.CheckBoxFor(model => model.EnableFeatureImage)
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.MetronicLabelFor(model => model.EnableGallery)
+        <div class="col-md-9">
+            @Html.CheckBoxFor(model => model.EnableGallery)
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.MetronicLabelFor(model => model.EnableWidgets)
+        <div class="col-md-9">
+            @Html.CheckBoxFor(model => model.EnableWidgets)
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.MetronicLabelFor(model => model.EnableViewPath)
+        <div class="col-md-9">
+            @Html.CheckBoxFor(model => model.EnableViewPath)
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.MetronicLabelFor(model => model.EnableSummary)
+        <div class="col-md-9">
+            @Html.CheckBoxFor(model => model.EnableSummary)
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.MetronicLabelFor(model => model.DisplayOrder)
+        <div class="col-md-9">
+            @Html.MetronicTextBoxFor(model => model.DisplayOrder)
+        </div>
+    </div><div class="form-group">
+    @Html.MetronicLabelFor(model => model.Icon)
+    <div class="col-md-9">
+        @Html.MetronicTextBoxFor(model => model.Icon)
+    </div>
+</div>
+</div>
+<div class="form-actions fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-offset-3 col-md-9">
+                @Html.MetronicBackButton(Url.Action("Index", "PostType"))
+                @Html.MetronicSaveButton()
+            </div>
+        </div>
+    </div>
+</div>

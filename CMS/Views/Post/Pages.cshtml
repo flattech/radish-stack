@@ -1,0 +1,57 @@
+﻿@*@using Core.Repositories.Enums
+@model IEnumerable<Infrastructure.Model.Post>
+<div class="row">
+    <div class="col-md-12">
+        <h3 class="page-title">
+            <small></small>
+           الصفحات
+        </h3>
+        <div class="page-bar">
+            <ul class="page-breadcrumb">
+                <li>
+                    <i class="fa fa-home"></i>
+                    <a href="@Url.Action("Index", "Home")">الرئيسية</a>
+                    <i class="fa fa-angle-right"></i>
+                </li>
+                <li><a href="@Url.Action("Index", "Post")"> الصفحات</a></li>
+            </ul>
+        </div>
+
+    </div>
+</div>
+
+@Html.AlertMessage()
+<div class="row">
+    <div class="col-md-12">
+   
+                <div class="table-toolbar">
+                    <div class="btn-group">
+                        <div>
+                            @Html.MetronicLink(Url.Action("Create", new { type=(int)PostTypeEnum.Page }), "صفحة جديدة", "plus", "green")
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-bordered table-striped table-condensed flip-content">
+                    <thead class="flip-content">
+                        <tr>
+                            <th>العنوان</th>
+                            <th>التاريخ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <a href="@Url.Action("Edit", new {id = item.Id})">@item.Title</a>
+                                </td>
+                                <td width="150">@item.CreationDate.ToString("yyyy-MM-dd")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            
+
+    </div>
+</div>*@
+

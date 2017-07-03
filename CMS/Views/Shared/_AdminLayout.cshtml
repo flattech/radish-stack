@@ -1,0 +1,67 @@
+﻿@if (!Request.IsAjaxRequest())
+{
+    <text><!DOCTYPE html>
+    </text>
+
+    <html dir="ltr" lang="en">
+
+    <head>
+        <meta charset="utf-8" />
+        <title>Radish Stack</title>
+
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+
+        <!-- BEGIN GLOBAL MANDATORY STYLES -->
+        @*<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />*@
+        @Html.Partial("_css")
+        @Html.Partial("_js")
+        <link rel="shortcut icon" href="/favicon.ico" />
+    </head>
+    <body class="page-header-fixed @(ViewBag.NewDesign != null && ViewBag.NewDesign ? "page-container-bg-solid" : "")">
+        <div class="page-spinner-bar" id="headerloader" style="display: none">
+            <div class="bounce1"></div>
+            <div class="bounce2"></div>
+            <div class="bounce3"></div>
+        </div>
+
+        @Html.Partial("_header")
+
+        <div class="clearfix"></div>
+        <div class="page-container">
+            @Html.Partial("_sidebar")
+            <div class="page-content-wrapper">
+                <div class="page-content">
+                    @RenderBody()
+                </div>
+            </div>
+            @Html.Partial("_sidebar_right")
+        </div>
+        @Html.Partial("_footer")
+        @Html.Partial("_ifIE")
+    </body>
+</html>
+}
+else
+{
+    @RenderBody()
+}
+@if (ViewBag.CurrentPageJsHandler != null)
+{
+    <script>
+        $(function() {
+            window.back.pages.initialize();
+            window.back.currentPage = @ViewBag.CurrentPageJsHandler;
+            window.back.currentPage.init(@ViewBag.CurrentPageJsHandlerData);
+        });
+    </script>
+}
+else
+{
+    <script>
+        $(function() {
+            window.back.pages.initialize();
+        });
+    </script>
+}

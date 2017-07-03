@@ -1,0 +1,25 @@
+﻿@*@model Kode.Web.Models.PageViewModel.WidgetViewModel
+
+@if (Model != null && Model.Posts.Any())
+{
+    foreach (var p in Model.Posts.OrderBy(x => x.DisplayOrder))
+    { <div class="post-preview">
+        <a href="@Url.RouteUrl("Post", new {SeName = p.SeName})">
+            <h2 class="post-title">
+                @p.Title
+            </h2>
+            <h3 class="post-subtitle">
+                @p.ShortDescription
+            </h3>
+        </a>
+        <p class="post-meta">@T("PostedOn")  @p.CreationDate.ToString("yyyy-MM-dd")</p>
+    </div>
+    <hr>
+    }
+    <ul class="pager">
+        <li class="next">
+            <a href="#">@T("OlderPosts")  &rarr;</a>
+        </li>
+    </ul>
+}*@
+

@@ -1,0 +1,80 @@
+﻿@using System.Configuration
+@using CMS
+@using Mentis.AlRassoul.CMS.Models.Localization
+@using Mentis.AlRassoul.Core.Domain.Posts
+@{
+    var area = Site.EnableArea ? "/admin" : "";
+    var frontlink = ConfigurationManager.AppSettings["FrontUrl"];
+}
+<script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.min.js"></script>
+<div class="row">
+    <div class="col-md-12">
+        <h3 class="page-title" data-url="@Url.Action("Index", "Logging")">
+            <small></small>
+            Logging
+        </h3>
+    </div>
+</div>
+@Html.AlertMessage()
+<div class="row">
+    <div class="col-md-12">
+        <div class="k-rtl">
+            <script type="text/x-kendo-template" id="template">
+                <div id="details-container" style="direction:ltr;">
+                    #= FullMessage #
+                </div>
+            </script>
+            <script type="text/javascript">
+                var detailsTemplate = kendo.template($("#template").html());
+
+                function showDetailslog(e) {
+                    e.preventDefault();
+
+                    var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+                    var wnd = $("#Details").data("kendoWindow");
+
+                    wnd.content(detailsTemplate(dataItem));
+                    wnd.center().open();
+                }
+            </script>
+            <div class="margin-bottom-10">
+                <a href="@Url.Action("ClearAll")" class="btn btn-danger">Clear</a>
+            </div>
+            @(Html.Kendo().Grid<LoggingController.LoggingView>()
+                  .Name("grid")
+                  .ToolBar(tools => tools.Excel())
+                  .Columns(columns =>
+                  {
+                      columns.Bound(p => p.Id).Visible(false);
+                      columns.Bound(p => p.CreationDate).Format("{0:MM/dd/yyyy}").Width(200);
+                      columns.Bound(p => p.ShortMessage);
+                      //columns.Bound(p => p.FullMessage);
+                      columns.Bound(p => p.IpAddress);
+                      columns.Bound(p => p.PageUrl);
+                      columns.Command(command => command.Custom("Details").Click("showDetailslog"));
+                  })
+                  .Filterable()
+                  .Pageable(pageable => pageable
+                      .Refresh(true)
+                      .PageSizes(true)
+                      .ButtonCount(10))
+                  .Sortable()
+                  .Scrollable(s => s.Height("auto"))
+                  .DataSource(dataSource => dataSource
+                      .Ajax()
+                      .Sort(sort => sort.Add("Id").Descending()) //
+                      .PageSize(10)
+                      .Read(read => read.Action("Read", "Logging"))
+                  ))
+            @(Html.Kendo().Window().Name("Details")
+                  .Title("Log Details")
+                  .Visible(false)
+                  .Modal(true)
+                  .Draggable(true)
+                  .Width(500)
+                  )
+
+
+        </div>
+    </div>
+</div>

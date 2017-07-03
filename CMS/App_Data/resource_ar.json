@@ -1,0 +1,159 @@
+﻿[
+    {
+        "Key": "Home",
+        "Value": "الرئيسية"
+    },
+    {
+        "Key": "PostTypes",
+        "Value": "أنواع المنشورات"
+    },
+    {
+        "Key": "HelloInYourCMS",
+        "Value": "مرحبا في إدارة الموقع"
+    },
+    {
+        "Key": "Pages",
+        "Value": "الصفحات"
+    },
+    {
+        "Key": "News",
+        "Value": "الأخبار"
+    },
+    {
+        "Key": "Widgets",
+        "Value": "التطبيقات"
+    },
+    {
+        "Key": "Admin",
+        "Value": "الإدارة"
+    },
+    {
+        "Key": "Users",
+        "Value": "المستخدمين"
+    },
+    {
+        "Key": "Create",
+        "Value": "جديد"
+    },
+    {
+        "Key": "Edit",
+        "Value": "تعديل"
+    },
+    {
+        "Key": "Delete",
+        "Value": "حذف"
+    },
+    {
+        "Key": "Save",
+        "Value": "حفظ"
+    },
+    {
+        "Key": "Category",
+        "Value": "الفئة"
+    },
+    {
+        "Key": "Categories",
+        "Value": "الفئات"
+    },
+    {
+        "Key": "Tags",
+        "Value": "التعريفات"
+    },
+    {
+        "Key": "Tag",
+        "Value": "التعريف"
+    },
+    {
+        "Key": "All",
+        "Value": "الكل"
+    },
+    {
+        "Key": "AddNew",
+        "Value": "إضافة جديد"
+    },
+    {
+        "Key": "Photo",
+        "Value": "الصورة"
+    },
+    {
+        "Key": "Title",
+        "Value": "العنوان"
+    },
+    {
+        "Key": "Date",
+        "Value": "التاريخ"
+    },
+    {
+        "Key": "Search",
+        "Value": "بحث"
+    },
+    {
+        "Key": "ThereAreNoItems",
+        "Value": "لا يوجد معلومات"
+    },
+    {
+        "Key": "Menu",
+        "Value": "الائحة"
+    }
+    ,
+    {
+        "Key": "Refresh",
+        "Value": "تحديث"
+    }
+    ,
+    {
+        "Key": "LogOff",
+        "Value": "تسجيل الخروج"
+    },
+    {
+        "Key": "DisplayOrder",
+        "Value": "الترتيب"
+    }
+    ,
+    {
+        "Key": "Back",
+        "Value": "رجوع"
+    }
+    ,
+    {
+        "Key": "Publishing",
+        "Value": "النشر"
+    }
+    ,
+    {
+        "Key": "FeaturedImage",
+        "Value": "الصورة الرئيسية"
+    }
+    ,
+    {
+        "Key": "Upload",
+        "Value": "تحميل"
+    },
+    {
+        "Key": "Details",
+        "Value": "التفاصيل"
+    }
+    ,
+    {
+        "Key": "AddNewCategory",
+        "Value": "إضافة فئة جديدة"
+    },
+    {
+        "Key": "Drop",
+        "Value": "وضع"
+    }
+    ,
+    {
+        "Key": "Upload",
+        "Value": "تحميل"
+    }
+    ,
+    {
+        "Key": "Remove",
+        "Value": "حذف"
+    },
+    {
+        "Key": "EnterTitleHere",
+        "Value": "العنوان"
+    }
+]

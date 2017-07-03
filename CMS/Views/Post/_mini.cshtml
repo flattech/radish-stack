@@ -1,0 +1,37 @@
+﻿@using CMS
+@model List<Core.Repositories.Post>
+    @{ var area = Site.AreaName;}
+    <div style="height: 500px;overflow-y: scroll">
+
+
+        <table class="table table-striped table-hover table-bordered" id="search_results">
+            <thead class="flip-content">
+                <tr>
+                    <th></th>
+                    <th>@AppResources.Instance.Get("Title")</th>
+                    <th>@AppResources.Instance.Get("Date")</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td><input type="checkbox" data-itemid="@item.Id" data-itemtitle="@item.Title" data-itemimage="@(item.Photo)" /></td>
+                        <td>
+                            <div style="margin-bottom: 10px">@item.Title</div>
+                            @if (!string.IsNullOrEmpty(item.Photo))
+                            {
+                                <img src="@(item.Photo)" width="64" height="64" />
+                            }
+                        </td>
+                        <td width="150">@item.CreationDate.ToString("yyyy-MM-dd")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <script>
+            Metronic.initUniform();
+
+        </script>
+    </div>

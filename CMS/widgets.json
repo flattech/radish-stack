@@ -1,0 +1,42 @@
+{
+    "rows": [
+        {
+            "cols": [
+                {
+                    "lg": 12,
+                    "text": "c0",
+                    "rows": [ ],
+                    "widgets": [ { "title": "slider" } ]
+                }
+            ]
+        },
+        {
+            "cols": [
+
+                {
+                    "lg": 9,
+                    "text": "c1.1",
+                    "rows": [ ],
+                    "widgets": [ { "title": "posts" } ]
+                },
+                {
+                    "lg": 3,
+                    "text": "c1.2",
+                    "rows": [ ],
+                    "widgets": [ { "title": "recommend" } ]
+                }
+            ]
+        },
+        {
+            "cols": [
+                
+                {
+                    "lg": 12,
+                    "text": "c2",
+                    "rows": [ ],
+                    "widgets": [ { "title": "footer" } ]
+                }
+            ]
+        }
+    ]
+}

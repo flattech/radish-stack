@@ -1,0 +1,52 @@
+﻿@model CMS.Controllers.MenuItemController.MenuItemViewModel
+
+<div class="row">
+    <div class="col-md-12">
+        <h3 class="page-title">
+            <small></small>
+         Menu
+        </h3>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        @Html.AlertMessage()
+        @Html.MetronicLink(Url.Action("Create", "MenuItem"), "جديد", "plus", "btn-success", "")
+        <div class="margin-bottom-10"> </div>
+        @if (Model.List != null && Model.List.Any())
+        {
+            <table class="table table-bordered table-striped table-condensed flip-content">
+                <thead class="flip-content">
+                    <tr>
+                        <th>
+                            العنوان
+                        </th>
+                        <th>
+                            
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.List)
+                    {
+                        <tr>
+                            <td>
+                                <a style="font-size: 16px;" href="@Url.Action("Edit", new { id = item.Id})">
+                                    <i class="fa fa-edit"></i> @item.Title
+                                </a>
+                            </td>
+                            <td></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="alert alert-info">
+                <strong>لا يوجد معلومات</strong>
+            </div>
+        }
+    </div>
+</div>

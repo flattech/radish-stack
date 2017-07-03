@@ -1,0 +1,100 @@
+﻿@using Nop.Core
+@using Nop.Core.Domain
+@using Nop.Core.Infrastructure
+@model Web.Models.TopMenuModel
+
+@{ var currentlang = EngineContext.Current.Resolve<IWorkContext>().WorkingLanguage.UniqueSeoCode;
+
+    //logo path
+    var settings = EngineContext.Current.Resolve<StoreInformationSettings>();
+
+}
+
+<footer id="footer" class="light">
+    <div class="container">
+        <div class="row">
+            <div class="widgetscontainer">
+
+
+                <div class="col-md-3">
+                    <div class="footer-widget">
+                        <h4 style="font-size: 20px"><span>@T("Alrrasoul")</span></h4>
+                        <ul class="footer-nav list-unstyled clearfix">
+                            @foreach (var menu in Model.Categories)
+                            {
+                                <li><a href="@Url.RouteUrl("Post", new {menu.SeName})"><i class="fa fa-long-arrow-right"></i>@menu.Name</a></li>
+                            }
+                            @*<li><a href="@Url.RouteUrl("AboutUS")"><i class="fa fa-long-arrow-right"></i>@T("AboutUS")</a></li>
+                                <li><a href="@Url.RouteUrl("ContactUs")"><i class="fa fa-long-arrow-right"></i>@T("ContactUs")</a></li>*@
+                            @*<li><a href="@Url.RouteUrl("SiteMap")"><i class="fa fa-long-arrow-right"></i>@T("SiteMap")</a></li>*@
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="footer-widget">
+                        <h4><span>@T("Newsletter")</span></h4>
+                        <div class="newsletter clearfix">
+                            <i class="fa fa-envelope"></i>
+                            <p class="newsletter-text">
+                                @T("Newsletter.Message")
+                            </p>
+                            <div class="error" id="error_news" style="display: none;"></div>
+                            <div class="success" id="message-news" style="display: none;">@T("NewsLetter.Successfull")</div>
+                            <form name="newsletter_form" id="newsletter_form" method="post" action="/@currentlang/common/SubmitNewsLetter" onsubmit=" return false ">
+                                <input type="text" name="Name" id="news_name" placeholder="@T("Address.Fields.Name")" onkeypress=" removeChecksnewsletter(); ">
+                                <input type="email" name="Email" id="news_email_address" placeholder="@T("Address.Fields.Email")" onkeypress=" removeChecksnewsletter(); ">
+                                <input type="submit" value="@T("Newsletter.SubscribeButton")" class="btn btn-default btn-rounded" onclick="validateNewsletter('@currentlang'); ">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="footer-widget">
+                        <h4><span>@T("ContactUs")</span></h4>
+                        <p>@T("Alrrasoul")</p>
+                        <div class="contact-widget">
+                            <i class="fa fa-home"></i>
+                            <p>@T("Alrrasoul.Address")</p>
+                            <i class="fa fa-mobile"></i>
+                            <p class="phone-number">(+961) 1 456456</p>
+                            <i class="fa fa-mobile"></i>
+                            <p class="phone-number">(+961) 1 452700</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="footer-widget ">
+                        <h4><span>@T("GetInTouch")</span></h4>
+                        <div class="contact-info">
+
+
+                            <div class="social-widget">
+                                <a href="@settings.FacebookLink">
+                                    <div class="socialbox">
+                                        <i class="medicom-face"></i>
+                                    </div>
+                                </a>
+
+                                <a href="@settings.TwitterLink">
+                                    <div class="socialbox">
+                                        <i class="medicom-tweet"></i>
+                                    </div>
+                                </a>
+                                <a href="@settings.YoutubeLink">
+                                    <div class="socialbox">
+                                        <i class="medicom-youtube"></i>
+                                    </div>
+                                </a>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p class="copyright text-center">@T("Content.CopyrightNotice", DateTime.Now.Year, T("Alrrasoul"))</p>
+
+</footer>
