@@ -8,8 +8,6 @@ namespace Web.Extentions
 {
     public static class HtmlExtensions
     {
-
-
         //we have two pagers:
         //The first one can have custom routes
         //The second one just adds query string parameter
