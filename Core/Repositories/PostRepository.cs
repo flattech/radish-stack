@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Core.Repositories.Enums;
 
 namespace Core.Repositories
 {
@@ -15,18 +16,27 @@ namespace Core.Repositories
 
         public IEnumerable<Post> GetByIds(Guid[] postids, bool b)
         {
-           return GetAll(1000, 1, string.Format(" Id in ('{0}')",string.Join("','", postids)));
+            return GetAll(1000, 1, string.Format(" Id in ('{0}')", string.Join("','", postids)));
         }
-       public Post GetObject(Guid id)
+
+        public Post GetPage(Guid id)
+        {
+            var post = Get(id);
+            if (string.IsNullOrEmpty(post.Widgets))
+                post.PostWidgets = Newtonsoft.Json.JsonConvert.DeserializeObject<List<PostWidget>>(post.Widgets);
+            return post;
+        }
+
+        public Post GetObject(Guid id)
         {
             var p = "Select * from Post where Id=@Id and Status!=-100;";
             var pt = "Select * From PostTerm WHERE PostId=@Id and Status!=-100;";
             var t = "Select t.Id,t.Title,t.TaxonomyId From Term t inner join PostTerm pt on t.id=pt.TermId WHERE  " +
                     " pt.Status!=-100 and pt.PostId=@Id ;";
-            using (var results = QueryMultiple(t+pt + p, new { id }))
+            using (var results = QueryMultiple(t + pt + p, new { id }))
             {
                 var terms = results.Read<Term>().ToList();
-                var postterms = results.Read<PostTerm>().Select(x=>Map(x,terms)).ToList();
+                var postterms = results.Read<PostTerm>().Select(x => Map(x, terms)).ToList();
                 var post = results.Read<Post>().SingleOrDefault();
                 if (post != null)
                 {
@@ -37,7 +47,7 @@ namespace Core.Repositories
             }
         }
 
-        private PostTerm Map(PostTerm pt,List<Term> terms )
+        private PostTerm Map(PostTerm pt, List<Term> terms)
         {
             pt.Term = terms.SingleOrDefault(x => x.Id == pt.TermId);
             return pt;
@@ -46,7 +56,52 @@ namespace Core.Repositories
         {
             throw new NotImplementedException();
         }
-      
+
+
+        public IList<Post> GetByType(Guid posttypeid, bool published, bool random, bool postOrder, int size = 12)
+        {
+            var query = "Select * Post Where PostTypeId =" + posttypeid + "or PostTypeId =0 ";
+            if (published)
+                query += "and status =" + (int)PostSatusEnum.Published + " ";
+            if (postOrder)
+            {
+                query += "Order by Asc ";
+            }
+            //else if (random)
+            //{
+            //    query = "Order by Asc";
+
+            //    query = query.OrderBy(x => Guid.NewGuid());
+            //}
+            else
+            {
+                query += "Order by CreationDate Desc ";
+            }
+
+            query += "";
+
+            using (var results = QueryMultiple(query))
+            {
+                var terms = results.Read<Post>().ToList();
+                //var postterms = results.Read<PostTerm>().Select(x => Map(x, terms)).ToList();
+                //var post = results.Read<Post>().SingleOrDefault();
+                //if (post != null)
+                //{
+                //    post.PostTerms = postterms;
+                //    return post;
+                //}
+                return null;
+            }
+
+
+            //return
+            //    query.Where(x => x.PostTypeId == type || type == 0)
+            //        //.IncludeProperties(x => x.FeaturedImage)
+            //        .IncludeProperties(x => x.PostType)
+            //        .IncludeProperties(x => x.PostTerms.Select(z => z.Term)).
+            //       Take(size).ToList();
+        }
+
 
         public IQueryable<Post> GetForGrid(int posttypeid, bool b, int termid)
         {
@@ -120,13 +175,13 @@ namespace Core.Repositories
         public string MetaValue { get; set; }
         public Post Post { get; set; }
     }
-    public class PostTerm:BaseModel
+    public class PostTerm : BaseModel
     {
         public Guid PostId { get; set; }
         public Guid TermId { get; set; }
         public int DisplayOrder { get; set; }
-        public  Term Term { get; set; }
-        public  Post Post { get; set; }
+        public Term Term { get; set; }
+        public Post Post { get; set; }
     }
-  
+
 }
