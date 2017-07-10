@@ -5,9 +5,9 @@
 
 
 @*@model Kode.Web.Models.PostDetailsModel
-@{
-    Html.AddTitleParts(T("HomePage").ToString());
-}*@
+    @{
+        Html.AddTitleParts(T("HomePage").ToString());
+    }*@
 
 
 <header class="intro-header" style="background-image: url('/Themes/DefaultClean/Content/img/home-bg.jpg')">
@@ -15,27 +15,37 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <div class="site-heading">
-                    <h1>@Model.Title </h1>
+                    <h1>@Model.title </h1>
                     <hr class="small">
-                    <span class="subheading">@Model.ShortDescription</span>
+                    <span class="subheading">@Model.shortDescription</span>
                 </div>
             </div>
         </div>
     </div>
 </header>
 <!-- Main Content -->
-<div class="container">
+@*<div class="container">
     <div class="row">
         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
             @Html.Partial("~/Themes/DefaultClean/Views/Shared/_Widgets.cshtml")
         </div>
     </div>
-</div>
+</div>*@
 
-@if (Model.Widgets != null && Model.Widgets.Any())
+@if (Model.rows != null && Model.rows.Any())
 {
-    foreach (var widget in Model.Widgets)
+    foreach (var rows in Model.rows)
     {
-            @Html.Partial( widget.ViewPath, widget)
+        <div class="row">
+            @foreach (var col in rows.cols)
+            {
+                <div class="col-lg-@(col.lg)">
+                    @foreach (var widget in col.widgets)
+                    {
+                        @Html.Partial(widget.viewPath, widget)
+                    }
+                </div>
+            }
+        </div>
     }
 }

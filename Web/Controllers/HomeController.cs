@@ -16,9 +16,9 @@ namespace Web.Controllers
 
             var model = new PageViewModel
             {
-                Widgets = FillWidgetsDatasource(page)
+                rows = FillWidgetsDatasource(page)
             };
-
+            //var model = FillWidgetsDatasource(page);
             return View(model);
         }
     }

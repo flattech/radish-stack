@@ -1,45 +1,84 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Core.Repositories;
 
 namespace Web.Models
 {
-    public partial class PageViewModel
+    public class PageViewModel
     {
         public PageViewModel()
         {
-            PictureModel = new Media();
-            Widgets = new List<WidgetViewModel>();
+            pictureModel = new Media();
+            rows = new List<RowViewModel>();
         }
 
-        public string Title { get; set; }
-        public string ShortDescription { get; set; }
-        public string FullDescription { get; set; }
-        public string TemplateViewPath { get; set; }
-        public string MetaKeywords { get; set; }
-        public string MetaDescription { get; set; }
-        public string MetaTitle { get; set; }
-        public string SeName { get; set; }
-        public Media PictureModel { get; set; }
-        public string FeaturedImage { get; set; }
-        public List<WidgetViewModel> Widgets { get; set; }
+        public string title { get; set; }
+        public string shortDescription { get; set; }
+        public string fullDescription { get; set; }
+        public string templateViewPath { get; set; }
+        public string metaKeywords { get; set; }
+        public string metaDescription { get; set; }
+        public string metaTitle { get; set; }
+        public string seName { get; set; }
+        public Media pictureModel { get; set; }
+        public string featuredImage { get; set; }
+        public List<RowViewModel> rows { get; set; }
+
+
 
         #region Nested Classes
 
-        public partial class WidgetViewModel
+        //public class RowsViewModel
+        //{
+        //    public RowsViewModel()
+        //    {
+        //        rows = new List<RowViewModel>();
+        //    }
+        //    public List<RowViewModel> rows { get; set; }
+        //}
+
+        public class RowViewModel
+        {
+            public RowViewModel()
+            {
+                cols = new List<ColViewModel>();
+            }
+            public List<ColViewModel> cols { get; set; }
+        }
+
+
+        public class ColViewModel
+        {
+
+            public ColViewModel()
+            {
+                rows = new List<RowViewModel>();
+                widgets = new List<WidgetViewModel>();
+            }
+            public string lg { get; set; }
+            public string text { get; set; }
+            public List<RowViewModel> rows { get; set; }
+            public List<WidgetViewModel> widgets { get; set; }
+        }
+
+
+        public class WidgetViewModel
         {
             public WidgetViewModel()
             {
-                Posts = new List<PostDetailsModel>();
+                posts = new List<PostDetailsModel>();
             }
-            public string Title { get; set; }
-            public int Location { get; set; }
-            public string MoreUrl { get; set; }
-            public string ViewPath { get; set; }
-            public List<PostDetailsModel> Posts { get; set; }
-            public List<TermModel> Categories { get; set; }
-            public List<TermModel> Tags { get; set; }
-            public bool ReturnPosts { get; set; }
-            public bool ReturnCategories { get; set; }
+
+            public Guid widgetid { get; set; }
+            public string title { get; set; }
+            public int location { get; set; }
+            public string moreUrl { get; set; }
+            public string viewPath { get; set; }
+            public List<PostDetailsModel> posts { get; set; }
+            public List<TermModel> categories { get; set; }
+            public List<TermModel> tags { get; set; }
+            public bool returnPosts { get; set; }
+            public bool returnCategories { get; set; }
         }
 
         #endregion

@@ -1,11 +1,11 @@
 ﻿@model Web.Models.PageViewModel.WidgetViewModel
-@if (Model != null && Model.Posts != null && Model.Posts.Count > 0)
+@if (Model != null && Model.posts != null && Model.posts.Count > 0)
 {
     <section class="">
         <div class="container">
-            <a class="widget-title" href="#">@Html.Raw(Model.Title)</a>
+            <a class="widget-title" href="#">@Html.Raw(Model.title)</a>
             <div id="" class="=">
-                @foreach (var post in Model.Posts.Take(3))
+                @foreach (var post in Model.posts.Take(3))
                 {
                     <div class="col-md-4 item blogeffect4-1 blind medicom-team nosocial  v blogeffect4">
                         <div class="team-thumb">

@@ -33,47 +33,79 @@ namespace Web.Controllers
         //    return new EmptyResult();
         //}
 
-        public List<PageViewModel.WidgetViewModel> FillWidgetsDatasource(Post p)
+        public List<PageViewModel.RowViewModel> FillWidgetsDatasource(Post p)
         {
             //return EngineContext.Current.Resolve<ICacheManager>().Get("Mentis.widgets",() =>
             //{
 
-            var descerializedwidgets = Newtonsoft.Json.JsonConvert.DeserializeObject<Rows>(p.Widgets);
-            var widgets = new List<PageViewModel.WidgetViewModel>();
+            var descerializedwidgets = Newtonsoft.Json.JsonConvert.DeserializeObject<PageViewModel>(p.Widgets);
+
+
+            //foreach (var w in p.PostWidgets.OrderBy(x => x.DisplayOrder))
+            var widgetmodel = new List<PageViewModel.RowViewModel>();
+
+            foreach (var r in descerializedwidgets.rows)
+            {
+                var generatedRow = GenerateRow(r);
+
+                if (generatedRow != null)
+                    widgetmodel.Add(generatedRow);
+
+            }
+            return widgetmodel;
+            //});
+        }
+
+        private PageViewModel.RowViewModel GenerateRow(PageViewModel.RowViewModel row)
+        {
             var _postrepository = Pool.Instance.Posts;
             var _widgetrepository = Pool.Instance.Widgets;
             var _termrepository = Pool.Instance.Terms;
 
-            //foreach (var w in p.PostWidgets.OrderBy(x => x.DisplayOrder))
-            foreach (var r in descerializedwidgets.rows)
+            var rowview = new PageViewModel.RowViewModel();
+
+            foreach (var col in row.cols)
             {
-                foreach (var col in r.cols)
+                var colview = new PageViewModel.ColViewModel();
+                colview.lg = col.lg;
+                colview.text = col.text;
+
+                colview.widgets = new List<PageViewModel.WidgetViewModel>();
+                if (col.rows.Any())
+                {
+                    foreach (var r in col.rows)
+                    {
+                        GenerateRow(r);
+                    }
+                }
+                else
                 {
                     foreach (var w in col.widgets)
                     {
-                        var widgetmodel = new PageViewModel.WidgetViewModel();
-
                         var model = _widgetrepository.Get(w.widgetid);
                         if (model == null)
                             continue;
 
-                        widgetmodel.Title = model.Title;
-                        widgetmodel.ViewPath = model.ViewPath;
+                        var widgetview = new PageViewModel.WidgetViewModel();
+
+                        widgetview.title = model.Title;
+                        widgetview.viewPath = model.ViewPath;
 
                         var posts = new List<Post>();
 
                         if (!string.IsNullOrEmpty(model.Posts))
                             posts = _postrepository.GetByIds(model.Posts.ToGuids(), true).ToList();
-                        else if (!string.IsNullOrEmpty(model.PostType))
-                            posts =
-                                _postrepository.GetByType(Guid.Parse(model.PostType), true, false, false,
-                                    descerializedwidgets.PostCount == 0 ? 12 : model.PostCount).ToList();
+                        //else if (!string.IsNullOrEmpty(model.PostType))
+                        //    posts =
+                        //        _postrepository.GetByType(Guid.Parse(model.PostType), true, false, false,
+                        //            descerializedwidgets.PostCount == 0 ? 12 : model.PostCount).ToList();
                         else if (!string.IsNullOrEmpty(model.Categories))
                             posts = _postrepository.GetByIds(model.Categories.ToGuids(), true).ToList();
                         else if (!string.IsNullOrEmpty(model.Tags))
                             posts = _postrepository.GetByIds(model.Tags.ToGuids(), true).ToList();
-                        widgetmodel.Posts = posts.Select(s => s.ToModel()).ToList();
+                        widgetview.posts = posts.Select(s => s.ToModel()).ToList();
 
+                        colview.widgets.Add(widgetview);
                         //if (w.Widget.ReturnCategories)
                         //{
                         //    var cats = new List<Term>();
@@ -94,12 +126,12 @@ namespace Web.Controllers
 
                         //    widgetmodel.Tags = tags.Select(s => s.ToModel()).ToList();
                         //}
-                        widgets.Add(widgetmodel);
+
                     }
+                    rowview.cols.Add(colview);
                 }
             }
-            return widgets;
-            //});
+            return rowview;
         }
 
     }
