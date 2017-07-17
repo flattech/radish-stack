@@ -43,6 +43,7 @@ namespace Web.Models
             {
                 cols = new List<ColViewModel>();
             }
+
             public List<ColViewModel> cols { get; set; }
         }
 
