@@ -65,6 +65,7 @@ namespace Web.Controllers
 
         private PageViewModel.RowViewModel GenerateRow(PageViewModel.RowViewModel row, PageViewModel.ColViewModel parent)
         {
+            
             var rowview = new PageViewModel.RowViewModel();
 
             foreach (var col in row.cols)
