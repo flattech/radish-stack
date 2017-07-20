@@ -50,7 +50,10 @@ namespace Web.Controllers
 
             foreach (var r in descerializedwidgets.rows)
             {
-                var generatedRow = GenerateRow(r, null);
+                if(r.cols==null || r.cols.Count==0)
+                    continue;
+
+                var generatedRow = GenerateRow(r);
 
                 if (generatedRow != null)
                     widgetmodel.Add(generatedRow);
@@ -63,23 +66,26 @@ namespace Web.Controllers
 
 
 
-        private PageViewModel.RowViewModel GenerateRow(PageViewModel.RowViewModel row, PageViewModel.ColViewModel parent)
+        private PageViewModel.RowViewModel GenerateRow(PageViewModel.RowViewModel row)
         {
             
             var rowview = new PageViewModel.RowViewModel();
 
             foreach (var col in row.cols)
             {
-                var colview = new PageViewModel.ColViewModel();
-                colview.lg = col.lg;
-                colview.text = col.text;
+                var colview = new PageViewModel.ColViewModel
+                {
+                    lg = col.lg,
+                    text = col.text
+                };
 
                 if (col.rows.Any())
                 {
                     foreach (var r in col.rows)
                     {
-                        rowview = r;
-                        GenerateRow(row, col);
+                        var rows = GenerateRow(r);
+                        if(rows!=null)
+                        colview.rows.Add(rows);
                     }
                 }
                 else
@@ -90,10 +96,12 @@ namespace Web.Controllers
                         if (model == null)
                             continue;
 
-                        var widgetview = new PageViewModel.WidgetViewModel();
+                        var widgetview = new PageViewModel.WidgetViewModel
+                        {
+                            title = model.Title,
+                            viewPath = model.ViewPath
+                        };
 
-                        widgetview.title = model.Title;
-                        widgetview.viewPath = model.ViewPath;
 
                         var posts = new List<Post>();
 
@@ -131,12 +139,8 @@ namespace Web.Controllers
                         //    widgetmodel.Tags = tags.Select(s => s.ToModel()).ToList();
                         //}
                     }
-
-                    rowview.cols.Add(colview);
-                    //var lastOrDefault = row.parent.rows.LastOrDefault();
-                    //lastOrDefault?.cols.Add(colview);
-
                 }
+                rowview.cols.Add(colview);
             }
             return rowview;
         }

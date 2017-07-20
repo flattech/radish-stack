@@ -1,12 +1,54 @@
-﻿@model Web.Models.PageViewModel
+﻿@using Web.Models
+@model PageViewModel
 @{
     Layout = "~/Views/Shared/_Root.cshtml";
+}
+
+@helper RenderRow(PageViewModel.RowViewModel row)
+{
+if (row.cols != null && row.cols.Any())
+{
+    var htmlrow = "<div class=\"row " + row.cssclass + "\">";
+    var htmlrowclose = "</div>";
+    var isrowopened = false;
+
+    foreach (var col in row.cols)
+    {
+        if (!isrowopened)
+        {
+            isrowopened = true;
+                @Html.Raw(htmlrow)
+        }
+            <div class="col-lg-@(col.lg) @col.cssclass">
+                @if (col.rows.Any())
+                {
+                foreach (var colrow in col.rows)
+                {
+                @RenderRow(colrow)
+                }
+                }
+                else {
+
+                foreach (var widget in col.widgets)
+                {
+                    @Html.Partial(widget.viewPath, widget)
+                }
+
+                }
+            </div>
+    }
+    if (isrowopened)
+    {
+            @Html.Raw(htmlrowclose)
+    }
+
+}
 }
 
 
 @*@model Kode.Web.Models.PostDetailsModel
     @{
-        Html.AddTitleParts(T("HomePage").ToString());
+    Html.AddTitleParts(T("HomePage").ToString());
     }*@
 
 
@@ -25,27 +67,14 @@
 </header>
 <!-- Main Content -->
 @*<div class="container">
-    <div class="row">
-        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-            @Html.Partial("~/Themes/DefaultClean/Views/Shared/_Widgets.cshtml")
-        </div>
-    </div>
-</div>*@
-
-@if (Model.rows != null && Model.rows.Any())
-{
-    foreach (var rows in Model.rows)
-    {
         <div class="row">
-            @foreach (var col in rows.cols)
-            {
-                <div class="col-lg-@(col.lg)">
-                    @foreach (var widget in col.widgets)
-                    {
-                        @Html.Partial(widget.viewPath, widget)
-                    }
-                </div>
-            }
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                @Html.Partial("~/Themes/DefaultClean/Views/Shared/_Widgets.cshtml")
+            </div>
         </div>
-    }
+    </div>*@
+
+@foreach (var row in Model.rows)
+{
+    @RenderRow(row)
 }
