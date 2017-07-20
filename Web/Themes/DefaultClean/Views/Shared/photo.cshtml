@@ -1,0 +1,25 @@
+﻿@model Web.Models.PageViewModel.WidgetViewModel
+@if (Model != null && Model.Posts != null && Model.Posts.Count > 0)
+{
+    <section class="">
+        <div class="container">
+            <a class="widget-title" href="#">@Html.Raw(Model.Title)</a>
+            <div id="" class="=">
+                @foreach (var post in Model.Posts.Take(3))
+                {
+                    <div class="col-md-4 item blogeffect4-1 blind medicom-team nosocial  v blogeffect4">
+                        <div class="team-thumb">
+                            <a href="#"><img src="@(post.FeaturedImage + "?width=400")" class="img-rounded" alt=""></a>
+                         </div>
+                        <h5>
+                            <a href="#">@post.Title</a>
+                         
+                        </h5>
+                        <p>@post.Summary</p>
+                        <a href="#"><em>@T("ViewProfile")  </em></a>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+}

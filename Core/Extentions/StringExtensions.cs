@@ -7,6 +7,23 @@ namespace Core.Extentions
 {
     public static class StringExtensions
     {
+
+        public static int[] ToIntegers(this string str1)
+        {
+            if (string.IsNullOrEmpty(str1))
+                return null;
+            return str1.Split(',')
+                        .Select(z => Convert.ToInt32(z)).ToArray();
+        }
+
+
+        public static Guid[] ToGuids(this string str1)
+        {
+            if (string.IsNullOrEmpty(str1))
+                return null;
+            return str1.Split(',')
+                        .Select(z => Guid.Parse(z)).ToArray();
+        }
         public static bool IsNotNullOrEmpty(this string str)
         {
             return !string.IsNullOrEmpty(str);

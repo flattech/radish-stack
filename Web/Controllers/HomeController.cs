@@ -7,22 +7,18 @@ namespace Web.Controllers
 {
     public class HomeController : BaseController
     {
-        public HomeController()
-        {
-       
-        }
         public ActionResult Index()
         {
-            var page = Pool.Instance.Posts.Get(Guid.Parse("86bca7c3-7f4a-4dcf-a39d-2d6b7629c934"));
+            var page = Pool.Instance.Posts.GetPage(Guid.Parse("86BCA7C3-7F4A-4DCF-A39D-2D6B7629C934"));
           
             if (page == null)
                 return new ContentResult {Content = "Add Home Page to DB"};
 
             var model = new PageViewModel
             {
-             //   Widgets = FillWidgetsDatasource(page)
+                rows = FillWidgetsDatasource(page)
             };
-
+            //var model = FillWidgetsDatasource(page);
             return View(model);
         }
     }

@@ -1,5 +1,15 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
 using System.Web.Routing;
+using Core;
+using Core.Extentions;
+using Core.Repositories;
+using Core.Repositories.Enums;
+using Web.Extentions;
+using Web.Models;
+using Rows = Web.Models.Rows;
 
 namespace Web.Controllers
 {
@@ -8,6 +18,10 @@ namespace Web.Controllers
     //[WwwRequirement]
     public abstract partial class BaseController : Controller
     {
+
+        private PostRepository _postrepository = Pool.Instance.Posts;
+        private WidgetRepository _widgetrepository = Pool.Instance.Widgets;
+        private TermRepository _termrepository = Pool.Instance.Terms;
 
         //protected virtual ActionResult InvokeHttp404()
         //{
@@ -23,65 +37,192 @@ namespace Web.Controllers
         //    return new EmptyResult();
         //}
 
-        //public List<PageViewModel.WidgetViewModel> FillWidgetsDatasource(Post p)
+        public List<PageViewModel.RowViewModel> FillWidgetsDatasource(Post p)
+        {
+            //return EngineContext.Current.Resolve<ICacheManager>().Get("Mentis.widgets",() =>
+            //{
+
+            var descerializedwidgets = Newtonsoft.Json.JsonConvert.DeserializeObject<PageViewModel>(p.Widgets);
+
+
+            //foreach (var w in p.PostWidgets.OrderBy(x => x.DisplayOrder))
+            var widgetmodel = new List<PageViewModel.RowViewModel>();
+
+            foreach (var r in descerializedwidgets.rows)
+            {
+                var generatedRow = GenerateRow(r, null);
+
+                if (generatedRow != null)
+                    widgetmodel.Add(generatedRow);
+
+            }
+            return widgetmodel;
+            //});
+        }
+
+
+
+
+        private PageViewModel.RowViewModel GenerateRow(PageViewModel.RowViewModel row, PageViewModel.ColViewModel parent)
+        {
+            
+            var rowview = new PageViewModel.RowViewModel();
+
+            foreach (var col in row.cols)
+            {
+                var colview = new PageViewModel.ColViewModel();
+                colview.lg = col.lg;
+                colview.text = col.text;
+
+                if (col.rows.Any())
+                {
+                    foreach (var r in col.rows)
+                    {
+                        rowview = r;
+                        GenerateRow(row, col);
+                    }
+                }
+                else
+                {
+                    foreach (var w in col.widgets)
+                    {
+                        var model = _widgetrepository.Get(w.widgetid);
+                        if (model == null)
+                            continue;
+
+                        var widgetview = new PageViewModel.WidgetViewModel();
+
+                        widgetview.title = model.Title;
+                        widgetview.viewPath = model.ViewPath;
+
+                        var posts = new List<Post>();
+
+                        if (!string.IsNullOrEmpty(model.Posts))
+                            posts = _postrepository.GetByIds(model.Posts.ToGuids(), true).ToList();
+                        //else if (!string.IsNullOrEmpty(model.PostType))
+                        //    posts =
+                        //        _postrepository.GetByType(Guid.Parse(model.PostType), true, false, false,
+                        //            descerializedwidgets.PostCount == 0 ? 12 : model.PostCount).ToList();
+                        else if (!string.IsNullOrEmpty(model.Categories))
+                            posts = _postrepository.GetByIds(model.Categories.ToGuids(), true).ToList();
+                        else if (!string.IsNullOrEmpty(model.Tags))
+                            posts = _postrepository.GetByIds(model.Tags.ToGuids(), true).ToList();
+                        widgetview.posts = posts.Select(s => s.ToModel()).ToList();
+
+                        colview.widgets.Add(widgetview);
+                        //if (w.Widget.ReturnCategories)
+                        //{
+                        //    var cats = new List<Term>();
+                        //    if (!string.IsNullOrEmpty(w.Widget.PostType))
+                        //        cats =
+                        //            _termrepository.GetByPostType(Guid.Parse(w.Widget.PostType), (int)TermTypeEnum.Category)
+                        //                .ToList();
+
+                        //    widgetmodel.Categories = cats.Select(s => s.ToModel()).ToList();
+                        //}
+                        //if (w.Widget.ReturnTags)
+                        //{
+                        //    var tags = new List<Term>();
+                        //    if (!string.IsNullOrEmpty(w.Widget.PostType))
+                        //        tags =
+                        //            _termrepository.GetByPostType(Guid.Parse(w.Widget.PostType), (int)TermTypeEnum.Tag)
+                        //                .ToList();
+
+                        //    widgetmodel.Tags = tags.Select(s => s.ToModel()).ToList();
+                        //}
+                    }
+
+                    rowview.cols.Add(colview);
+                    //var lastOrDefault = row.parent.rows.LastOrDefault();
+                    //lastOrDefault?.cols.Add(colview);
+
+                }
+            }
+            return rowview;
+        }
+
+        //private List<PageViewModel.ColViewModel> GenerateColumns(PageViewModel.RowViewModel row, PageViewModel.RowViewModel parent)
         //{
-        //    //return EngineContext.Current.Resolve<ICacheManager>().Get("Mentis.widgets",() =>
-        //    //{
-        //    var widgets = new List<PageViewModel.WidgetViewModel>();
-        //    var _postrepository = Pool.Instance.Posts;
-        //    var _termrepository = Pool.Instance.Terms;
-
-        //    foreach (var w in p.PostWidgets.OrderBy(x => x.DisplayOrder))
+        //foreach (var col  in row.cols)
+        //{
+        //    PageViewModel.ColViewModel colview;
+        //    if (parent == null)
         //    {
-        //        var widgetmodel = new PageViewModel.WidgetViewModel();
-        //        if (w == null)
-        //            return null;
+        //        colview = new PageViewModel.ColViewModel();
+        //        colview.lg = col.lg;
+        //        colview.text = col.text;
 
-        //        widgetmodel.Title = w.Widget.Title;
-        //        widgetmodel.ViewPath = w.Widget.ViewPath;
-        //        widgetmodel.Location = w.Location;
-        //        var config = Newtonsoft.Json.JsonConvert.DeserializeObject<WidgetConfig>(w.Widget.Config);
-
-        //        if (config.ReturnPosts)
+        //        colview.widgets = new List<PageViewModel.WidgetViewModel>();
+        //    }
+        //    else
+        //    {
+        //        colview = parent.cols.Add();
+        //    }
+        //    if (col.rows.Any())
+        //    {
+        //        foreach (var r in col.rows)
         //        {
+        //            GenerateRow(r, col);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        foreach (var w in col.widgets)
+        //        {
+        //            var model = _widgetrepository.Get(w.widgetid);
+        //            if (model == null)
+        //                continue;
+
+        //            var widgetview = new PageViewModel.WidgetViewModel();
+
+        //            widgetview.title = model.Title;
+        //            widgetview.viewPath = model.ViewPath;
+
         //            var posts = new List<Post>();
 
-        //            if (!string.IsNullOrEmpty(config.Posts))
-        //                posts = _postrepository.GetByIds(config.Posts.ToIntegers(), true);
-        //            else if (!string.IsNullOrEmpty(config.PostType))
-        //                posts =
-        //                    _postrepository.GetByType(Convert.ToInt32(config.PostType), true,false,false,w.Widget.PostCount == 0 ? 12 : w.Widget.PostCount).ToList();
-        //            else if (!string.IsNullOrEmpty(config.Categorys))
-        //                posts = _postrepository.GetByIds(config.Categorys.ToIntegers(), true);
-        //            else if (!string.IsNullOrEmpty(config.Tags))
-        //                posts = _postrepository.GetByIds(config.Tags.ToIntegers(), true);
-        //            widgetmodel.Posts = posts.Select(s => s.ToModel()).ToList();
-        //        }
-        //        if (config.ReturnCategorys)
-        //        {
-        //            var cats = new List<Term>();
-        //            if (!string.IsNullOrEmpty(config.PostType))
-        //                cats =
-        //                    _termrepository.GetByPostType(Convert.ToInt32(config.PostType), (int)TermTypeEnum.Category)
-        //                        .ToList();
+        //            if (!string.IsNullOrEmpty(model.Posts))
+        //                posts = _postrepository.GetByIds(model.Posts.ToGuids(), true).ToList();
+        //            //else if (!string.IsNullOrEmpty(model.PostType))
+        //            //    posts =
+        //            //        _postrepository.GetByType(Guid.Parse(model.PostType), true, false, false,
+        //            //            descerializedwidgets.PostCount == 0 ? 12 : model.PostCount).ToList();
+        //            else if (!string.IsNullOrEmpty(model.Categories))
+        //                posts = _postrepository.GetByIds(model.Categories.ToGuids(), true).ToList();
+        //            else if (!string.IsNullOrEmpty(model.Tags))
+        //                posts = _postrepository.GetByIds(model.Tags.ToGuids(), true).ToList();
+        //            widgetview.posts = posts.Select(s => s.ToModel()).ToList();
 
-        //            widgetmodel.Categories = cats.Select(s => s.ToModel()).ToList();
-        //        }
-        //        if (config.ReturnTags)
-        //        {
-        //            var tags = new List<Term>();
-        //            if (!string.IsNullOrEmpty(config.PostType))
-        //                tags =
-        //                    _termrepository.GetByPostType(Convert.ToInt32(config.PostType), (int)TermTypeEnum.Tag)
-        //                        .ToList();
+        //            colview.widgets.Add(widgetview);
+        //            //if (w.Widget.ReturnCategories)
+        //            //{
+        //            //    var cats = new List<Term>();
+        //            //    if (!string.IsNullOrEmpty(w.Widget.PostType))
+        //            //        cats =
+        //            //            _termrepository.GetByPostType(Guid.Parse(w.Widget.PostType), (int)TermTypeEnum.Category)
+        //            //                .ToList();
 
-        //            widgetmodel.Tags = tags.Select(s => s.ToModel()).ToList();
+        //            //    widgetmodel.Categories = cats.Select(s => s.ToModel()).ToList();
+        //            //}
+        //            //if (w.Widget.ReturnTags)
+        //            //{
+        //            //    var tags = new List<Term>();
+        //            //    if (!string.IsNullOrEmpty(w.Widget.PostType))
+        //            //        tags =
+        //            //            _termrepository.GetByPostType(Guid.Parse(w.Widget.PostType), (int)TermTypeEnum.Tag)
+        //            //                .ToList();
+
+        //            //    widgetmodel.Tags = tags.Select(s => s.ToModel()).ToList();
+        //            //}
         //        }
-        //        widgets.Add(widgetmodel);
+        //        if(parent == null)
+        //        row.cols.Add(colview);
+        //        else
+        //        {
+        //            parent.rows.
+        //        }
         //    }
-        //    return widgets;
-        //    //});
         //}
-
+        //return row.cols;
+        //}
     }
 }

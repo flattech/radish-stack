@@ -56,6 +56,7 @@ window.back.postwidget = (function ($, ko, bootbox) {
     var widget = function (data) {
         var self = this;
         self.title = ko.observable(data.title);
+        self.widgetid = ko.observable(data.widgetid);
     };
 
 
