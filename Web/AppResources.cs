@@ -7,6 +7,7 @@ namespace Web
     {
         public static readonly AppsResources Instance = new AppsResources();
 
+
         private Dictionary<string, string> _dictionary;
 
         private AppsResources()
