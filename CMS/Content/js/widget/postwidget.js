@@ -1,8 +1,13 @@
 ﻿var emptyGuid = "00000000-0000-0000-0000-000000000000";
 window.back.postwidget = (function ($, ko, bootbox) {
     //Helpers
-    var col = function (rows, widgets, lg, text) {
+    var col = function (rows, widgets, lg, text,classname) {
         var self = this;
+        if (classname === undefined)
+            self.classname = ko.observable("");
+        else {
+            self.classname = ko.observable(classname);
+        }
         self.lg = ko.observable(lg);
         self.text = ko.observable(text);
         self.rows = ko.observableArray(rows || []);
@@ -11,7 +16,7 @@ window.back.postwidget = (function ($, ko, bootbox) {
             $.get("/widget/mini").done(function (data) {
                 bootbox.dialog({
                     message: data,
-                    title: "Choose Widget" ,
+                    title: "Choose Widget",
                     buttons: {
                         success: {
                             label: window.AppResources.Next,
@@ -34,15 +39,21 @@ window.back.postwidget = (function ($, ko, bootbox) {
         };
 
         self.addrow = function () {
-            self.rows.push(new row([new col([], [], 12, "c2")]));
+            self.rows.push(new row("", [new col([], [], 12, "c2","")]));
         };
         self.removerow = function (data) {
             // if (self.rows().length > 1)
             self.rows.remove(data);
         };
     };
-    var row = function (cols) {
+
+    var row = function (classname, cols) {
         var self = this;
+        if (classname === undefined)
+            self.classname = ko.observable("");
+        else {
+            self.classname = ko.observable(classname);
+        }
         self.cols = ko.observableArray(cols);
         self.addcol = function () {
             self.cols.push(new col([], [], 1, "c2"));
@@ -70,9 +81,9 @@ window.back.postwidget = (function ($, ko, bootbox) {
                 for (var h = 0; h < c.widgets.length; h++) {
                     wds.push(new widget(c.widgets[h]));
                 }
-                cols.push(new col(fillRows(c.rows), wds, c.lg, c.text));
+                cols.push(new col(fillRows(c.rows), wds, c.lg, c.text,c.classname));
             }
-            rows.push(new row(cols));
+            rows.push(new row(rs[i].classname, cols));
         }
         return rows;
     };
@@ -84,7 +95,7 @@ window.back.postwidget = (function ($, ko, bootbox) {
 
                 addrow = function (index) {
                     console.log(index);
-                    rows.splice(index + 1, 0, new row([new col([], [], 12, "c2")]));
+                    rows.splice(index + 1, 0, new row("", [new col([], [], 12, "c2")]));
                 },
 
                 removerow = function (data) {
@@ -93,7 +104,7 @@ window.back.postwidget = (function ($, ko, bootbox) {
 
                 },
                 getJson = function () {
-                    if (rows().length > 0 && rows()[0].cols().length>0)
+                    if (rows().length > 0 && rows()[0].cols().length > 0)
                         return ko.toJSON(viewmodel);
                 },
                 initModel = function (data) {
@@ -108,7 +119,7 @@ window.back.postwidget = (function ($, ko, bootbox) {
             };
         },
         callbackForPopUp = function () {
-         
+
         },
 
         init = function (data) {
@@ -121,20 +132,16 @@ window.back.postwidget = (function ($, ko, bootbox) {
             //];
 
             var dt = [
-                new row([])
+                new row("", [])
             ];
 
             var finaldata = dt;
             if (data && data.rows)
                 finaldata = fillRows(data.rows);
 
-            //console.log(finaldata);
             viewmodel = new itemviewmodel();
-            //var d = JSON.parse(data);
-            //console.log(dt);
             viewmodel.init(finaldata);
             ko.applyBindings(viewmodel, $("#itemkocontainer")[0]);
-            //window.back.PopUpTitle = "مسلسل الاخبار";
             window.back.finishCallbackForPopUp = callbackForPopUp;
         };
 

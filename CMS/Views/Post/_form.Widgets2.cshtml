@@ -28,22 +28,25 @@
                                 <script id="rowtemp" type="text/html">
                                     <div class="rowitem">
                                         <div class="rowhead">
-                                            <span>Row</span>
-                                            @*<span data-bind="text: ($index()+1)"></span>*@
-
-                                            <span data-bind="click:$parent.removerow" style="cursor: pointer">
-                                                <i class="fa fa-trash-o " style="color: #F3565D"></i>
-                                            </span>
-                                            <span data-bind="click:addcol" style="cursor: pointer">
-                                                <i class="fa fa-arrow-right " style="color: #45B6AF"></i>
-                                            </span>
+                                            <div class="row">
+                                                <div class="col-lg-2">
+                                                    <span>Row</span>
+                                                    <span data-bind="click:$parent.removerow" style="cursor: pointer">
+                                                        <i class="fa fa-trash-o " style="color: #F3565D"></i>
+                                                    </span>
+                                                    <span data-bind="click:addcol" style="cursor: pointer">
+                                                        <i class="fa fa-arrow-right " style="color: #45B6AF"></i>
+                                                    </span>
+                                                </div>
+                                                <div class="col-lg-4">class <input type="text" data-bind="value: classname" /></div>
+                                            </div>
                                         </div>
                                         <div class="row">
                                             <!-- ko template: { name: 'coltemp',foreach: cols } --><!-- /ko -->
                                         </div>
                                         <div class="rowfoot">
                                             <span data-bind="click:$parent.addrow.bind($data, $index())" style="cursor: pointer">
-                                               <i class="fa fa-arrow-down " style="color: #45B6AF"></i> row
+                                                <i class="fa fa-arrow-down " style="color: #45B6AF"></i> row
                                             </span>
                                         </div>
                                     </div>
@@ -51,20 +54,26 @@
                                 <script id="coltemp" type="text/html">
                                     <div data-bind="attr:{class:'colbord col col-lg-' + lg() }">
                                         <div class="colhead">
-                                            <span>Col </span>
-                                            <span data-bind="click:$parent.removecol" style="cursor: pointer">
-                                                <i class="fa fa-trash-o " style="color: #F3565D"></i>
-                                            </span>
-                                            <span data-bind="click:addrow" style="cursor: pointer">
-                                                <i class="fa fa-arrow-down " style="color: #45B6AF"></i> 
-                                            </span>
-                                            <input type="text" data-bind="value:lg" class="inputcol">
+                                            <div class="row">
+                                                <div class="col-lg-3">
+                                                    <span>Col </span>
+                                                    <span data-bind="click:$parent.removecol" style="cursor: pointer">
+                                                        <i class="fa fa-trash-o " style="color: #F3565D"></i>
+                                                    </span>
+                                                    <span data-bind="click:addrow" style="cursor: pointer">
+                                                        <i class="fa fa-arrow-down " style="color: #45B6AF"></i>
+                                                    </span>
+                                                    <input type="text" data-bind="value:lg" class="inputcol">
+                                                </div>
+
+                                                <div class="col-lg-4">
+                                                    <span>class</span> <input type="text" data-bind="value: classname" />
+                                                </div>
+                                            </div>
                                         </div>
 
 
                                         <!-- ko template: { name: 'rowtemp',foreach: rows } --><!-- /ko -->
-
-
 
                                         <ul class="list-group" data-bind="sortable: widgets,visible:rows().length==0" style="margin: 0; padding: 0;">
                                             <li class="widget">
@@ -78,9 +87,9 @@
                                         </ul>
                                         <div class="colfoot">
                                             @*<a data-popuptitle="Choose Widget" href="@Url.Action("mini", "widget")"
-                                               class="btn btn-success btn-xs" data-loadtype="popup">
-                                                <i class="fa fa-plus-square"></i> Widget
-                                            </a>*@
+                                                   class="btn btn-success btn-xs" data-loadtype="popup">
+                                                    <i class="fa fa-plus-square"></i> Widget
+                                                </a>*@
                                             <span data-bind="click:addwidget,visible:rows().length==0" style="cursor: pointer">
                                                 <i class="fa fa-plus-circle " style="color: #45B6AF"></i> widget
                                             </span>
@@ -89,7 +98,7 @@
                                     </div>
                                 </script>
                                 <div data-bind="template: { name: 'rowtemp', foreach: rows }">
-                                    
+
                                     <div class="row">
                                         <!-- ko template: { name: 'coltemp',foreach: cols } --><!-- /ko -->
                                     </div>
@@ -113,10 +122,15 @@
         width: 20px;
         height: 15px;
     }
-     .media-heading {
-         font-family: "Open Sans", sans-serif;
-     }
-    .row{margin: 0!important;}
+
+    .media-heading {
+        font-family: "Open Sans", sans-serif;
+    }
+
+    .row {
+        margin: 0 !important;
+    }
+
     .rowfoot {
         margin-bottom: 3px;
         padding: 2px;
@@ -133,7 +147,8 @@
     }
 
     .rowitem {
-        margin: 15px;margin-bottom: 25px;
+        margin: 15px;
+        margin-bottom: 25px;
     }
 
     .rowhead {

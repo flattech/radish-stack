@@ -45,7 +45,7 @@ namespace Web.Models
             }
 
             public List<ColViewModel> cols { get; set; }
-            public string cssclass { get; set; }
+            public string classname { get; set; }
         }
 
 
@@ -58,7 +58,7 @@ namespace Web.Models
                 widgets = new List<WidgetViewModel>();
             }
             public string lg { get; set; }
-            public string cssclass { get; set; }
+            public string classname { get; set; }
             public string text { get; set; }
             public List<RowViewModel> rows { get; set; }
             public List<WidgetViewModel> widgets { get; set; }

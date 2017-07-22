@@ -70,13 +70,14 @@ namespace Web.Controllers
         {
             
             var rowview = new PageViewModel.RowViewModel();
-
+            rowview.classname = row.classname;
             foreach (var col in row.cols)
             {
                 var colview = new PageViewModel.ColViewModel
                 {
                     lg = col.lg,
-                    text = col.text
+                    text = col.text,
+                    classname = col.classname
                 };
 
                 if (col.rows.Any())
