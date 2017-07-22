@@ -12,7 +12,9 @@ namespace Web
         
         protected void Application_Start()
         {
-           var theme= AppConfigs.Instance.Theme;
+            Logger.EnsureInitialized();
+            Logger.Info(this, "Radish Web is starting up");
+            var theme= AppConfigs.Instance.Theme;
             //disable "X-AspNetMvc-Version" header name
             MvcHandler.DisableMvcResponseHeader = true;
 
@@ -85,12 +87,21 @@ namespace Web
             SetWorkingCulture();
         }
 
-        protected void Application_Error(Object sender, EventArgs e)
+        void Application_Error(object sender, EventArgs e)
         {
-            var exception = Server.GetLastError();
+            var url = Request.Url.ToString();
+            var referrr = "";
+            if (Request.UrlReferrer != null)
+                referrr = Request.UrlReferrer.ToString();
+            var ip = "";
+            if (Request.UserHostAddress != null)
+                ip = Request.UserHostAddress;
+            if (url.EndsWith("favicon.ico")) return;
+            var lastError = Server.GetLastError();
+            if (lastError == null) return;
+            var ex = lastError.GetBaseException();
+            Logger.Fatal(this, "#RadishWeb #Error #Web #Global Method:" + Request.HttpMethod + "----ip :" + ip + "--referrr " + referrr + " Application global error " + url, ex);
 
-            //log error
-            //LogException(exception);
         }
 
         protected void SetWorkingCulture()
