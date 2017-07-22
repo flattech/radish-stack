@@ -1,8 +1,9 @@
 # Radish Stack
 Manage web projects
 
-stack-web.radishai.com
+http://radishstack.com
 
-stack-cms.radishai.com
+http://cms.radishstack.com
 
-stack-api.radishai.com
+http://api.radishstack.com
+
