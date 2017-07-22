@@ -262,6 +262,7 @@
     <Content Include="Themes\DefaultClean\Views\Shared\_Widgets.cshtml" />
     <Content Include="Themes\DefaultClean\Views\Shared\slider.cshtml" />
     <Content Include="Themes\DefaultClean\Views\Shared\photo.cshtml" />
+    <None Include="Properties\PublishProfiles\kk.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -272,7 +273,6 @@
   <ItemGroup>
     <Folder Include="App_Start\" />
     <Folder Include="Content\" />
-    <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj">
@@ -291,6 +291,9 @@
     <OutputPath>bin\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'MayadeenEspanol|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <OutputPath>bin\</OutputPath>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
