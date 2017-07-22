@@ -8,7 +8,7 @@
 {
 if (row.cols != null && row.cols.Any())
 {
-    var htmlrow = "<div class=\"row " + row.cssclass + "\">";
+    var htmlrow = "<div class=\"row " + row.classname + "\">";
     var htmlrowclose = "</div>";
     var isrowopened = false;
 
@@ -19,7 +19,7 @@ if (row.cols != null && row.cols.Any())
             isrowopened = true;
                 @Html.Raw(htmlrow)
         }
-            <div class="col-lg-@(col.lg) @col.cssclass">
+            <div class="col-lg-@(col.lg) @col.classname">
                 @if (col.rows.Any())
                 {
                 foreach (var colrow in col.rows)
