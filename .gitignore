@@ -1,4 +1,5 @@
 packages
 obj
 bin
+/API/Properties/PublishProfiles
 /CMS/Logs

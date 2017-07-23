@@ -9,7 +9,11 @@ namespace Core.Repositories
 {
     public class BaseRepository<T> where T : BaseModel
     {
+#if  DEBUG
         private string ConnectionString { get { return "Data Source=.;Initial Catalog=RadishStackDB;Integrated Security=True;MultipleActiveResultSets=True"; } }
+#else
+        private string ConnectionString { get { return "Data Source=148.72.232.166;Initial Catalog=RadishStackDB;User Id=radishstack;Password=Radish@AI123;MultipleActiveResultSets=True"; } }
+#endif
         protected string BaseColumns = "Id,CreationDate,PublicId,Status,";
         protected string SqlSelect;
         protected string SqlInsert;
@@ -28,7 +32,7 @@ namespace Core.Repositories
             SqlDelete = string.Format("UPDATE {0} SET Status=-100 WHERE Id=@Id; ", TableName);
         }
 
-        #region common functions: Getall, getbyid, save update insert, delete
+#region common functions: Getall, getbyid, save update insert, delete
         public T Get(Guid id)
         {
             if (string.IsNullOrEmpty(SqlSelect))
@@ -137,8 +141,8 @@ namespace Core.Repositories
             Execute("UPDATE " + TableName + " SET " + column + "=@value WHERE Id=@id", new { value, id });
         }
 
-        #endregion
-        #region Dapper access
+#endregion
+#region Dapper access
 
         public int Execute(string sql, dynamic param = null)
         {
@@ -163,7 +167,7 @@ namespace Core.Repositories
         {
             return ConnectionManager.GetConnection(ConnectionString).QueryMultiple(sql, param);
         }
-        #endregion
+#endregion
     }
     public class BaseModel
     {
