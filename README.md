@@ -7,3 +7,6 @@ http://cms.radishstack.com
 
 http://api.radishstack.com
 
+https://github.com/bestmomo/laravel5-3-example
+
+https://backpackforlaravel.com/
