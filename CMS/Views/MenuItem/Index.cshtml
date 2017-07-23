@@ -12,7 +12,7 @@
 <div class="row">
     <div class="col-md-12">
         @Html.AlertMessage()
-        @Html.MetronicLink(Url.Action("Create", "MenuItem"), "جديد", "plus", "btn-success", "")
+        @Html.MetronicLink(Url.Action("Create", "MenuItem"), "New", "plus", "btn-success", "")
         <div class="margin-bottom-10"> </div>
         @if (Model.List != null && Model.List.Any())
         {
@@ -20,7 +20,7 @@
                 <thead class="flip-content">
                     <tr>
                         <th>
-                            العنوان
+                            Title
                         </th>
                         <th>
                             
@@ -45,7 +45,7 @@
         else
         {
             <div class="alert alert-info">
-                <strong>لا يوجد معلومات</strong>
+                <strong>No data found !</strong>
             </div>
         }
     </div>

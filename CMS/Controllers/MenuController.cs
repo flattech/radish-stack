@@ -21,7 +21,7 @@ namespace CMS.Controllers
             var list = UOW.Menues.GetTree().ToList();
             var model = new MenuItemViewModel
             {
-                List = list.Select(x => new MenuItem { Id = x.Id, Title = x.GetFormattedBreadCrumb(list, "--") }).ToList()
+                List = list.Select(x => new MenuItem { Id = x.Id, Title = x.GetFormattedMenuBreadCrumb(list, "--") }).ToList()
             };
             return View(model);
         }
@@ -47,8 +47,7 @@ namespace CMS.Controllers
             if (ModelState.IsValid)
             {
                 var model = Map(form);
-                UOW.Menues.Add(model);
-                UOW.Commit();
+                UOW.Menues.Save(model);
                 AlertSuccessMessage("MenuItem is Successfully Saved");
 
                 return RedirectToAction("Edit", new { id = model.Id });
@@ -65,8 +64,8 @@ namespace CMS.Controllers
 
             model.AvailableMenuItems.Add(new SelectListItem
             {
-                Text = "[None]",
-                Value = "0"
+                Text = null,
+                Value = null
             });
             var items = UOW.Menues.GetTree().ToList();
             foreach (var c in items)

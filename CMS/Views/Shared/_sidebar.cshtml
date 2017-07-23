@@ -58,11 +58,11 @@
                                 <span class="title">@AppResources.Instance.Get("PostTypes")</span>
                             </a>
                         </li>
-                        @*<li class="sidemenuli">
+                        <li class="sidemenuli">
                             <a href="@Url.Action("Index", "MenuItem")" class="sidemenu ">
                                 <span class="title">@AppResources.Instance.Get("Menu")</span>
                             </a>
-                        </li>*@
+                        </li>
 
                         <li class="sidemenuli @(ViewBag.Current == "User" ? "active" : "")">
                             <a href="@Url.Action("Index", "User")" class="sidemenu">

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using Core.Repositories;
 
 namespace Web.Models
@@ -10,6 +11,7 @@ namespace Web.Models
         {
             pictureModel = new Media();
             rows = new List<RowViewModel>();
+            menus = new List<MenuItem>();
         }
 
         public string title { get; set; }
@@ -23,6 +25,7 @@ namespace Web.Models
         public Media pictureModel { get; set; }
         public string featuredImage { get; set; }
         public List<RowViewModel> rows { get; set; }
+        public List<MenuItem> menus { get; set; }
 
 
 

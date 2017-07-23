@@ -23,8 +23,7 @@ namespace CMS.Controllers
 
         public ActionResult Index(Guid posttypeid, int page = 1, int size = 10, string query = "", Guid? termid = null)
         {
-            var q = Query("PostTypeId", posttypeid.ToString()) +
-                    QueryLike("and Title", query);
+            var q = Query("PostTypeId", posttypeid.ToString()) + QueryLike("and Title", query);
             var model = new PostModel
             {
                 PostType = UOW.PostTypes.Get(posttypeid),

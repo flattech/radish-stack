@@ -1,4 +1,5 @@
-﻿@using Web.Models.UI
+﻿@using Core.Repositories
+@using Web.Models.UI
 
 <!DOCTYPE html>
 <html>
@@ -30,6 +31,37 @@
 
 </head>
 <body>
+
+
+    @helper RenderMenu(MenuItem menuItem)
+    {
+if (menuItem == null)
+{
+    return;
+}
+    <li>
+        @menuItem.Title
+        @foreach (var child in menuItem.Children)
+        {
+            <ul>
+                <li>
+                    @child.Title
+                    @if (child.Children.Any())
+                    {
+                        <ul>
+                            @foreach (var children in child.Children)
+                            {
+                                @RenderMenu(children)
+                            }
+                        </ul>
+                    }
+                </li>
+            </ul>
+        }
+    </li>
+}
+
+
     <!-- Navigation -->
     <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
         <div class="container-fluid">
@@ -46,17 +78,22 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="/">@T("Home")</a>
-                    </li>
+                    @foreach (var menu in Model.menus)
+                    {
+                        @RenderMenu(menu)
+                    }
 
-                    <li>
-                        <a href="/about">@T("About")</a>
-                    </li>
+                    @*<li>
+                            <a href="/">@T("Home")</a>
+                        </li>
 
-                    <li>
-                        <a href="/contact">@T("Contact")</a>
-                    </li>
+                        <li>
+                            <a href="/about">@T("About")</a>
+                        </li>
+
+                        <li>
+                            <a href="/contact">@T("Contact")</a>
+                        </li>*@
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
