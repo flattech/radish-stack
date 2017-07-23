@@ -106,7 +106,10 @@ namespace Core.Repositories
         public bool IncludeInHeader { get; set; }
         public bool IncludeInFooter { get; set; }
         public bool EnableMedia { get; set; }
+        public string SeName { get; set; }
         public List<MenuItem> Children { get; set; }
+        public string Icon { get; set; }
+
     }
 
 }
