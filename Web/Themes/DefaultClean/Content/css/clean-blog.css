@@ -393,3 +393,8 @@ img::-moz-selection {
 body {
   webkit-tap-highlight-color: #0085a1;
 }
+
+
+.navbar-nav>li {
+    color :white
+}
