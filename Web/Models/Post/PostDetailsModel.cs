@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Core.Repositories;
+using Web.Models.Term;
 
-namespace Web.Models
+namespace Web.Models.Post
 {
     public partial class PostDetailsModel 
     {
@@ -45,10 +46,10 @@ namespace Web.Models
         public PostBreadcrumbModel Breadcrumb { get; set; }
         public string FeaturedImage { get; set; }
         public DateTime CreationDate { get; set; }
-        public IEnumerable<Term> PostTerms { get; set; }
+        public IEnumerable<Core.Repositories.Term> PostTerms { get; set; }
         public IEnumerable<TermModel> Categories { get; set; }
         public IEnumerable<TermModel> Tags { get; set; }
-        public IEnumerable<Post> Posts { get; set; }
+        public IEnumerable<Core.Repositories.Post> Posts { get; set; }
         public List<PostAttachment> Gallery { get; set; }
         public List<PageViewModel.WidgetViewModel> Widgets { get; set; }
         public IEnumerable<PostDetailsModel> RecentPosts { get; set; }

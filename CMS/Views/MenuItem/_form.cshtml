@@ -11,11 +11,10 @@
             @Html.ValidationMessageFor(model => model.Title)
         </div>
     </div>
-
     <div class="form-group">
         <label class="control-label col-md-3" for="ParentId">Parent Menu </label>
         <div class="col-md-9">
-            @Html.DropDownListFor(model => model.ParentId, Model.AvailableMenuItems, new {@class = "form-control input-xlarge " })
+            @Html.DropDownListFor(model => model.ParentId, Model.AvailableMenuItems, new { @class = "form-control input-xlarge " })
         </div>
     </div>
     <div class="form-group">
@@ -27,7 +26,6 @@
                     <option value="@(e)" selected="@(e.ToString()==Model.EntityName)">@e.ToString()</option>
                 }
             </select>
-
         </div>
     </div>
     <div class="form-group">
@@ -60,18 +58,11 @@
             @Html.CheckBoxFor(model => model.IncludeInFooter)
         </div>
     </div><div class="form-group">
-              @Html.MetronicLabelFor(model => model.IncludeInHeader)
-              <div class="col-md-9">
-                  @Html.CheckBoxFor(model => model.IncludeInHeader)
-              </div>
-          </div>
-    <div class="form-group">
-        @Html.MetronicLabelFor(model => model.EnableMedia)
+        @Html.MetronicLabelFor(model => model.IncludeInHeader)
         <div class="col-md-9">
-            @Html.CheckBoxFor(model => model.EnableMedia)
+            @Html.CheckBoxFor(model => model.IncludeInHeader)
         </div>
     </div>
-    
 </div>
 <div class="form-actions fluid">
     <div class="row">
@@ -83,6 +74,4 @@
         </div>
     </div>
 </div>
-
-
 

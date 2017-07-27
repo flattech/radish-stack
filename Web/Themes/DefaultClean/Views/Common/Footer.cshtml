@@ -1,14 +1,4 @@
-﻿@using Nop.Core
-@using Nop.Core.Domain
-@using Nop.Core.Infrastructure
-@model Web.Models.TopMenuModel
-
-@{ var currentlang = EngineContext.Current.Resolve<IWorkContext>().WorkingLanguage.UniqueSeoCode;
-
-    //logo path
-    var settings = EngineContext.Current.Resolve<StoreInformationSettings>();
-
-}
+﻿@model Web.Models.TopMenuModel
 
 <footer id="footer" class="light">
     <div class="container">
@@ -21,11 +11,11 @@
                         <h4 style="font-size: 20px"><span>@T("Alrrasoul")</span></h4>
                         <ul class="footer-nav list-unstyled clearfix">
                             @foreach (var menu in Model.Categories)
-                            {
+                        {
                                 <li><a href="@Url.RouteUrl("Post", new {menu.SeName})"><i class="fa fa-long-arrow-right"></i>@menu.Name</a></li>
-                            }
+                        }
                             @*<li><a href="@Url.RouteUrl("AboutUS")"><i class="fa fa-long-arrow-right"></i>@T("AboutUS")</a></li>
-                                <li><a href="@Url.RouteUrl("ContactUs")"><i class="fa fa-long-arrow-right"></i>@T("ContactUs")</a></li>*@
+                        <li><a href="@Url.RouteUrl("ContactUs")"><i class="fa fa-long-arrow-right"></i>@T("ContactUs")</a></li>*@
                             @*<li><a href="@Url.RouteUrl("SiteMap")"><i class="fa fa-long-arrow-right"></i>@T("SiteMap")</a></li>*@
                         </ul>
                     </div>
@@ -96,5 +86,5 @@
         </div>
     </div>
     <p class="copyright text-center">@T("Content.CopyrightNotice", DateTime.Now.Year, T("Alrrasoul"))</p>
-
+    
 </footer>

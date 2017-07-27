@@ -72,8 +72,13 @@ namespace CMS.Controllers
 
         public ActionResult Create(Guid posttypeid)
         {
-            var model = new PostForm { PostTypeId = posttypeid, CreationDate = DateTime.Now };
-            model.PostType = UOW.PostTypes.Get(posttypeid);
+            var model = new PostForm
+            {
+                PostTypeId = posttypeid,
+                CreationDate = DateTime.Now,
+                PostType = UOW.PostTypes.Get(posttypeid)
+            };
+            InitMeta(model);
             PrepareAllTermsModel(model);
             return View(model);
         }
@@ -111,18 +116,19 @@ namespace CMS.Controllers
                 LogException(ex);
             }
             form.PostType = UOW.PostTypes.Get(form.PostTypeId);
+            InitMeta(form);
             AlertErrorMessage("error");
             return View(form);
         }
 
         private void LogException(Exception ex)
         {
-            // throw new NotImplementedException();
+            Logger.Fatal(this, "PostContoller | " + ex.Message);
         }
 
-        private void LogActivity(string createnewpost, string format)
+        private void LogActivity(string type, string message)
         {
-            //throw new NotImplementedException();
+            Logger.Info(this, type + " | " + message);
         }
 
         public ActionResult Edit(Guid id)
@@ -163,7 +169,7 @@ namespace CMS.Controllers
             return View(form);
         }
 
-        public ActionResult Delete(Guid id,Guid  posttypeid)
+        public ActionResult Delete(Guid id, Guid posttypeid)
         {
             try
             {
@@ -176,7 +182,7 @@ namespace CMS.Controllers
             catch (Exception ex)
             {
                 AlertErrorMessage(ex.Message);
-                return RedirectToAction("Index",new { posttypeid = posttypeid });
+                return RedirectToAction("Index", new { posttypeid = posttypeid });
             }
         }
 
@@ -199,22 +205,35 @@ namespace CMS.Controllers
 
             // SyncTerms(form.SelectedTerms, post);
 
-            //if (post.PostType.EnableWidgets)
-            //{
-            //    SyncWidgets(form, post);
-            //}
-
             SyncAttachments(form, post);
-
+            SyncMeta(post);
             return post;
         }
 
+        private void InitMeta(PostForm model)
+        {
+            if (!string.IsNullOrEmpty(model.PostType.PostMetaFields))
+                model.PostFields = JsonConvert.DeserializeObject<List<PostFields>>(model.PostType.PostMetaFields);
+        }
+
+        private void SyncMeta(Post post)
+        {
+            if (!string.IsNullOrEmpty(post.PostType.PostMetaFields))
+            {
+                var postfiels = JsonConvert.DeserializeObject<PostFields[]>(post.PostType.PostMetaFields);
+                foreach (var pf in postfiels)
+                {
+                    pf.Value = Request.Form[$"PostMetaValues[{pf.Key}]"];
+                }
+                post.PostMetaValues = JsonConvert.SerializeObject(postfiels);
+            }
+        }
         private PostForm Map(Post post)
         {
             if (post == null)
                 throw new Exception("no such Post");
             post.PostType = UOW.PostTypes.Get(post.PostTypeId);
-            var f = new PostForm
+            var form = new PostForm
             {
                 SelectedTerms = post.PostTerms.Select(x => x.Term).Where(x => !x.IsTag()).Select(x => x.Id).ToList(),
                 SelectedTags =
@@ -233,43 +252,33 @@ namespace CMS.Controllers
                 MediaGallery = string.IsNullOrEmpty(post.Gallery) ? new List<MediaMini>() : JsonConvert.DeserializeObject<List<MediaMini>>(post.Gallery)
             };
 
-            //if (post.PostType.EnableWidgets)
-            //{
-            //    var list = UOW.PostWidgets.GetAll("PostId", post.Id.ToString()).Select(x => new PostWidgetForm
-            //    {
-            //        Title = x.Widget.Title,
-            //        Id = x.Id,
-            //        WidgetId = x.WidgetId,
-            //        DisplayOrder = x.DisplayOrder,
-            //        Location = x.Location
-            //    }).ToList();
-
-            //    f.PostWidgetsModel = new PostWidgetsModel
-            //    {
-            //        List1 =
-            //            list.Where(x => x.Location == (int)WidgetLocationEnum.OneColumnTop)
-            //                .OrderBy(x => x.DisplayOrder)
-            //                .ToList(),
-            //        List2 =
-            //            list.Where(x => x.Location == (int)WidgetLocationEnum.TwoColumnMiddle)
-            //                .OrderBy(x => x.DisplayOrder)
-            //                .ToList(),
-            //        List3 =
-            //            list.Where(x => x.Location == (int)WidgetLocationEnum.TwoColumnMiddleSidebar)
-            //                .OrderBy(x => x.DisplayOrder)
-            //                .ToList(),
-            //        List4 =
-            //            list.Where(x => x.Location == (int)WidgetLocationEnum.OneColumnMiddleBottom)
-            //                .OrderBy(x => x.DisplayOrder)
-            //                .ToList()
-            //    };
-            //}
-            //f.PostAttachments = GetDictionary(post);
-
-            return f;
+            form.PostAttachments = FillPostMedia(post);
+            FillPostMeta(form,post);
+            return form;
         }
 
-        private Dictionary<string, PostAttachment> GetDictionary(Post post)
+        private void FillPostMeta(PostForm form,Post post)
+        {
+            if (!string.IsNullOrEmpty(post.PostType.PostMetaFields))
+            {
+                var listposttype = JsonConvert.DeserializeObject<PostFields[]>(post.PostType.PostMetaFields);
+                PostFields[] listpost = null;
+                if (!string.IsNullOrEmpty(post.PostMetaValues))
+                    listpost = JsonConvert.DeserializeObject<PostFields[]>(post.PostMetaValues);
+
+                var finalList = new List<PostFields>();
+                foreach (var field in listposttype)
+                {
+                    var exist = new PostFields { Key = field.Key };
+                    if (listpost != null)
+                        exist = listpost.SingleOrDefault(x => x.Key == field.Key) ?? exist;
+                    finalList.Add(exist);
+                }
+                form.PostFields = finalList.ToList();
+            }
+        }
+
+        private Dictionary<string, PostAttachment> FillPostMedia(Post post)
         {
             var dict = new Dictionary<string, PostAttachment>();
             if (string.IsNullOrEmpty(post.PostType.PostMediaList))
@@ -291,8 +300,6 @@ namespace CMS.Controllers
 
         private void SyncAttachments(PostForm form, Post post)
         {
-
-
             //if (!string.IsNullOrEmpty(post.PostType.PostMediaList))
             //{
             //    var postfields = JsonConvert.DeserializeObject<PostAttachment[]>(post.PostType.PostMediaList);
@@ -305,56 +312,6 @@ namespace CMS.Controllers
             //    }
             //    post.Attachments = JsonConvert.SerializeObject(postfields);
             //}
-        }
-
-        private void SyncWidgets(PostForm form, Post post)
-        {
-            var current = post.PostWidgets ?? new List<PostWidget>();
-            var selectedlist = new List<PostWidgetForm>();
-            if (form.PostWidgetsModel != null)
-            {
-                if (form.PostWidgetsModel.List1 != null && form.PostWidgetsModel.List1.Any())
-                    selectedlist.AddRange(form.PostWidgetsModel.List1);
-                if (form.PostWidgetsModel.List2 != null && form.PostWidgetsModel.List2.Any())
-                    selectedlist.AddRange(form.PostWidgetsModel.List2);
-                if (form.PostWidgetsModel.List3 != null && form.PostWidgetsModel.List3.Any())
-                    selectedlist.AddRange(form.PostWidgetsModel.List3);
-                if (form.PostWidgetsModel.List4 != null && form.PostWidgetsModel.List4.Any())
-                    selectedlist.AddRange(form.PostWidgetsModel.List4);
-            }
-            if (selectedlist.Any())
-                foreach (var t in selectedlist)
-                {
-                    var existing = current.SingleOrDefault(x => x.WidgetId == t.WidgetId);
-                    if (existing == null)
-                        current.Add(new PostWidget
-                        {
-                            Location = t.Location,
-                            DisplayOrder = t.DisplayOrder,
-                            WidgetId = t.WidgetId,
-                            CreationDate = DateTime.UtcNow
-                        });
-                    else
-                    {
-                        existing.DisplayOrder = t.DisplayOrder;
-                        existing.Location = t.Location;
-                    }
-                }
-
-            var deletedTerms = new List<PostWidget>();
-
-            foreach (var t in current)
-            {
-                var ex = selectedlist.Any(x => x.Id == t.Id);
-                if (!ex)
-                    deletedTerms.Add(t);
-            }
-
-            foreach (var t in deletedTerms)
-            {
-                UOW.Posts.DeleteWidget(t);
-                current.Remove(t);
-            }
         }
 
         private void SyncTerms(PostForm form, Post post)
@@ -405,13 +362,6 @@ namespace CMS.Controllers
                 }
         }
 
-        private PostForm Getpost(Guid postid)
-        {
-            var post = UOW.Posts.Get(postid);
-            var model = Map(post);
-            PrepareAllTermsModel(model);
-            return model;
-        }
 
         public class StatusView
         {

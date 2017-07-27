@@ -4,6 +4,8 @@ using System.Configuration;
 using System.Linq;
 using Core.Repositories;
 using Web.Models;
+using Web.Models.Post;
+using Web.Models.Term;
 
 namespace Web.Extentions
 {

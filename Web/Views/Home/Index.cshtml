@@ -1,13 +1,5 @@
-﻿@model Web.Models.PageViewModel
+﻿@model Web.Models.Post.PageViewModel
 @{
     Layout = "~/Views/Shared/_Root.cshtml";
 }
 Old Index
-@if (Model != null && Model.Widgets != null && Model.Widgets.Any())
-{
-    foreach (var widget in Model.Widgets)
-    {
-       
-             @Html.Partial(widget.ViewPath, widget)
-    }
-}

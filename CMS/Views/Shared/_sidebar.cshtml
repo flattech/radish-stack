@@ -23,65 +23,73 @@
                     <i class="icon-screen-desktop"></i>
                     <span class="title"> @AppResources.Instance.Get("Home") </span>
                     @if (ViewBag.Current == "Home")
-                   {
-                <span class="selected"></span>
-                   }
+                    {
+                        <span class="selected"></span>
+                    }
                 </a>
             </li>
             @Html.Action("SideBarMenu", "Common")
             <li class="sidemenuli @(ViewBag.Current == "Widget"  ? "active" : "")">
                 <a href="@Url.Action("Index", "Widget")" class="sidemenu mainlevel ">
-                    <i class="icon-wrench"></i> <span class="title">@AppResources.Instance.Get("Widgets") </span>
+                    <i class="icon-grid"></i> <span class="title">@AppResources.Instance.Get("Widgets") </span>
                     @if (ViewBag.Current == "Widget")
                     {
                         <span class="selected"></span>
                     }
                 </a>
             </li>
-            
+
+            <li class="sidemenuli @(ViewBag.Current == "MenuItem" ? "active" : "")">
+                <a href="@Url.Action("Index", "MenuItem")" class="sidemenu mainlevel ">
+                    <i class="icon-cursor"></i> <span class="title">@AppResources.Instance.Get("MenuItem") </span>
+                    @if (ViewBag.Current == "MenuItem")
+                    {
+                        <span class="selected"></span>
+                    }
+                </a>
+            </li>
             @if (ViewBag.IsAdmin)
             {
-
-                <li class="sidemenuli @(ViewBag.CurrentSection == "Admin" ? "active" : "")">
-                    <a href="javascript:;" class="sidemenu mainlevel">
-                        <i class="icon-settings"></i>
-                        <span class="title">@AppResources.Instance.Get("Admin")</span>
-                        @if (ViewBag.Current == "Admin")
+                <li class="sidemenuli @(ViewBag.Current == "User" ? "active" : "")">
+                    <a href="@Url.Action("Index", "User")" class="sidemenu mainlevel ">
+                        <i class="icon-users"></i> <span class="title">@AppResources.Instance.Get("Users") </span>
+                        @if (ViewBag.Current == "User")
                         {
                             <span class="selected"></span>
                         }
-                        <span class="arrow "></span>
                     </a>
-                    <ul class="sub-menu">
-                        <li class="sidemenuli">
-                            <a href="@Url.Action("Index", "PostType")" class="sidemenu">
-                                <span class="title">@AppResources.Instance.Get("PostTypes")</span>
-                            </a>
-                        </li>
-                        <li class="sidemenuli">
-                            <a href="@Url.Action("Index", "MenuItem")" class="sidemenu ">
-                                <span class="title">@AppResources.Instance.Get("Menu")</span>
-                            </a>
-                        </li>
+                </li>
 
-                        <li class="sidemenuli @(ViewBag.Current == "User" ? "active" : "")">
-                            <a href="@Url.Action("Index", "User")" class="sidemenu">
-                                <span class="title">@AppResources.Instance.Get("Users")</span>
-                            </a>
-                        </li>
-                        @*<li class="sidemenuli @(ViewBag.Current == "ActivityLogging" ? "active" : "")">
-                            <a href="@Url.Action("Index", "ActivityLogging")" class="sidemenu">
-                                <span class="title">Activity Log</span>
-                            </a>
-                        </li>
-                        <li class="sidemenuli @(ViewBag.Current == "Logging" ? "active" : "")">
-                            <a href="@Url.Action("Index", "Logging")" class="sidemenu">
-                                <span class="title">System Log</span>
-                            </a>
-                        </li>*@
-                    </ul>
+                <li class="sidemenuli @(ViewBag.Current == "PostType" ? "active" : "")">
+                    <a href="@Url.Action("Index", "PostType")" class="sidemenu mainlevel ">
+                        <i class="icon-check"></i> <span class="title">@AppResources.Instance.Get("PostTypes") </span>
+                        @if (ViewBag.Current == "PostType")
+                        {
+                            <span class="selected"></span>
+                        }
+                    </a>
                 </li>
             }
+
+            @*<li class="sidemenuli @(ViewBag.CurrentSection == "Admin" ? "active" : "")">
+                <a href="javascript:;" class="sidemenu mainlevel">
+                    <i class="icon-settings"></i>
+                    <span class="title">@AppResources.Instance.Get("Admin")</span>
+                    @if (ViewBag.Current == "Admin")
+                    {
+                        <span class="selected"></span>
+                    }
+                    <span class="arrow "></span>
+                </a>
+                <ul class="sub-menu">
+                    <li class="sidemenuli">
+                        <a href="@Url.Action("Index", "PostType")" class="sidemenu">
+                            <span class="title">@AppResources.Instance.Get("PostTypes")</span>
+                        </a>
+                    </li>                    
+                </ul>
+            </li>*@
+
         </ul>
     </div>
 </div>

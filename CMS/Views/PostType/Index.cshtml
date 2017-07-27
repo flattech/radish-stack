@@ -57,7 +57,6 @@
                     <table class="table table-bordered table-striped table-condensed flip-content">
                         <thead class="flip-content">
                             <tr>
-                                <th>@AppResources.Instance.Get("DisplayOrder")</th>
                                 <th>@AppResources.Instance.Get("Title")</th>
                                 <th>@AppResources.Instance.Get("Date")</th>
                                 <th></th>
@@ -67,9 +66,6 @@
                             @foreach (var item in Model.List)
                             {
                                 <tr>
-                                    <td style="padding: 10px">
-                                        #@item.DisplayOrder
-                                </td>
                                 <td style="padding: 10px">
                                     <a href="@Url.Action("Edit", new {id = item.Id})" style="font-size: 18px; font-weight: 300">@item.Title</a>
                                 </td>

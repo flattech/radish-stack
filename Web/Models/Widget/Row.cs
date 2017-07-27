@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Web.Models
+namespace Web.Models.Widget
 {
     public class Row
     {

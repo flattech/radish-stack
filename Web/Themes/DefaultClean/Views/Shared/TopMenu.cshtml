@@ -1,0 +1,109 @@
+﻿@using Core.Repositories
+@model Web.Models.TopMenuModel
+    @helper RenderItemLine(MenuItem item, int level, bool responsiveMobileMenu)
+    {
+var entityid = Request.RequestContext.RouteData.Values["entityid"];
+
+//subcategories
+var subCategories = responsiveMobileMenu ?
+    //responsive (all categories)
+    item.Children :
+    //standard design (only categories with "IncludeInTopMenu")
+    item.Children.ToList();
+var levelClass = "";
+if (level == 0)
+{
+    levelClass = "first-level";
+}
+var isactive = (level == 0 && entityid != null && item.EntityId.ToString() == entityid.ToString()) || entityid == null && item.Url == "/";
+
+
+if (!item.IsMega)
+{
+        <li class="dropdown @(isactive? "active" : "")">
+            <a href="" class="@(subCategories.Count > 0 ? "dropdown-toggle" : "")">
+                @if (level == 0)
+                {
+                    <i class="fa fa-plus"></i>
+                }
+                @item.Title
+            </a>
+            @if (subCategories.Count > 0)
+            {
+
+                <ul class="dropdown-menu @levelClass">
+                    @foreach (var subItem in subCategories)
+                    {
+                        @RenderItemLine(subItem, level + 1, responsiveMobileMenu)
+                    }
+                </ul>
+
+            }
+        </li>
+}
+else
+{
+        <li class="mega-menu-item @(isactive ? "active" : "")">
+            <a href="@Url.RouteUrl(item.EntityName, new {item.EntityId})"
+               class="@(subCategories.Count > 0 ? "dropdown-toggle" : "")">
+                @if (level == 0)
+                {
+                    <i class="fa fa-plus"></i>
+                }
+                @item.Title
+            </a>
+            <div class="mega-menu">
+                @foreach (var subItem in subCategories)
+                {
+                    <ul class="">
+                        @if (subItem.Icon != null)
+                        {
+                            <li>
+                                <a href="@Url.RouteUrl(item.EntityName, new { subItem.EntityId })">
+                                 @subItem.Title
+                                </a>
+                            </li>
+
+                        }
+                        @foreach (var c in subItem.Children)
+                        {
+                            <li>
+                                <a href="@Url.RouteUrl(c.EntityName, new { c.EntityId })">
+                                    @c.Title
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                }
+            </div>
+        </li>
+}
+
+}
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">@T("ToggleNavigation")</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">@T("Radish Stack")</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    @foreach (var item in Model.MenuItems)
+                    {
+                        @RenderItemLine(item, 0, false)
+                    }
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>

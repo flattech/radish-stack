@@ -1,49 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using System.Web.Routing;
 using Core;
 using Core.Extentions;
 using Core.Repositories;
-using Core.Repositories.Enums;
+using Newtonsoft.Json;
 using Web.Extentions;
-using Web.Models;
-using MenuItem = System.Web.UI.WebControls.MenuItem;
-using Rows = Web.Models.Rows;
+using Web.Models.Post;
 
 namespace Web.Controllers
 {
-
-    //[NopHttpsRequirement(SslRequirement.NoMatter)]
-    //[WwwRequirement]
-    public abstract partial class BaseController : Controller
+    public abstract class BaseController : Controller
     {
-
         private PostRepository _postrepository = Pool.Instance.Posts;
         private WidgetRepository _widgetrepository = Pool.Instance.Widgets;
         private TermRepository _termrepository = Pool.Instance.Terms;
-
-        //protected virtual ActionResult InvokeHttp404()
-        //{
-        //    // Call target Controller and pass the routeData.
-        //    IController errorController = new CommonController();
-
-        //    var routeData = new RouteData();
-        //    routeData.Values.Add("controller", "Common");
-        //    routeData.Values.Add("action", "PageNotFound");
-
-        //    errorController.Execute(new RequestContext(this.HttpContext, routeData));
-
-        //    return new EmptyResult();
-        //}
-
+        
         public List<PageViewModel.RowViewModel> FillWidgetsDatasource(Post p)
         {
             //return EngineContext.Current.Resolve<ICacheManager>().Get("Mentis.widgets",() =>
             //{
 
-            var descerializedwidgets = Newtonsoft.Json.JsonConvert.DeserializeObject<PageViewModel>(p.Widgets);
+            var descerializedwidgets = JsonConvert.DeserializeObject<PageViewModel>(p.Widgets);
 
 
             //foreach (var w in p.PostWidgets.OrderBy(x => x.DisplayOrder))
@@ -143,40 +121,6 @@ namespace Web.Controllers
             }
             return rowview;
         }
-
-
-        public List<Core.Repositories.MenuItem> FillMenuDataSource(IList<Core.Repositories.MenuItem> menu)
-        {
-            var groups = menu.GroupBy(i => i.ParentId);
-
-            var enumerable = groups as IList<IGrouping<Guid?, Core.Repositories.MenuItem>> ?? groups.ToList();
-            var first = enumerable.FirstOrDefault(g => g.Key.HasValue == false);
-            if (first == null)
-                return null;
-            {
-                var roots = first.ToList();
-
-                if (roots.Count <= 0)
-                    return roots;
-                var dict = enumerable.Where(g => g.Key.HasValue).ToDictionary(g => g.Key.Value, g => g.ToList());
-                foreach (Core.Repositories.MenuItem t in roots)
-                    AddChildren(t, dict);
-                return roots;
-            }
-        }
-
-        private static void AddChildren(Core.Repositories.MenuItem node, IDictionary<Guid, List<Core.Repositories.MenuItem>> source)
-        {
-            if (source.ContainsKey(node.Id))
-            {
-                node.Children = source[node.Id];
-                foreach (Core.Repositories.MenuItem t in node.Children)
-                    AddChildren(t, source);
-            }
-            else
-            {
-                node.Children = new List<Core.Repositories.MenuItem>();
-            }
-        }
+    
     }
 }

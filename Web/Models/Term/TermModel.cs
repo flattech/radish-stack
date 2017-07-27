@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using Core.Repositories;
+using Web.Models.Post;
 using Web.Models.UI.Paging;
 
-namespace Web.Models
+namespace Web.Models.Term
 {
     public partial class SearchModel
     {

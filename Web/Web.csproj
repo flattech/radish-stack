@@ -202,6 +202,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppResources.cs" />
+    <Compile Include="Controllers\SharedController.cs" />
     <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Helpers\Themes\ThemeableRazorViewEngine.cs" />
     <Compile Include="Helpers\Themes\ThemeableVirtualPathProviderViewEngine.cs" />
@@ -209,30 +210,30 @@
     <Compile Include="Helpers\WebViewPage.cs" />
     <Compile Include="Extentions\HtmlExtensions.cs" />
     <Compile Include="Extentions\MappingExtensions.cs" />
-    <Compile Include="Controllers\BasePublicController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\TermController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Col.cs" />
+    <Compile Include="Models\Widget\Col.cs" />
     <Compile Include="Models\FormModel.cs" />
-    <Compile Include="Models\PageViewModel.cs" />
-    <Compile Include="Models\PostDetailsModel.cs" />
-    <Compile Include="Models\PostModel.cs" />
-    <Compile Include="Models\Row.cs" />
-    <Compile Include="Models\Rows.cs" />
-    <Compile Include="Models\TermModel.cs" />
-    <Compile Include="Models\CategoryNavigationModel.cs" />
-    <Compile Include="Models\CategorySimpleModel.cs" />
+    <Compile Include="Models\Post\PageViewModel.cs" />
+    <Compile Include="Models\Post\PostDetailsModel.cs" />
+    <Compile Include="Models\Post\PostModel.cs" />
+    <Compile Include="Models\Widget\Row.cs" />
+    <Compile Include="Models\Widget\Rows.cs" />
+    <Compile Include="Models\Term\TermModel.cs" />
+    <Compile Include="Models\Term\CategoryNavigationModel.cs" />
+    <Compile Include="Models\Term\CategorySimpleModel.cs" />
     <Compile Include="Models\Common\ContactUsModel.cs" />
     <Compile Include="Models\Common\FaviconModel.cs" />
     <Compile Include="Models\Common\FooterModel.cs" />
     <Compile Include="Models\Common\HeaderLinksModel.cs" />
     <Compile Include="Models\Common\PagerModel.cs" />
     <Compile Include="Models\Common\SitemapModel.cs" />
-    <Compile Include="Models\RenderWidgetModel.cs" />
+    <Compile Include="Models\Widget\RenderWidgetModel.cs" />
     <Compile Include="Models\TopMenuModel.cs" />
     <Compile Include="Models\UI\AsIsBundleOrderer.cs" />
     <Compile Include="Models\UI\IPageHeadBuilder.cs" />
@@ -243,7 +244,7 @@
     <Compile Include="Models\UI\Paging\IPageableModel.cs" />
     <Compile Include="Models\UI\Paging\Pager.cs" />
     <Compile Include="Models\UI\ResourceLocation.cs" />
-    <Compile Include="Models\WidgetModel.cs" />
+    <Compile Include="Models\Widget\WidgetModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -258,11 +259,24 @@
     <Content Include="Themes\DefaultClean\Content\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Themes\DefaultClean\Content\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Themes\DefaultClean\Views\Post\PostDetail.Simple.cshtml" />
-    <Content Include="Themes\DefaultClean\Views\Widgets\Widget.Work.cshtml" />
-    <Content Include="Themes\DefaultClean\Views\Shared\_Widgets.cshtml" />
     <Content Include="Themes\DefaultClean\Views\Shared\slider.cshtml" />
     <Content Include="Themes\DefaultClean\Views\Shared\photo.cshtml" />
     <None Include="Properties\PublishProfiles\kk.pubxml" />
+    <Content Include="Themes\DefaultClean\Views\Common\Footer.cshtml" />
+    <Content Include="Themes\DefaultClean\Views\Common\Search.cshtml" />
+    <Content Include="Themes\DefaultClean\Views\Shared\TopMenu.cshtml" />
+    <Content Include="Views\Common\Favicon.cshtml" />
+    <Content Include="Views\Shared\Footer.cshtml" />
+    <Content Include="Views\Common\Sitemap.cshtml" />
+    <Content Include="Views\Shared\TopMenu.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Post\PostDetail.Simple.cshtml" />
+    <Content Include="Views\Post\_PostBreadcrumb.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Root.cshtml" />
+    <Content Include="Views\Term\Index.cshtml" />
+    <Content Include="Views\Term\TermNavigation.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

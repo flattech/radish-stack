@@ -1,6 +1,6 @@
 ﻿using System.Web.Routing;
 
-namespace Web.Models
+namespace Web.Models.Widget
 {
     public partial class RenderWidgetModel 
     {

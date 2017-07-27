@@ -12,7 +12,6 @@ namespace CMS.Models
         {
             PostFields = new List<PostFields>();
             AvailableTerms = new List<Term>();
-            PostWidgetsModel = new PostWidgetsModel();
             PostAttachments = new Dictionary<string, PostAttachment>();
             MediaGallery = new List<MediaMini>();
         }
@@ -31,14 +30,13 @@ namespace CMS.Models
         public Guid PostTypeId { get; set; }
         public Media FeatureImage { get; set; }
         public Media FeatureImageBig { get; set; }
-        public PostWidgetsModel PostWidgetsModel { get; set; }
         public int Status { get; set; }
         public string ViewPath { get; set; }
         public Guid FeatureImageBigId { get; set; }
         public DateTime CreationDate { get; set; }
         [AllowHtml]
         public string Detail { get; set; }
-        public string PostMetaValues { get; set; }
+        //public string PostMetaValues { get; set; }
         public List<PostFields> PostFields { get; set; }
         public string Photo { get; set; }
         public string Gallery { get; set; }

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Web.Models
+namespace Web.Models.Term
 {
     public class CategorySimpleModel 
     {
@@ -11,7 +11,6 @@ namespace Web.Models
 
         public string Name { get; set; }
 
-        public string SeName { get; set; }
 
         public bool IncludeInTopMenu
         {

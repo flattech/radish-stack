@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
 using Core.Repositories;
+using Web.Models.Term;
 
-namespace Web.Models
+namespace Web.Models.Post
 {
     public class PageViewModel
     {

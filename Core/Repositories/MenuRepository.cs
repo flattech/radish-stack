@@ -11,20 +11,18 @@ namespace Core.Repositories
     {
         public MenuRepository()
         {
-            base.Init("MenuItem", "Title,ParentId,EntityId,EntityName,Url,DisplayOrder,IsMega");
+            base.Init("MenuItem", "Title,ParentId,EntityId,EntityName,Url,DisplayOrder,IsMega,IsActive,IncludeInHeader,IncludeInFooter");
         }
 
         public IEnumerable<MenuItem> GetTree()
         {
-            return
-                   GetAllItems().ToList().SortMenuForTree();
+            return GetAllItems().ToList().SortMenuForTree();
         }
     }
 
     public static class MenuExtentions
     {
-        public static IList<MenuItem> SortMenuForTree(this IList<MenuItem> source, Guid? parentId = null,
-            bool ignoreWithoutExistingParent = false)
+        public static IList<MenuItem> SortMenuForTree(this IList<MenuItem> source, Guid? parentId = null)
         {
             if (source == null)
                 throw new ArgumentNullException("source");
@@ -34,15 +32,15 @@ namespace Core.Repositories
             foreach (var cat in source.Where(c => c.ParentId == parentId).ToList())
             {
                 result.Add(cat);
-                result.AddRange(SortMenuForTree(source, (Guid?)cat.Id, true));
+                result.AddRange(SortMenuForTree(source,cat.Id));
             }
-            if (!ignoreWithoutExistingParent && result.Count != source.Count)
-            {
-                //find categories without parent in provided Term source and insert them into result
-                foreach (var cat in source)
-                    if (result.FirstOrDefault(x => x.Id == cat.Id) == null)
-                        result.Add(cat);
-            }
+            //if (result.Count != source.Count)
+            //{
+            //    //find categories without parent in provided Term source and insert them into result
+            //    foreach (var cat in source)
+            //        if (result.FirstOrDefault(x => x.Id == cat.Id) == null)
+            //            result.Add(cat);
+            //}
             return result;
         }
 
@@ -54,8 +52,8 @@ namespace Core.Repositories
             var breadcrumb = GetMenuBreadCrumb(Term, allCategories, true);
             for (int i = 0; i <= breadcrumb.Count - 1; i++)
             {
-                var TermName = breadcrumb[i].Title;//.GetLocalized(x => x.Title, languageId);
-                result = String.IsNullOrEmpty(result) ? TermName : string.Format("{0} {1} {2}", result, separator, TermName);
+                var termName = breadcrumb[i].Title;//.GetLocalized(x => x.Title, languageId);
+                result = String.IsNullOrEmpty(result) ? termName : $"{result} {separator} {termName}";
             }
 
             return result;
@@ -71,7 +69,7 @@ namespace Core.Repositories
             //used to prevent circular references
             var alreadyProcessedTermIds = new List<Guid>();
 
-            while (menu != null && //not null
+            while (menu != null &&
                 (showHidden
                 // || Term.IsActive
                 ) && //published
@@ -105,11 +103,9 @@ namespace Core.Repositories
         public bool IsMega { get; set; }
         public bool IncludeInHeader { get; set; }
         public bool IncludeInFooter { get; set; }
-        public bool EnableMedia { get; set; }
-        public string SeName { get; set; }
         public List<MenuItem> Children { get; set; }
         public string Icon { get; set; }
-
+        public bool IsActive { get; set; }
     }
 
 }

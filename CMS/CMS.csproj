@@ -229,7 +229,6 @@
     <Compile Include="Models\MenuItemForm.cs" />
     <Compile Include="Models\TermForm.cs" />
     <Compile Include="Models\UserForm.cs" />
-    <Compile Include="Models\PostWidgetForm.cs" />
     <Compile Include="Models\WidgetForm.cs" />
     <Compile Include="Models\Listing.cs" />
     <Compile Include="Models\UnauthorizedModel.cs" />
@@ -1782,10 +1781,10 @@
     <Content Include="Views\PostType\_form.cshtml" />
     <Content Include="Views\PostType\Create.cshtml" />
     <Content Include="Views\PostType\Edit.cshtml" />
-    <Content Include="Views\Post\_form.Widgets2.cshtml" />
     <Content Include="widgets.json" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
+    <Content Include="Views\Post\_form.Meta.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\fonts\" />

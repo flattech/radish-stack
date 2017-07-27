@@ -32,7 +32,8 @@ namespace Core.Repositories
         public List<Term> GetAll(string[] tags,Guid posttypeid)
         {
             string intitle="N'" + string.Join("',N'", tags) + "'";
-            return Query<Term>(SqlSelect + string.Format(" WHERE Status!=-100 and TaxonomyId=20 and PostTypeId='{1}' and  [Title] in ({0})", intitle, posttypeid)).ToList();
+            return Query<Term>(SqlSelect + string.Format(" WHERE Status!=-100 and TaxonomyId=20 and " +
+                                                         "PostTypeId='{1}' and  [Title] in ({0})", intitle, posttypeid)).ToList();
         }
      
     }
@@ -245,8 +246,6 @@ namespace Core.Repositories
         public virtual PostType PostType { get; set; }
         public bool IsPublic { get; set; }
         public bool IsActive { get; set; }
-
-       
     }
 
 }

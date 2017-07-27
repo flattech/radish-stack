@@ -1,0 +1,12 @@
+﻿@model PostForm
+@if (!string.IsNullOrEmpty(Model.PostType.PostMetaFields))
+{
+    foreach (var f in Model.PostFields)
+    {
+        <div class="form-group">
+            <label class="">@f.Key</label>
+            @Html.TextBox("PostMetaValues[" + f.Key + "]", f.Value, new { @class = "form-control" })
+        </div>
+    }
+}
+

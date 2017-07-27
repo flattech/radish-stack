@@ -90,9 +90,7 @@ namespace CMS.Controllers
             return View(model);
         }
 
-        //
-        // POST: /PostCategory/Edit/5
-
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(MenuItemForm MenuItemForm)
@@ -109,9 +107,7 @@ namespace CMS.Controllers
             return View(MenuItemForm);
         }
 
-        //
-        // GET: /Category/Delete/5
-
+     
         public ActionResult Delete(Guid id)
         {
             MenuItem MenuItem = UOW.Menues.Get(id);
@@ -132,34 +128,32 @@ namespace CMS.Controllers
             if (dbMenuItem == null)
                 throw new Exception("no such MenuItem");
             dbMenuItem.Title = form.Title;
-            //dbMenuItem.IsActive = form.IsActive;
+            dbMenuItem.IsActive = form.IsActive;
             dbMenuItem.DisplayOrder = form.DisplayOrder;
             dbMenuItem.EntityId = form.EntityId;
-            //dbMenuItem.EnableMedia = form.EnableMedia;
             dbMenuItem.EntityName = form.EntityName;
-            //dbMenuItem.IncludeInFooter = form.IncludeInFooter;
-            //dbMenuItem.IncludeInHeader = form.IncludeInHeader;
+            dbMenuItem.IncludeInFooter = form.IncludeInFooter;
+            dbMenuItem.IncludeInHeader = form.IncludeInHeader;
             dbMenuItem.Url = form.Url;
             dbMenuItem.ParentId = form.ParentId;
             return dbMenuItem;
         }
-        private MenuItemForm Map(MenuItem MenuItem)
+        private MenuItemForm Map(MenuItem menuItem)
         {
-            if (MenuItem == null)
+            if (menuItem == null)
                 throw new Exception("no such MenuItem");
             var model = new MenuItemForm
             {
-                Id = MenuItem.Id,
-                Title = MenuItem.Title,
-                EntityName = MenuItem.EntityName,
-                EnableMedia = MenuItem.EnableMedia,
-                IncludeInFooter = MenuItem.IncludeInFooter,
-                IncludeInHeader = MenuItem.IncludeInHeader,
-                EntityId = MenuItem.EntityId,
-                DisplayOrder = MenuItem.DisplayOrder,
-                Url = MenuItem.Url,
-                //IsActive = MenuItem.IsActive,
-                ParentId = MenuItem.ParentId,
+                Id = menuItem.Id,
+                Title = menuItem.Title,
+                EntityName = menuItem.EntityName,
+                IncludeInFooter = menuItem.IncludeInFooter,
+                IncludeInHeader = menuItem.IncludeInHeader,
+                EntityId = menuItem.EntityId,
+                DisplayOrder = menuItem.DisplayOrder,
+                Url = menuItem.Url,
+                IsActive = menuItem.IsActive,
+                ParentId = menuItem.ParentId,
             };
             return model;
         }

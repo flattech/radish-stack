@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using Web.Models.Post;
+using Web.Models.Term;
 
 namespace Web.Models.Common
 {

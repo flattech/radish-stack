@@ -23,13 +23,7 @@
                 </div>
             </div>
             <div class="portlet-body form">
-                @using (Html.BeginForm("Edit", "PostType", FormMethod.Post, new
-                {
-                    @enctype = "multipart/form-data",
-                    @class = "form-horizontal " +
-                              "form-bordered " +
-                              "form-label-stripped"
-                }))
+                @using (Html.BeginForm("Edit", "PostType", FormMethod.Post))
                 {
                     @Html.Partial("_form")
                 }

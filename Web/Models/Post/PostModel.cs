@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using Core.Repositories;
+using Web.Models.Widget;
 
-namespace Web.Models
+namespace Web.Models.Post
 {
     public class PostModel
     {

@@ -1,98 +1,135 @@
 ﻿@model Core.Repositories.PostType
 @Html.AntiForgeryToken()
-<div class="form-body">
-    <div class="form-group">
-        <label class="control-label col-md-3" for="Title">Title</label>
-        @Html.HiddenFor(model => model.Id)
-        @Html.HiddenFor(model => model.CreationDate)
-        <div class="col-md-9">
-            @Html.MetronicTextBoxFor(model => model.Title)
-            @Html.ValidationMessageFor(model => model.Title)
+<div style="padding: 20px">
+
+    <div class="tabbable-custom ">
+        <ul class="nav nav-tabs ">
+            <li class="active">
+                <a href="#tab_posttypeconfig" data-toggle="tab" aria-expanded="true"> Config </a>
+            </li>
+            <li class="">
+                <a href="#tab_postmeta" data-toggle="tab" aria-expanded="false"> Post Meta </a>
+            </li>
+            <li>
+                <a href="#tab_postmedia" data-toggle="tab"> Post Media </a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active  form-horizontal form-bordered form-label-stripped" id="tab_posttypeconfig">
+                <div class="form-body">
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="Title">Title</label>
+                        @Html.HiddenFor(model => model.Id)
+                        @Html.HiddenFor(model => model.CreationDate)
+                        <div class="col-md-9">
+                            @Html.MetronicTextBoxFor(model => model.Title)
+                            @Html.ValidationMessageFor(model => model.Title)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="ViewPath">View Path</label>
+                        <div class="col-md-9">
+                            @Html.MetronicTextBoxFor(model => model.ViewPath)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="TermViewPath">Term View Path</label>
+                        <div class="col-md-9">
+                            @Html.MetronicTextBoxFor(model => model.TermViewPath)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.MetronicLabelFor(model => model.IsActive)
+                        <div class="col-md-9">
+                            @Html.CheckBoxFor(model => model.IsActive)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="EnableCategories">Categories</label>
+                        <div class="col-md-9">
+                            @Html.CheckBoxFor(model => model.EnableCategories)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="EnableSummary">Summary</label>
+                        <div class="col-md-9">
+                            @Html.CheckBoxFor(model => model.EnableSummary)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="EnableDescription">Details</label>
+                        <div class="col-md-9">
+                            @Html.CheckBoxFor(model => model.EnableDescription)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="EnableTags">Tags</label>
+                        <div class="col-md-9">
+                            @Html.CheckBoxFor(model => model.EnableTags)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="EnableFeatureImage">Feature Image</label>
+                        <div class="col-md-9">
+                            @Html.CheckBoxFor(model => model.EnableFeatureImage)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="EnableGallery">Gallery</label>
+                        <div class="col-md-9">
+                            @Html.CheckBoxFor(model => model.EnableGallery)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="EnableWidgets">Widgets</label>
+                        <div class="col-md-9">
+                            @Html.CheckBoxFor(model => model.EnableWidgets)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="tab_postmeta">
+                <div data-bind="foreach: list">
+                    <div class="form-inline" style="padding: 10px">
+                        <div class="form-group">
+                            <input type="text" data-bind="value:key" placeholder="Key" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <select data-bind="options: $parent.metatypes,value: type" class="form-control"> </select>
+                            <span class="badge badge-danger" data-bind="click:$parent.removeItem" style="cursor: pointer;margin-left: 5px">
+                                X
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+                <div style="margin-top: 10px">
+                    <input type="hidden" name="PostMetaFields" data-bind="attr: {value:  getJson() }" />
+                    <button type="button" class="btn btn-success" data-bind="click:addItem"><i class="fa fa-plus-circle"></i> Add</button>
+                </div>
+            </div>
+            <div class="tab-pane" id="tab_postmedia">
+                 <div data-bind="foreach: list">
+                    <div class="form-inline" style="padding: 10px">
+                        <div class="form-group">
+                            <input type="text" data-bind="value:key" placeholder="Key" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <select data-bind="options: $parent.metatypes,value: type" class="form-control"> </select>
+                            <span class="badge badge-danger" data-bind="click:$parent.removeItem" style="cursor: pointer;margin-left: 5px">
+                                X
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+                <div style="margin-top: 10px">
+                    <input type="hidden" name="PostMetaFields" data-bind="attr: {value:  getJson() }" />
+                    <button type="button" class="btn btn-success" data-bind="click:addItem"><i class="fa fa-plus-circle"></i> Add</button>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="form-group">
-        @Html.MetronicLabelFor(model => model.ViewPath)
-        <div class="col-md-9">
-            @Html.MetronicTextBoxFor(model => model.ViewPath)
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.MetronicLabelFor(model => model.TermViewPath)
-        <div class="col-md-9">
-            @Html.MetronicTextBoxFor(model => model.TermViewPath)
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.MetronicLabelFor(model => model.IsActive)
-        <div class="col-md-9">
-            @Html.CheckBoxFor(model => model.IsActive)
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.MetronicLabelFor(model => model.EnableCategories)
-        <div class="col-md-9">
-            @Html.CheckBoxFor(model => model.EnableCategories)
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.MetronicLabelFor(model => model.EnableSummary)
-        <div class="col-md-9">
-            @Html.CheckBoxFor(model => model.EnableSummary)
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.MetronicLabelFor(model => model.EnableDescription)
-        <div class="col-md-9">
-            @Html.CheckBoxFor(model => model.EnableDescription)
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.MetronicLabelFor(model => model.EnableTags)
-        <div class="col-md-9">
-            @Html.CheckBoxFor(model => model.EnableTags)
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.MetronicLabelFor(model => model.EnableFeatureImage)
-        <div class="col-md-9">
-            @Html.CheckBoxFor(model => model.EnableFeatureImage)
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.MetronicLabelFor(model => model.EnableGallery)
-        <div class="col-md-9">
-            @Html.CheckBoxFor(model => model.EnableGallery)
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.MetronicLabelFor(model => model.EnableWidgets)
-        <div class="col-md-9">
-            @Html.CheckBoxFor(model => model.EnableWidgets)
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.MetronicLabelFor(model => model.EnableViewPath)
-        <div class="col-md-9">
-            @Html.CheckBoxFor(model => model.EnableViewPath)
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.MetronicLabelFor(model => model.EnableSummary)
-        <div class="col-md-9">
-            @Html.CheckBoxFor(model => model.EnableSummary)
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.MetronicLabelFor(model => model.DisplayOrder)
-        <div class="col-md-9">
-            @Html.MetronicTextBoxFor(model => model.DisplayOrder)
-        </div>
-    </div><div class="form-group">
-    @Html.MetronicLabelFor(model => model.Icon)
-    <div class="col-md-9">
-        @Html.MetronicTextBoxFor(model => model.Icon)
-    </div>
-</div>
 </div>
 <div class="form-actions fluid">
     <div class="row">
@@ -104,3 +141,100 @@
         </div>
     </div>
 </div>
+
+
+<script>
+    var MetaItem = function(data) {
+            var self = this;
+            data = data || {};
+            self.key = ko.observable(data.key || '');
+            self.type = ko.observable(data.type || '');
+        },
+        importItem = function(items) {
+            return $.map(items || [],
+                function(elm) {
+                    return new MetaItem(elm);
+                });
+        };
+    var metaviewmodel,
+        MetaItemviewmodel = function() {
+            var list = ko.observableArray(),
+                metatypes = ["text", "numeric"],
+                addItem = function() {
+                    list.push(new MetaItem());
+                },
+                removeItem = function(data) {
+                    list.remove(data);
+                },
+                getJson = function() {
+                    return ko.toJSON(list);
+                },
+                initModel = function(data) {
+                    var l = importItem(data);
+                    list(l);
+                };
+            return {
+                metatypes: metatypes,
+                getJson: getJson,
+                list: list,
+                addItem: addItem,
+                initModel: initModel,
+                removeItem: removeItem
+            };
+        },
+
+        meta_init = function(data) {
+            metaviewmodel = new MetaItemviewmodel();
+            metaviewmodel.initModel(data);
+            ko.applyBindings(metaviewmodel, $("#tab_postmeta")[0]);
+        };
+    meta_init(@Html.Raw(Model.PostMetaFields));
+</script>
+
+<script>
+    var MediaItem = function(data) {
+            var self = this;
+            data = data || {};
+            self.key = ko.observable(data.key || '');
+            self.type = ko.observable(data.type || '');
+        },
+        importItem = function(items) {
+            return $.map(items || [],
+                function(elm) {
+                    return new MediaItem(elm);
+                });
+        };
+    var mediaviewmodel,
+        MediaItemviewmodel = function() {
+            var list = ko.observableArray(),
+                metatypes = ["text", "numeric"],
+                addItem = function() {
+                    list.push(new MediaItem());
+                },
+                removeItem = function(data) {
+                    list.remove(data);
+                },
+                getJson = function() {
+                    return ko.toJSON(list);
+                },
+                initModel = function(data) {
+                    var l = importItem(data);
+                    list(l);
+                };
+            return {
+                metatypes: metatypes,
+                getJson: getJson,
+                list: list,
+                addItem: addItem,
+                initModel: initModel,
+                removeItem: removeItem
+            };
+        },
+
+        media_init = function(data) {
+            mediaviewmodel = new MediaItemviewmodel();
+            mediaviewmodel.initModel(data);
+            ko.applyBindings(mediaviewmodel, $("#tab_postmedia")[0]);
+        };
+    media_init(@Html.Raw(Model.PostMediaList));
+</script>

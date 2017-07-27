@@ -1,8 +1,7 @@
-﻿@model Web.Models.PostDetailsModel
+﻿@model Web.Models.Post.PostDetailsModel
 @using System.Web.Mvc.Html
-@using Mentis.Common.Models.Configs
-@using Nop.Core.Domain.Seo
-@using Nop.Core.Infrastructure
+@using Core
+@using Web.Models.UI
 
 
 @{
@@ -47,14 +46,9 @@
     }
 }
 
-@section Breadcrumb
-{
-    @Html.Partial("_PostBreadcrumb", Model.Breadcrumb)
-}
 
 <div class="page product-details-page">
     <div class="page-body">
-        @Html.Widget("productdetails_top", Model.Id)
      
             <div itemscope itemtype="http://schema.org/Post" data-productid="@Model.Id">
                 <div class="product-essential">
@@ -85,13 +79,6 @@
                         </div>
                     }
                 </div>
-                @Html.Widget("productdetails_before_collateral", Model.Id)
-                @*<div class="product-collateral">
-                    @Html.Partial("_ProductSpecifications", Model.ProductSpecifications)
-                    @Html.Partial("_ProductTags", Model.ProductTags)
-                </div>*@
             </div>
-        
-        @*@Html.Widget("productdetails_bottom", Model.Id)*@
     </div>
 </div>

@@ -51,14 +51,14 @@
         <div class="col-md-9">
             <div class="clearfix">
                 <ul class="media-list list-group" data-bind="sortable: list">
-                    <li class="media list-group-item row">
-                        <a class="pull-left" href="javascript:;">
+                    <li class="media list-group-item ">
+                        <a  href="javascript:;">
                             <img class="media-object" data-bind="attr:{ src:  image}" src="" alt="no image" style="width: 64px; height: 64px;">
                         </a>
                         <div class="media-body">
                             <h4 data-bind="text: title" class="media-heading"></h4>
                         </div>
-                        <span class="badge badge-danger" data-bind="click:$parent.removeSlide" style="cursor: pointer">
+                        <span class="badge badge-danger" data-bind="click:$parent.removeSlide" style="cursor: pointer; float: none;">
                                 Delete
                             </span>
                     </li>
