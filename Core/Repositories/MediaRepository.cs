@@ -18,9 +18,11 @@ namespace Core.Repositories
         public int Type { get; set; }
     }
 
-    public class MediaMini 
+    public class MediaMini
     {
         public string Path { get; set; }
         public string Title { get; set; }
     }
 }
+
+

@@ -88,7 +88,7 @@ namespace CMS.Controllers
         {
             var list = UOW.Terms.GetByPostType(model.PostTypeId);
             model.AvailableTerms =
-                list.Where(x => x.TaxonomyId == (int)TermTypeEnum.Category).OrderBy(x => x.DisplayOrder).ToList();
+                list.Where(x => x.TaxonomyId == (int)TermTypeEnum.Tree).OrderBy(x => x.DisplayOrder).ToList();
             model.AvailableTags = list.Where(x => x.TaxonomyId == (int)TermTypeEnum.Tag)
                 .Select(x => x.Title).ToList();
         }
@@ -191,12 +191,16 @@ namespace CMS.Controllers
             var post = form.Id == Guid.Empty ? new Post() : _repository.GetObject(form.Id);
             if (post == null)
                 throw new Exception("no such Post");
+            //@ToDo  should be date control
+            post.PublishedDate = DateTime.UtcNow;
+
             post.Title = form.Title;
             post.ViewPath = form.ViewPath;
             post.Widgets = form.Widgets;
             post.Status = form.Status;
             post.Photo = form.Photo;
             post.CreationDate = form.CreationDate;
+            post.UrlKey = form.UrlKey;
             post.Detail = form.Detail;
             post.PostTypeId = form.PostTypeId;
             post.PostType = UOW.PostTypes.Get(form.PostTypeId);
@@ -245,6 +249,7 @@ namespace CMS.Controllers
                 Widgets = post.Widgets,
                 Status = post.Status,
                 IsActive = post.IsActive,
+                UrlKey = post.UrlKey,
                 ViewPath = post.ViewPath,
                 PostType = UOW.PostTypes.Get(post.PostTypeId),
                 PostTypeId = post.PostTypeId,

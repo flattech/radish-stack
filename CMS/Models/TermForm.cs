@@ -43,5 +43,6 @@ namespace CMS.Models
         public int DisplayOrder { get; set; }
         public bool IsPublic { get; set; }
         public TermTypeEnum Taxonomy { get; set; }
+        public string UrlKey { get; set; }
     }
 }

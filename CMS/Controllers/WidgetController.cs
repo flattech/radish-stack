@@ -114,7 +114,7 @@ namespace CMS.Controllers
                 });
             }
 
-            var list = UOW.Terms.GetAll(TermTypeEnum.Category);
+            var list = UOW.Terms.GetAll(TermTypeEnum.Tree);
             foreach (var c in list)
             {
                 model.AvailableTerms.Add(new SelectListItem

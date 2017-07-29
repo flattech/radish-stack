@@ -14,7 +14,7 @@ namespace Web
         {
             Logger.EnsureInitialized();
             Logger.Info(this, "Radish Web is starting up");
-            var theme= AppConfigs.Instance.Theme;
+            //var theme= AppSettings.Instance.Theme;
             //disable "X-AspNetMvc-Version" header name
             MvcHandler.DisableMvcResponseHeader = true;
 
@@ -28,6 +28,7 @@ namespace Web
             RegisterRoutes(RouteTable.Routes);
 
         }
+
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("favicon.ico");
@@ -39,32 +40,43 @@ namespace Web
 
             //home page
             routes.MapRoute("HomePage",
-                            "",
-                            new { controller = "Home", action = "Index" }, new[] { "Web.Controllers" });
+                "",
+                new {controller = "Home", action = "Index"}, new[] {"Web.Controllers"});
+          
             //sitemap
             routes.MapRoute("Sitemap",
-                            "sitemap",
-                            new { controller = "Common", action = "Sitemap" }, new[] { "Web.Controllers" });
+                "sitemap",
+                new {controller = "Common", action = "Sitemap"}, new[] {"Web.Controllers"});
 
 
             //robots.txt
             routes.MapRoute("robots.txt",
-                            "robots.txt",
-                            new { controller = "Common", action = "RobotsTextFile" },
-                            new[] { "Web.Controllers" });
+                "robots.txt",
+                new {controller = "Common", action = "RobotsTextFile"},
+                new[] {"Web.Controllers"});
 
             //sitemap (XML)
             routes.MapRoute("sitemap.xml",
-                            "sitemap.xml",
-                            new { controller = "Common", action = "SitemapXml" }
-                            , new[] { "Web.Controllers" });
+                "sitemap.xml",
+                new {controller = "Common", action = "SitemapXml"}
+                , new[] {"Web.Controllers"});
 
             //page not found
             routes.MapRoute("PageNotFound",
-                            "page-not-found",
-                            new { controller = "Common", action = "PageNotFound" },
-                            new[] { "Web.Controllers" });
+                "page-not-found",
+                new {controller = "Common", action = "PageNotFound"},
+                new[] {"Web.Controllers"});
 
+            routes.MapRoute(
+                "Post", // Route name
+                "{posttype}/post/{id}", // URL with parameters
+                new {controller = "Post", action = "Details", id = UrlParameter.Optional}
+                );
+            routes.MapRoute(
+                "Term", // Route name
+                "{posttype}/term/{id}", // URL with parameters
+                new { controller = "Term", action = "Index", id = UrlParameter.Optional }
+                );
             routes.MapRoute(
                 "Default", // Route name
                 "{controller}/{action}/{id}", // URL with parameters

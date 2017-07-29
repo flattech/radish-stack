@@ -101,7 +101,7 @@ namespace Core
 
         public static void Info(object source, object message)
         {
-            Task.Run(() => SendTelegram("#" + Environment.MachineName + " | " + message));
+           // Task.Run(() => SendTelegram("#" + Environment.MachineName + " | " + message));
 
             Info(source.GetType(), message);
         }
@@ -195,7 +195,7 @@ namespace Core
 
         public static void Fatal(object source, object message, Exception exception)
         {
-            Task.Run(() => SendTelegram("#" + Environment.MachineName + " | " + message + " | " + exception.Message));
+            //Task.Run(() => SendTelegram("#" + Environment.MachineName + " | " + message + " | " + exception.Message));
 
             Fatal(source.GetType(), message, exception);
         }

@@ -1,11 +1,13 @@
 ﻿@model Core.Repositories.PostType
 @Html.AntiForgeryToken()
 <div style="padding: 20px">
-
-    <div class="tabbable-custom ">
+    <div class="tabbable-custom">
         <ul class="nav nav-tabs ">
             <li class="active">
                 <a href="#tab_posttypeconfig" data-toggle="tab" aria-expanded="true"> Config </a>
+            </li>
+            <li class="">
+                <a href="#tab_termtaxonomy" data-toggle="tab" aria-expanded="false"> Term Taxonomy </a>
             </li>
             <li class="">
                 <a href="#tab_postmeta" data-toggle="tab" aria-expanded="false"> Post Meta </a>
@@ -27,6 +29,12 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="control-label col-md-3" for="UrlKey">Url Key</label>
+                        <div class="col-md-9">
+                            @Html.MetronicTextBoxFor(model => model.UrlKey)
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="control-label col-md-3" for="ViewPath">View Path</label>
                         <div class="col-md-9">
                             @Html.MetronicTextBoxFor(model => model.ViewPath)
@@ -36,6 +44,18 @@
                         <label class="control-label col-md-3" for="TermViewPath">Term View Path</label>
                         <div class="col-md-9">
                             @Html.MetronicTextBoxFor(model => model.TermViewPath)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="DisplayOrder">Order</label>
+                        <div class="col-md-9">
+                            @Html.MetronicTextBoxFor(model => model.DisplayOrder)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="Icon">Icon</label>
+                        <div class="col-md-9">
+                            @Html.MetronicTextBoxFor(model => model.Icon)
                         </div>
                     </div>
                     <div class="form-group">
@@ -88,6 +108,26 @@
                     </div>
                 </div>
             </div>
+            <div class="tab-pane" id="tab_termtaxonomy">
+                <div data-bind="foreach: list">
+                    <div class="form-inline" style="padding: 10px">
+                        <div class="form-group">
+                            <input type="text" data-bind="value:key" placeholder="Key" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <select data-bind="options: $parent.taxonomies,value: taxonomy" class="form-control"> </select>
+                            <span class="badge badge-danger" data-bind="click:$parent.removeItem" style="cursor: pointer;margin-left: 5px">
+                                X
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+                <div style="margin-top: 10px">
+                    <input type="hidden" name="TermTaxonomyList" data-bind="attr: {value:  getJson() }" />
+                    <button type="button" class="btn btn-success" data-bind="click:addItem"><i class="fa fa-plus-circle"></i> Add</button>
+                </div>
+            </div>
             <div class="tab-pane" id="tab_postmeta">
                 <div data-bind="foreach: list">
                     <div class="form-inline" style="padding: 10px">
@@ -109,7 +149,7 @@
                 </div>
             </div>
             <div class="tab-pane" id="tab_postmedia">
-                 <div data-bind="foreach: list">
+                <div data-bind="foreach: list">
                     <div class="form-inline" style="padding: 10px">
                         <div class="form-group">
                             <input type="text" data-bind="value:key" placeholder="Key" class="form-control">
@@ -124,7 +164,7 @@
 
                 </div>
                 <div style="margin-top: 10px">
-                    <input type="hidden" name="PostMetaFields" data-bind="attr: {value:  getJson() }" />
+                    <input type="hidden" name="PostMediaList" data-bind="attr: {value:  getJson() }" />
                     <button type="button" class="btn btn-success" data-bind="click:addItem"><i class="fa fa-plus-circle"></i> Add</button>
                 </div>
             </div>
@@ -142,34 +182,80 @@
     </div>
 </div>
 
-
 <script>
-    var MetaItem = function(data) {
-            var self = this;
-            data = data || {};
-            self.key = ko.observable(data.key || '');
-            self.type = ko.observable(data.type || '');
-        },
-        importItem = function(items) {
+    var TaxonomyItem = function (data) {
+        var self = this;
+        data = data || {};
+        self.key = ko.observable(data.key || '');
+        self.taxonomy = ko.observable(data.taxonomy || '');
+    },
+        importItem = function (items) {
             return $.map(items || [],
-                function(elm) {
+                function (elm) {
+                    return new TaxonomyItem(elm);
+                });
+        };
+    var taxonomyviewmodel,
+        TaxonomyItemviewmodel = function () {
+            var list = ko.observableArray(),
+                taxonomies = ["tree", "tag", "dropdown"],
+                addItem = function () {
+                    list.push(new TaxonomyItem());
+                },
+                removeItem = function (data) {
+                    list.remove(data);
+                },
+                getJson = function () {
+                    return ko.toJSON(list);
+                },
+                initModel = function (data) {
+                    var l = importItem(data);
+                    list(l);
+                };
+            return {
+                taxonomies: taxonomies,
+                getJson: getJson,
+                list: list,
+                addItem: addItem,
+                initModel: initModel,
+                removeItem: removeItem
+            };
+        },
+
+        taxonomy_init = function (data) {
+            taxonomyviewmodel = new TaxonomyItemviewmodel();
+            taxonomyviewmodel.initModel(data);
+            ko.applyBindings(taxonomyviewmodel, $("#tab_termtaxonomy")[0]);
+        };
+    taxonomy_init(@Html.Raw(Model.TermTaxonomyList));
+</script>
+<script>
+    var MetaItem = function (data) {
+        var self = this;
+        data = data || {};
+        self.key = ko.observable(data.key || '');
+        self.type = ko.observable(data.type || '');
+    },
+        importItem = function (items) {
+            return $.map(items || [],
+                function (elm) {
                     return new MetaItem(elm);
                 });
         };
     var metaviewmodel,
-        MetaItemviewmodel = function() {
+        MetaItemviewmodel = function () {
             var list = ko.observableArray(),
-                metatypes = ["text", "numeric"],
-                addItem = function() {
+                metatypes = ["text","multiline","editor", "numeric"],
+                addItem = function () {
                     list.push(new MetaItem());
                 },
-                removeItem = function(data) {
+                removeItem = function (data) {
                     list.remove(data);
                 },
-                getJson = function() {
+                getJson = function () {
                     return ko.toJSON(list);
                 },
-                initModel = function(data) {
+                initModel = function (data) {
                     var l = importItem(data);
                     list(l);
                 };
@@ -183,41 +269,40 @@
             };
         },
 
-        meta_init = function(data) {
+        meta_init = function (data) {
             metaviewmodel = new MetaItemviewmodel();
             metaviewmodel.initModel(data);
             ko.applyBindings(metaviewmodel, $("#tab_postmeta")[0]);
         };
     meta_init(@Html.Raw(Model.PostMetaFields));
 </script>
-
 <script>
-    var MediaItem = function(data) {
-            var self = this;
-            data = data || {};
-            self.key = ko.observable(data.key || '');
-            self.type = ko.observable(data.type || '');
-        },
-        importItem = function(items) {
+    var MediaItem = function (data) {
+        var self = this;
+        data = data || {};
+        self.key = ko.observable(data.key || '');
+        self.type = ko.observable(data.type || '');
+    },
+        importItem = function (items) {
             return $.map(items || [],
-                function(elm) {
+                function (elm) {
                     return new MediaItem(elm);
                 });
         };
     var mediaviewmodel,
-        MediaItemviewmodel = function() {
+        MediaItemviewmodel = function () {
             var list = ko.observableArray(),
-                metatypes = ["text", "numeric"],
-                addItem = function() {
+                metatypes = ["image", "gallery", "video", "file"],
+                addItem = function () {
                     list.push(new MediaItem());
                 },
-                removeItem = function(data) {
+                removeItem = function (data) {
                     list.remove(data);
                 },
-                getJson = function() {
+                getJson = function () {
                     return ko.toJSON(list);
                 },
-                initModel = function(data) {
+                initModel = function (data) {
                     var l = importItem(data);
                     list(l);
                 };
@@ -231,7 +316,7 @@
             };
         },
 
-        media_init = function(data) {
+        media_init = function (data) {
             mediaviewmodel = new MediaItemviewmodel();
             mediaviewmodel.initModel(data);
             ko.applyBindings(mediaviewmodel, $("#tab_postmedia")[0]);

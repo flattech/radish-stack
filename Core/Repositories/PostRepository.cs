@@ -11,7 +11,8 @@ namespace Core.Repositories
 
         public PostRepository()
         {
-            base.Init("Post", "Title,Detail,Photo,PostTypeId,IsInitial,ViewPath,Attachments,PostMetaValues,Author,Gallery,Widgets");
+            base.Init("Post", "Title,Detail,Photo,PostTypeId,IsInitial," +
+                              "ViewPath,Attachments,PostMetaValues,Author,Gallery,Widgets,PublishedDate,UrlKey");
         }
 
         public IEnumerable<Post> GetByIds(Guid[] postids, bool b)
@@ -46,71 +47,30 @@ namespace Core.Repositories
                 return null;
             }
         }
-
-        private PostTerm Map(PostTerm pt, List<Term> terms)
+        private Post Map(Post p, List<PostTerm> terms)
         {
-            pt.Term = terms.SingleOrDefault(x => x.Id == pt.TermId);
+            p.PostTerms = terms.Where(x => x.PostId == p.Id).ToList();
+            return p;
+        }
+        private PostTerm Map(PostTerm pt, List<Term> postterms)
+        {
+            pt.Term = postterms.SingleOrDefault(x => x.Id == pt.TermId);
             return pt;
         }
-        public IEnumerable<Post> GetByType(Guid posttypeid)
-        {
-            throw new NotImplementedException();
-        }
 
-
-        public IList<Post> GetByType(Guid posttypeid, bool published, bool random, bool postOrder, int size = 12)
+        public IList<Post> GetPosts(Guid posttypeid, PostSatusEnum status, int page, int size = 12)
         {
-            var query = "Select * Post Where PostTypeId =" + posttypeid + "or PostTypeId =0 ";
-            if (published)
-                query += "and status =" + (int)PostSatusEnum.Published + " ";
-            if (postOrder)
+            var postids = "Select Id from Post where PostTypeId=@Id and Status!=-100 order by PublishedDate desc";
+            var posts = $"Select * from Post where Id IN  ({postids})";
+            var pt = $"Select * From PostTerm WHERE PostId IN  ({postids}) and Status!=-100;";
+            var t = "Select t.Id,t.Title,t.TaxonomyId From Term t inner join PostTerm " +
+                    $"pt on t.id=pt.TermId WHERE   pt.Status!=-100 and pt.PostId IN  ({postids}) ;";
+            using (var results = QueryMultiple(t + pt + posts, new { Id= posttypeid }))
             {
-                query += "Order by Asc ";
+                var terms = results.Read<Term>().ToList();
+                var postterms = results.Read<PostTerm>().Select(x => Map(x, terms)).ToList();
+                return results.Read<Post>().Select(x => Map(x, postterms)).ToList();
             }
-            //else if (random)
-            //{
-            //    query = "Order by Asc";
-
-            //    query = query.OrderBy(x => Guid.NewGuid());
-            //}
-            else
-            {
-                query += "Order by CreationDate Desc ";
-            }
-
-            query += "";
-
-            using (var results = QueryMultiple(query))
-            {
-                var terms = results.Read<Post>().ToList();
-                //var postterms = results.Read<PostTerm>().Select(x => Map(x, terms)).ToList();
-                //var post = results.Read<Post>().SingleOrDefault();
-                //if (post != null)
-                //{
-                //    post.PostTerms = postterms;
-                //    return post;
-                //}
-                return null;
-            }
-
-
-            //return
-            //    query.Where(x => x.PostTypeId == type || type == 0)
-            //        //.IncludeProperties(x => x.FeaturedImage)
-            //        .IncludeProperties(x => x.PostType)
-            //        .IncludeProperties(x => x.PostTerms.Select(z => z.Term)).
-            //       Take(size).ToList();
-        }
-
-
-        public IQueryable<Post> GetForGrid(int posttypeid, bool b, int termid)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteWidget(PostWidget postWidget)
-        {
-            throw new NotImplementedException();
         }
     }
 
@@ -130,7 +90,9 @@ namespace Core.Repositories
             this.PostWidgets = new List<PostWidget>();
         }
 
+        public DateTime PublishedDate { get; set; }
         public DateTime LastModified { get; set; }
+        public string UrlKey { get; set; }
         public string Title { get; set; }
         public string Widgets { get; set; }
         public string Photo { get; set; }

@@ -59,7 +59,7 @@ namespace Web.Helpers.Themes
 
         protected virtual string GetCurrentTheme()
         {
-            var themeContext = AppConfigs.Instance.Theme;
+            var themeContext = AppSettings.Instance.Theme;
             if (themeContext == null || string.IsNullOrEmpty(themeContext.ThemeName))
                 themeContext = new ThemeConfig
                 {

@@ -27,7 +27,7 @@
     public enum TermTypeEnum : int
     {
         NotSet = -1,
-        Category = 10,
+        Tree = 10,
         Tag = 20
     }
  

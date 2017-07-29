@@ -10,8 +10,8 @@ namespace Core.Repositories
         public PostTypeRepository()
         {
             base.Init("PostType", "Title,ViewPath,DisplayOrder,Icon,EnableViewPath," +
-                                  "EnableWidgets,PostMediaList,PostMetaFields,TermViewPath,IsSystem,IsActive,EnableCategories" +
-                                  ",EnableGallery,EnableSummary,EnableDescription,EnableTags,EnableFeatureImage");
+                                  "EnableWidgets,PostMediaList,PostMetaFields,TermTaxonomyList,TermViewPath,IsSystem,IsActive,EnableCategories" +
+                                  ",EnableGallery,EnableSummary,EnableDescription,EnableTags,EnableFeatureImage,UrlKey");
             postTypes = GetAll().ToList();
         }
         //public new PostType GetAll(Guid id)
@@ -27,6 +27,7 @@ namespace Core.Repositories
 
     public class PostType : BaseModel
     {
+        public string UrlKey { get; set; }
         public string Title { get; set; }
         public string ViewPath { get; set; }
         public int DisplayOrder { get; set; }
@@ -44,6 +45,7 @@ namespace Core.Repositories
         public string PostMetaFields { get; set; }
         public string PostMediaList { get; set; }
         public bool EnableWidgets { get; set; }
+        public string TermTaxonomyList { get; set; }
     }
 
 }

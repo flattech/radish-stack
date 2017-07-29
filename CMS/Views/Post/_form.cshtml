@@ -3,7 +3,7 @@
 @Html.AntiForgeryToken()
 @{ var area = Site.AreaName;}
 <div>
-   @Html.MetronicBackButton(Url.Action("Index", "Post",new{posttypeid=Model.PostType.Id}))
+    @Html.MetronicBackButton(Url.Action("Index", "Post", new { posttypeid = Model.PostType.Id }))
 </div>
 <div class="margin-bottom-10"> </div>
 <div class="row">
@@ -12,6 +12,11 @@
             <div class="form-group">
                 <input class="form-control" placeholder="@AppResources.Instance.Get("EnterTitleHere")" id="Title" name="Title" type="text" value="@Model.Title">
             </div>
+
+            <div class="form-group">
+                <input class="form-control" placeholder="@AppResources.Instance.Get("EnterUrlKeyHere")" id="UrlKey" name="UrlKey" type="text" value="@Model.UrlKey">
+            </div>
+
             <div class="panel-group accordion" id="accordiondetails">
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -32,22 +37,25 @@
                     </div>
                 </div>
             </div>
-            <div class="panel-group accordion" id="metaaccordiondetails">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a class="accordion-toggle accordion-toggle-styled " data-toggle="collapse" data-parent="#metacollapse_details" href="#collapse_details">
-                                @AppResources.Instance.Get("Meta Fields")
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="metacollapse_details" class="panel-collapse collapse in ">
-                        <div class="panel-body">
+            @if (!string.IsNullOrEmpty(Model.PostType.PostMetaFields))
+            {
+                <div class="panel-group accordion" id="metaaccordiondetails">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle accordion-toggle-styled " data-toggle="collapse" data-parent="#metaaccordiondetails" href="#metacollapse_details">
+                                    @AppResources.Instance.Get("Meta Fields")
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="metacollapse_details" class="panel-collapse collapse in ">
+                            <div class="panel-body">
                                 @Html.Partial("_form.Meta")
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            }
         </div>
         <div>
         </div>
@@ -62,7 +70,7 @@
         }
     </div>
     <div class="col-md-3">
-      @Html.Partial("_form.Sidebar")
+        @Html.Partial("_form.Sidebar")
     </div>
 </div>
 

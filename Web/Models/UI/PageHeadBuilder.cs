@@ -99,7 +99,7 @@ namespace Web.Models.UI
         public virtual string GenerateTitle(bool addDefaultTitle)
         {
             string result = "";
-            var specificTitle = string.Join(AppConfigs.Instance.SeoSettings.PageTitleSeparator, _titleParts.AsEnumerable().Reverse().ToArray());
+            var specificTitle = string.Join(AppSettings.Instance.SeoSettings.PageTitleSeparator, _titleParts.AsEnumerable().Reverse().ToArray());
             if (!String.IsNullOrEmpty(specificTitle))
             {
                 //if (addDefaultTitle)
@@ -130,7 +130,7 @@ namespace Web.Models.UI
             else
             {
                 //store name only
-                result = AppConfigs.Instance.SeoSettings.DefaultTitle;
+                result = AppSettings.Instance.SeoSettings.DefaultTitle;
             }
             return result;
         }
@@ -153,7 +153,7 @@ namespace Web.Models.UI
         public virtual string GenerateMetaDescription()
         {
             var metaDescription = string.Join(", ", _metaDescriptionParts.AsEnumerable().Reverse().ToArray());
-            var result = !String.IsNullOrEmpty(metaDescription) ? metaDescription : AppConfigs.Instance.SeoSettings.DefaultMetaDescription;
+            var result = !String.IsNullOrEmpty(metaDescription) ? metaDescription : AppSettings.Instance.SeoSettings.DefaultMetaDescription;
             return result;
         }
 
@@ -175,7 +175,7 @@ namespace Web.Models.UI
         public virtual string GenerateMetaKeywords()
         {
             var metaKeyword = string.Join(", ", _metaKeywordParts.AsEnumerable().Reverse().ToArray());
-            var result = !String.IsNullOrEmpty(metaKeyword) ? metaKeyword :  AppConfigs.Instance.SeoSettings.DefaultMetaKeywords;
+            var result = !String.IsNullOrEmpty(metaKeyword) ? metaKeyword :  AppSettings.Instance.SeoSettings.DefaultMetaKeywords;
             return result;
         }
 
@@ -219,7 +219,7 @@ namespace Web.Models.UI
             if (!bundleFiles.HasValue)
             {
                 //use setting if no value is specified
-                bundleFiles = AppConfigs.Instance.SeoSettings.EnableJsBundling 
+                bundleFiles = AppSettings.Instance.SeoSettings.EnableJsBundling 
                     && BundleTable.EnableOptimizations;
             }
             if (bundleFiles.Value)
@@ -318,7 +318,7 @@ namespace Web.Models.UI
             if (!bundleFiles.HasValue)
             {
                 //use setting if no value is specified
-                bundleFiles =  AppConfigs.Instance.SeoSettings.EnableCssBundling 
+                bundleFiles =  AppSettings.Instance.SeoSettings.EnableCssBundling 
                     && BundleTable.EnableOptimizations;
             }
             if (bundleFiles.Value)

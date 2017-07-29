@@ -135,6 +135,8 @@ namespace CMS.Controllers
             dbMenuItem.IncludeInFooter = form.IncludeInFooter;
             dbMenuItem.IncludeInHeader = form.IncludeInHeader;
             dbMenuItem.Url = form.Url;
+            dbMenuItem.IsMega = form.IsMega;
+            dbMenuItem.WidgetId = form.WidgetId;
             dbMenuItem.ParentId = form.ParentId;
             return dbMenuItem;
         }
@@ -150,7 +152,9 @@ namespace CMS.Controllers
                 IncludeInFooter = menuItem.IncludeInFooter,
                 IncludeInHeader = menuItem.IncludeInHeader,
                 EntityId = menuItem.EntityId,
+                IsMega = menuItem.IsMega,
                 DisplayOrder = menuItem.DisplayOrder,
+                WidgetId = menuItem.WidgetId,
                 Url = menuItem.Url,
                 IsActive = menuItem.IsActive,
                 ParentId = menuItem.ParentId,

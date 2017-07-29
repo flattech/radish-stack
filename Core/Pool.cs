@@ -7,6 +7,7 @@ namespace Core
         public static readonly Pool Instance = new Pool();
 
         public TermRepository Terms { get; set; }
+        public SettingRepository Settings { get; set; }
         public PostTypeRepository PostTypes { get; set; }
         public PostRepository Posts { get; set; }
         public PostTermRepository PostTerms { get; set; }
@@ -19,6 +20,7 @@ namespace Core
 
         private Pool()
         {
+            Settings = new SettingRepository();
             PostTypes = new PostTypeRepository();
             PostWidgets = new PostWidgetRepository();
             Terms = new TermRepository();

@@ -11,12 +11,15 @@ namespace Core.Repositories
     {
         public MenuRepository()
         {
-            base.Init("MenuItem", "Title,ParentId,EntityId,EntityName,Url,DisplayOrder,IsMega,IsActive,IncludeInHeader,IncludeInFooter");
+            base.Init("MenuItem", "Title,ParentId,EntityId,EntityName,Url,DisplayOrder,IsMega,IsActive,IncludeInHeader,IncludeInFooter,WidgetId");
         }
-
+        public new List<MenuItem> GetAll()
+        {
+            return GetAllItems("", "DisplayOrder").ToList();
+        }
         public IEnumerable<MenuItem> GetTree()
         {
-            return GetAllItems().ToList().SortMenuForTree();
+            return GetAll().SortMenuForTree();
         }
     }
 
@@ -106,6 +109,7 @@ namespace Core.Repositories
         public List<MenuItem> Children { get; set; }
         public string Icon { get; set; }
         public bool IsActive { get; set; }
+        public Guid? WidgetId { get; set; }
     }
 
 }

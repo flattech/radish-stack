@@ -1,0 +1,23 @@
+﻿@using Core.Repositories.Enums
+@model Web.Models.Post.PageViewModel.WidgetViewModel
+@if (Model != null && Model.posts != null && Model.posts.Count > 0)
+{    <div class="section" id="main-slider">
+        @foreach (var post in Model.posts)
+        {
+            <div class="post feature-post" style="background-image: url(@(post.FeaturedImage)); background-size: cover;">
+                <div class="post-content">
+                    @{ var term = post.Term.SingleOrDefault(x => x.TaxonomyId == (int)TermTypeEnum.Tree);}
+                    @if (term != null)
+                    {
+                        <div class="catagory">
+                            <a href="@Url.RouteUrl("Term", new {posttype = post.PostType.UrlKey, id = term.UrlKey })">term.Title</a>
+                        </div>
+                    }
+                    <h2 class="entry-title">
+                        <a href="@Url.RouteUrl("Post", new {posttype = post.PostType.UrlKey, id = post.Id})">@(post.Title)</a>
+                    </h2>
+                </div>
+            </div>
+            }
+    </div>
+}

@@ -3,9 +3,9 @@ using Core.Repositories;
 
 namespace Web.Models
 {
-    public class TopMenuModel
+    public class HeaderModel
     {
-        public TopMenuModel()
+        public HeaderModel()
         {
             MenuItems = new List<MenuItem>();
         }

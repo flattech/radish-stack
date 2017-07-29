@@ -1,0 +1,87 @@
+﻿@*@using System.Globalization
+@using Mentis.Alrassoul.Web.Extentions
+@using Mentis.AlRassoul.Data.Helpers
+@model Mentis.Alrassoul.Web.Models.SearchModel
+@{
+    Html.AddTitleParts(T("Search").Text);
+  
+}
+<section class="medicom-waypoint">
+    <div class="captionheader">
+        <h1>@Model.Query</h1>
+    </div>
+     Blog Content Start 
+    <div class="bg-color">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 blog-wrapper">
+                    <div id="hebele" class="blog-style-two-column">
+                        @if (Model != null && Model.Posts != null && Model.Posts.Count > 0)
+                        {
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @foreach (var product in Model.Posts.Take(3))
+                                    {
+                                        <article class="blog-item">
+                                            @if (!string.IsNullOrEmpty(product.FeaturedImage))
+                                            {
+                                                <div class="blog-thumbnail">
+                                                    <img alt="" src="@(product.FeaturedImage + "?width=400")">
+                                                    <div class="blog-date">
+                                                        <p class="day">@product.CreationDate.Day</p>
+                                                        <p class="monthyear">@product.CreationDate.ToString("MMM", CultureInfo.InvariantCulture) @product.CreationDate.Year</p>
+                                                    </div>
+                                                </div>
+                                            }
+                                            <div class="blog-content">
+                                                <h4 class="blog-title">
+                                                    <a href="#">@product.Title</a>
+                                                </h4>
+                                                <p>@Html.Raw(product.ShortDescription)...</p>
+                                                <a href="@Url.RouteUrl("Post", new {product.SeName})" title="@product.Title" class="btn btn-default btn-mini btn-rounded">@T("MORE")</a>
+                                            </div>
+                                        </article>
+                                    }
+                                </div>
+                                <div class="col-md-6">
+                                    @foreach (var product in Model.Posts.Skip(3).Take(3))
+                                    {
+                                        <article class="blog-item">
+                                            @if (!string.IsNullOrEmpty(product.FeaturedImage ))
+                                            {
+                                                <div class="blog-thumbnail">
+                                                    <img alt="" src="@(product.FeaturedImage + "?width=400")">
+                                                    <div class="blog-date">
+                                                        <p class="day">@product.CreationDate.Day</p>
+                                                        <p class="monthyear">@product.CreationDate.ToString("MMM", CultureInfo.InvariantCulture) @product.CreationDate.Year</p>
+                                                    </div>
+                                                </div>
+                                            }
+                                            <div class="blog-content">
+                                                <h4 class="blog-title">
+                                                    <a href="#">@product.Title</a>
+                                                </h4>
+                                                <p>@Html.Raw(product.ShortDescription)...</p>
+                                                <a href="@Url.RouteUrl("Post", new {product.SeName})" title="@product.Title" class="btn btn-default btn-mini btn-rounded">@T("MORE")</a>
+                                            </div>
+                                        </article>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="clearfix"></div>
+                    @{
+                        var pager = Html.Pager(Model.PagingFilteringContext).QueryParam("pagenumber");
+                        if (!pager.IsEmpty())
+                        {
+                            @pager
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>*@
+

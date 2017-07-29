@@ -49,7 +49,7 @@
             <div class="panel-body">
                 <p>
                     <div >
-                        <select name="Status" id="Status">
+                        <select name="Status" id="Status" class="form-control">
                             @foreach (var e in Enum.GetValues(typeof (PostSatusEnum)))
                             {
                                 <option value="@((int) e)" selected="@((int) e == Model.Status)">@e.ToString()</option>
@@ -57,7 +57,7 @@
                         </select>
                     </div>
                     <div class="margin-bottom-10"></div>
-
+                    @Model.PublishedDate
                     <div>
                     </div>
                     <div class="margin-bottom-10"></div>

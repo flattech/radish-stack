@@ -42,6 +42,8 @@ namespace CMS.Models
         public string Gallery { get; set; }
         public string Widgets { get; set; }
         public List<MediaMini> MediaGallery { get; set; }
+        public string PublishedDate { get; set; }
+        public string UrlKey { get; set; }
     }
 
 }

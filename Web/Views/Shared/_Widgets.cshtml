@@ -1,0 +1,48 @@
+﻿@using Web.Models.Post
+@model PageViewModel
+
+@helper RenderRow(PageViewModel.RowViewModel row)
+{
+if (row.cols != null && row.cols.Any())
+{
+    var htmlrow = "<div class=\"row " + row.classname + "\">";
+    var htmlrowclose = "</div>";
+    var isrowopened = false;
+
+    foreach (var col in row.cols)
+    {
+        if (!isrowopened)
+        {
+            isrowopened = true;
+                @Html.Raw(htmlrow)
+        }
+            <div class="col-lg-@(col.lg) @col.classname">
+                @if (col.rows.Any())
+                {
+                    foreach (var colrow in col.rows)
+                    {
+                        @RenderRow(colrow)
+                    }
+                }
+                else
+                {
+
+                    foreach (var widget in col.widgets)
+                    {
+                        @Html.Partial(widget.viewPath, widget)
+                    }
+
+                }
+            </div>
+    }
+    if (isrowopened)
+    {
+            @Html.Raw(htmlrowclose)
+    }
+
+}
+}
+@foreach (var row in Model.rows)
+{
+    @RenderRow(row)
+}

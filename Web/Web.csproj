@@ -58,6 +58,10 @@
       <HintPath>..\packages\ImageResizer.Storage.4.1.9\lib\net45\ImageResizer.Storage.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Data.Edm, Version=5.8.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Data.Edm.5.8.2\lib\net40\Microsoft.Data.Edm.dll</HintPath>
       <Private>True</Private>
@@ -177,6 +181,41 @@
     <Content Include="FileNotFound.htm" />
     <Content Include="Global.asax" />
     <Content Include="App_Data\resource_en.json" />
+    <Content Include="Themes\DailyNews\Content\css\bootstrap.min.css" />
+    <Content Include="Themes\DailyNews\Content\css\font-awesome.min.css" />
+    <Content Include="Themes\DailyNews\Content\css\magnific-popup.css" />
+    <Content Include="Themes\DailyNews\Content\css\main.css" />
+    <Content Include="Themes\DailyNews\Content\css\owl.carousel.css" />
+    <Content Include="Themes\DailyNews\Content\css\responsive.css" />
+    <Content Include="Themes\DailyNews\Content\images\ico\apple-touch-icon-114-precomposed.png" />
+    <Content Include="Themes\DailyNews\Content\images\ico\apple-touch-icon-144-precomposed.png" />
+    <Content Include="Themes\DailyNews\Content\images\ico\apple-touch-icon-57-precomposed.png" />
+    <Content Include="Themes\DailyNews\Content\images\ico\apple-touch-icon-72-precomposed.png" />
+    <Content Include="Themes\DailyNews\Content\images\ico\favicon.ico" />
+    <Content Include="Themes\DailyNews\Content\images\logo.png" />
+    <Content Include="Themes\DailyNews\Content\images\others\author.png" />
+    <Content Include="Themes\DailyNews\Content\images\others\author1.png" />
+    <Content Include="Themes\DailyNews\Content\images\others\author3.png" />
+    <Content Include="Themes\DailyNews\Content\images\others\box-bg.png" />
+    <Content Include="Themes\DailyNews\Content\images\others\error.png" />
+    <Content Include="Themes\DailyNews\Content\images\others\password-icon.png" />
+    <Content Include="Themes\DailyNews\Content\images\others\s1.png" />
+    <Content Include="Themes\DailyNews\Content\images\others\s2.png" />
+    <Content Include="Themes\DailyNews\Content\images\others\s3.png" />
+    <Content Include="Themes\DailyNews\Content\images\others\s4.png" />
+    <Content Include="Themes\DailyNews\Content\images\others\user-icon.png" />
+    <Content Include="Themes\DailyNews\Content\images\others\weather1.png" />
+    <Content Include="Themes\DailyNews\Content\images\others\weather2.png" />
+    <Content Include="Themes\DailyNews\Content\js\bootstrap.min.js" />
+    <Content Include="Themes\DailyNews\Content\js\html5shiv.js" />
+    <Content Include="Themes\DailyNews\Content\js\jquery.js" />
+    <Content Include="Themes\DailyNews\Content\js\jquery.magnific-popup.min.js" />
+    <Content Include="Themes\DailyNews\Content\js\main.js" />
+    <Content Include="Themes\DailyNews\Content\js\owl.carousel.min.js" />
+    <Content Include="Themes\DailyNews\Content\js\respond.min.js" />
+    <Content Include="Themes\DailyNews\favicon.ico" />
+    <Content Include="Themes\DailyNews\index.html" />
+    <Content Include="Themes\DailyNews\news-details.html" />
     <Content Include="Themes\DefaultClean\Content\css\bootstrap.css" />
     <Content Include="Themes\DefaultClean\Content\css\bootstrap.min.css" />
     <Content Include="Themes\DefaultClean\Content\css\bootstraprtl.min.css" />
@@ -202,6 +241,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppResources.cs" />
+    <Compile Include="Controllers\WidgetController.cs" />
     <Compile Include="Controllers\SharedController.cs" />
     <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Helpers\Themes\ThemeableRazorViewEngine.cs" />
@@ -217,6 +257,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\FooterModel.cs" />
     <Compile Include="Models\Widget\Col.cs" />
     <Compile Include="Models\FormModel.cs" />
     <Compile Include="Models\Post\PageViewModel.cs" />
@@ -229,12 +270,11 @@
     <Compile Include="Models\Term\CategorySimpleModel.cs" />
     <Compile Include="Models\Common\ContactUsModel.cs" />
     <Compile Include="Models\Common\FaviconModel.cs" />
-    <Compile Include="Models\Common\FooterModel.cs" />
     <Compile Include="Models\Common\HeaderLinksModel.cs" />
     <Compile Include="Models\Common\PagerModel.cs" />
     <Compile Include="Models\Common\SitemapModel.cs" />
     <Compile Include="Models\Widget\RenderWidgetModel.cs" />
-    <Compile Include="Models\TopMenuModel.cs" />
+    <Compile Include="Models\HeaderModel.cs" />
     <Compile Include="Models\UI\AsIsBundleOrderer.cs" />
     <Compile Include="Models\UI\IPageHeadBuilder.cs" />
     <Compile Include="Models\UI\LayoutExtensions.cs" />
@@ -268,7 +308,7 @@
     <Content Include="Views\Common\Favicon.cshtml" />
     <Content Include="Views\Shared\Footer.cshtml" />
     <Content Include="Views\Common\Sitemap.cshtml" />
-    <Content Include="Views\Shared\TopMenu.cshtml" />
+    <Content Include="Views\Shared\Header.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Post\PostDetail.Simple.cshtml" />
     <Content Include="Views\Post\_PostBreadcrumb.cshtml" />
@@ -277,6 +317,19 @@
     <Content Include="Views\Term\Index.cshtml" />
     <Content Include="Views\Term\TermNavigation.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Themes\DailyNews\Views\_ViewStart.cshtml" />
+    <Content Include="Themes\DailyNews\Views\Common\Footer.cshtml" />
+    <Content Include="Themes\DailyNews\Views\Common\Search.cshtml" />
+    <Content Include="Themes\DailyNews\Views\Home\Index.cshtml" />
+    <Content Include="Themes\DailyNews\Views\Post\PostDetail.Simple.cshtml" />
+    <Content Include="Themes\DailyNews\Views\Shared\_Root.cshtml" />
+    <Content Include="Themes\DailyNews\Views\Shared\photo.cshtml" />
+    <Content Include="Themes\DailyNews\Views\Shared\slider.cshtml" />
+    <Content Include="Themes\DailyNews\Views\Shared\Header.cshtml" />
+    <Content Include="Themes\DailyNews\Views\Shared\widget.Slider.cshtml" />
+    <Content Include="Themes\DailyNews\Views\web.config" />
+    <Content Include="Themes\DailyNews\Views\Shared\Footer.cshtml" />
+    <Content Include="Views\Shared\_Widgets.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

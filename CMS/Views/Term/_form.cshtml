@@ -26,6 +26,12 @@
         </div>
     }
     <div class="form-group">
+        <label class="control-label col-md-3" for="UrlKey">Url Key</label>
+        <div class="col-md-9">
+            @Html.MetronicTextBoxFor(model => model.UrlKey)
+        </div>
+    </div>
+    <div class="form-group">
         @Html.MetronicLabelFor(model => model.IsActive)
         <div class="col-md-9">
             @Html.CheckBoxFor(model => model.IsActive)

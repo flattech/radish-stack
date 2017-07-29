@@ -64,7 +64,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppConfigs.cs" />
+    <Compile Include="AppSettings.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Repositories\BaseRepository.cs" />
     <Compile Include="DB\ConnectionManager.cs" />
@@ -75,6 +75,7 @@
     <Compile Include="Repositories\Enums\PostTypeEnum.cs" />
     <Compile Include="Repositories\Enums\TermTypeEnum.cs" />
     <Compile Include="Repositories\Enums\UserTypeEnum.cs" />
+    <Compile Include="Repositories\SettingRepository.cs" />
     <Compile Include="Repositories\MediaRepository.cs" />
     <Compile Include="Repositories\MenuRepository.cs" />
     <Compile Include="Repositories\PostWidgetRepository.cs" />

@@ -14,7 +14,7 @@ namespace Web.Controllers
             var item = Pool.Instance.Posts.GetObject(id);
                if (item == null)
                    return null;
-               var model = item.ToModel();
+               var model = item.ToDetailsModel();
 
                //if (item.PostWidgets.Any())
               //     model.Widgets = FillWidgetsDatasource(item);

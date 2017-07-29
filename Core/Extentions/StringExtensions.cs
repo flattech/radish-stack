@@ -7,6 +7,12 @@ namespace Core.Extentions
 {
     public static class StringExtensions
     {
+        public static T FromJson<T>(this string str1)
+        {
+            if (string.IsNullOrEmpty(str1))
+                return default(T);
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(str1);
+        }
 
         public static int[] ToIntegers(this string str1)
         {

@@ -9,13 +9,13 @@ namespace Core.Repositories
     {
         public TermRepository()
         {
-            base.Init("Term", "Title,ParentId,TaxonomyId,IncludeInTopMenu,PostTypeId,DisplayOrder,IsPublic,IsActive");
+            base.Init("Term", "Title,ParentId,TaxonomyId,IncludeInTopMenu,PostTypeId,DisplayOrder,IsPublic,IsActive,UrlKey");
         }
         
         public IList<Term> GetTree(Guid postTypeId)
         {
             return
-                GetAllItems("TaxonomyId=" + (int)(TermTypeEnum.Category) + " and PostTypeId='" + postTypeId + "'").ToList().SortTermsForTree();
+                GetAllItems("TaxonomyId=" + (int)(TermTypeEnum.Tree) + " and PostTypeId='" + postTypeId + "'").ToList().SortTermsForTree();
         }
 
         public IList<Term> GetAll(TermTypeEnum t)
@@ -246,6 +246,7 @@ namespace Core.Repositories
         public virtual PostType PostType { get; set; }
         public bool IsPublic { get; set; }
         public bool IsActive { get; set; }
+        public string UrlKey { get; set; }
     }
 
 }

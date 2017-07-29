@@ -38,8 +38,8 @@
             </li>
             @if (item.EnableCategories)
             {
-                <li class="sidemenuli @(selected && controllerName == "term" && taxonomyid == (int)TermTypeEnum.Category ? "active" : "")">
-                    <a class="sidemenu" href="@Url.Action("Index", "Term", new {posttypeid = item.Id, taxonomyid = (int) TermTypeEnum.Category})">
+                <li class="sidemenuli @(selected && controllerName == "term" && taxonomyid == (int)TermTypeEnum.Tree ? "active" : "")">
+                    <a class="sidemenu" href="@Url.Action("Index", "Term", new {posttypeid = item.Id, taxonomyid = (int) TermTypeEnum.Tree})">
                         <i class="icon-anchor"></i>
                         <span class="title">@AppResources.Instance.Get("Categories")</span>
                     </a>

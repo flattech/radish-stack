@@ -52,6 +52,8 @@ namespace CMS.Models
         public bool IncludeInFooter { get; set; }
         public bool IncludeInHeader { get; set; }
         public bool EnableMedia { get; set; }
+        public bool IsMega { get; set; }
+        public Guid? WidgetId { get; set; }
     }
     public partial class MenuItemLocalizedModel
     {

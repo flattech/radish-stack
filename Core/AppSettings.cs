@@ -1,42 +1,45 @@
-﻿namespace Core
+﻿using Core.Extentions;
+
+namespace Core
 {
-    public class AppConfigs
+    public class AppSettings
     {
-        public static readonly AppConfigs Instance = new AppConfigs();
-        
+        public static readonly AppSettings Instance = new AppSettings();
+
         public ThemeConfig Theme { get; set; }
         public SeoSettings SeoSettings { get; set; }
 
 
-        private AppConfigs()
+        private AppSettings()
         {
             Theme = new ThemeConfig();
             SeoSettings = new SeoSettings();
-           // Fill();
+            Fill();
         }
 
-        //private void Fill()
-        //{
-        //    foreach (var config in GlobalConfigs.Entries)
-        //    {
-        //        switch (config.Key)
-        //        {
-        //            case (int)ConfigsKey.Theme:
-        //                Theme = config.Value.FromJson<ThemeConfig>();
-        //                break;
-                  
-        //        }
-        //    }
-        //}
+        private void Fill()
+        {
+            foreach (var config in Pool.Instance.Settings.GetAll())
+            {
+                switch (config.Type)
+                {
+                    case (int)SettingsType.Theme:
+                        Theme = config.Value.FromJson<ThemeConfig>();
+                        break;
+                }
+            }
+        }
 
+        
         public void Refresh()
         {
-           // Fill();
+            Fill();
         }
     }
     public class SeoSettings
     {
 
+        public string Site { get; set; }
         public string PageTitleSeparator { get; set; }
 
         //public PageTitleSeoAdjustment PageTitleSeoAdjustment { get; set; }
@@ -78,18 +81,9 @@
         public string ThemeName { get; set; }
 
     }
-    public enum ConfigsKey
+    public enum SettingsType
     {
-        Styling = 500,
-        Services = 510,
-        Cdn = 520,
-        OrganizationInfo = 540,
-        Newsletter = 570,
-        Analytics = 580,
-        Language = 590,
-        MediaConfig = 610,
-        Misc = 700,
-        Theme = 800,
-        SeoSettings = 900
+        Theme = 10,
+        Seo = 20
     }
 }

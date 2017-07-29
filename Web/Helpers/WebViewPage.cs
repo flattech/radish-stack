@@ -119,7 +119,7 @@ namespace Web.Helpers
         /// <returns></returns>
         public bool ShouldUseRtlTheme()
         {
-            var supportRtl = AppConfigs.Instance.Theme.SupportRtl;
+            var supportRtl = AppSettings.Instance.Theme.SupportRtl;
             //_workContext.WorkingLanguage.Rtl;
             //if (supportRtl)
             //{

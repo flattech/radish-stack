@@ -27,7 +27,7 @@ namespace CMS.Controllers
             var tax = (TermTypeEnum) taxonomyid;
             List<Term> terms;
 
-            if (tax == TermTypeEnum.Category)
+            if (tax == TermTypeEnum.Tree)
             {
                 var list = _repository.GetTree(posttypeid);
                 terms = list.Select(x => new Term {Id = x.Id, Title = x.GetFormattedBreadCrumb(list, "--")}).ToList();
@@ -155,6 +155,7 @@ namespace CMS.Controllers
             dbterm.Title = form.Title;
             dbterm.IsActive = form.IsActive;
             dbterm.IsPublic = form.IsPublic;
+            dbterm.UrlKey = form.UrlKey;
             dbterm.DisplayOrder = form.DisplayOrder;
             dbterm.IncludeInTopMenu = form.IncludeInTopMenu;
 
@@ -179,6 +180,7 @@ namespace CMS.Controllers
                 Taxonomy = (TermTypeEnum) term.TaxonomyId,
                 DisplayOrder = term.DisplayOrder,
                 IsActive = term.IsActive,
+                UrlKey = term.UrlKey,
                 IsPublic = term.IsPublic,
                 PostTypeId = term.PostTypeId,
                 TaxonomyId = term.TaxonomyId,

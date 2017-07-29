@@ -32,7 +32,7 @@ namespace Web.Models.UI
         /// <param name="addDefaultTitle">A value indicating whether to insert a default title</param>
         /// <param name="part">Title part</param>
         /// <returns>Generated string</returns>
-        public static MvcHtmlString NopTitle(this HtmlHelper html, bool addDefaultTitle, string part = "")
+        public static MvcHtmlString RenderTitle(this HtmlHelper html, bool addDefaultTitle, string part = "")
         {
             var pageHeadBuilder = new PageHeadBuilder();
             html.AppendTitleParts(part);
