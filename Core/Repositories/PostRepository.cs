@@ -34,6 +34,7 @@ namespace Core.Repositories
             var pt = "Select * From PostTerm WHERE PostId=@Id and Status!=-100;";
             var t = "Select t.Id,t.Title,t.TaxonomyId From Term t inner join PostTerm pt on t.id=pt.TermId WHERE  " +
                     " pt.Status!=-100 and pt.PostId=@Id ;";
+
             using (var results = QueryMultiple(t + pt + p, new { id }))
             {
                 var terms = results.Read<Term>().ToList();
