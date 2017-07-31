@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web.Mvc;
 using CMS.Models;
 using Core;
+using Core.Extentions;
 using Core.Repositories;
 using Core.Repositories.Enums;
 using Newtonsoft.Json;
@@ -195,6 +196,8 @@ namespace CMS.Controllers
             post.PublishedDate = DateTime.UtcNow;
 
             post.Title = form.Title;
+            if (string.IsNullOrEmpty(form.UrlKey) || (!string.IsNullOrEmpty(post.Title) && post.Title != form.Title))
+                post.UrlKey = form.Title.GenerateSlug();
             post.ViewPath = form.ViewPath;
             post.Widgets = form.Widgets;
             post.Status = form.Status;
@@ -258,11 +261,11 @@ namespace CMS.Controllers
             };
 
             form.PostAttachments = FillPostMedia(post);
-            FillPostMeta(form,post);
+            FillPostMeta(form, post);
             return form;
         }
 
-        private void FillPostMeta(PostForm form,Post post)
+        private void FillPostMeta(PostForm form, Post post)
         {
             if (!string.IsNullOrEmpty(post.PostType.PostMetaFields))
             {

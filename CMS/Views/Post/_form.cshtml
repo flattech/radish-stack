@@ -11,11 +11,12 @@
         <div class="form-body">
             <div class="form-group">
                 <input class="form-control" placeholder="@AppResources.Instance.Get("EnterTitleHere")" id="Title" name="Title" type="text" value="@Model.Title">
+                @Html.HiddenFor(x => x.UrlKey)
             </div>
 
-            <div class="form-group">
-                <input class="form-control" placeholder="@AppResources.Instance.Get("EnterUrlKeyHere")" id="UrlKey" name="UrlKey" type="text" value="@Model.UrlKey">
-            </div>
+            @*<div class="form-group">
+                    <input class="form-control" placeholder="@AppResources.Instance.Get("EnterUrlKeyHere")" id="UrlKey" name="UrlKey" type="text" value="@Model.UrlKey">
+                </div>*@
 
             <div class="panel-group accordion" id="accordiondetails">
                 <div class="panel panel-default">

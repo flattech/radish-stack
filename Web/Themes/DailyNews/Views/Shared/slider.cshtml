@@ -10,11 +10,11 @@
                     @if (term != null)
                     {
                         <div class="catagory">
-                            <a href="@*@Url.RouteUrl("Term", new {posttype = "", id = term.UrlKey })*@">term.Title</a>
+                            <a href="@Url.RouteUrl("Term", new {posttype = post.PostType.UrlKey, id = term.UrlKey })">@term.Title</a>
                         </div>
                     }
                     <h2 class="entry-title">
-                        <a href="@Url.Action("Details","Post", new { id = post.Id})">@(post.Title)</a>
+                        <a href="@Url.RouteUrl("Post", new {posttype=post.PostType.UrlKey, id = post.Id})">@(post.Title)</a>
                     </h2>
                 </div>
             </div>

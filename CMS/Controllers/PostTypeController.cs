@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Core;
+using Core.Extentions;
 using Core.Repositories;
 
 
@@ -46,14 +47,16 @@ namespace CMS.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(PostType target)
+        public ActionResult Create(PostType form)
         {
             try
             {
+                if (string.IsNullOrEmpty(form.Title) || string.IsNullOrEmpty(form.UrlKey))
+                    ModelState.AddModelError("", "Title and UrlKey are Required");
                 if (ModelState.IsValid)
                 {
-                    _repository.Save(target);
-                    AlertSuccessMessage(AppResources.Instance.Get("SuccessfullyDeleted") + " " + target.Title);
+                    _repository.Save(form);
+                    AlertSuccessMessage(AppResources.Instance.Get("SuccessfullySaved") + " " + form.Title);
                     return RedirectToAction("Index");
                 }
             }
@@ -61,7 +64,7 @@ namespace CMS.Controllers
             {
                 AlertErrorMessage(ex.Message);
             }
-            return View(target);
+            return View(form);
         }
 
         public ActionResult Edit(Guid id)
@@ -76,6 +79,9 @@ namespace CMS.Controllers
         {
             try
             {
+                if(string.IsNullOrEmpty(form.Title) || string.IsNullOrEmpty(form.UrlKey))
+                    ModelState.AddModelError("","Title and UrlKey are Required");
+
                 if (ModelState.IsValid)
                 {
                     _repository.Save(form);

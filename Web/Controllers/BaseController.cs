@@ -51,12 +51,14 @@ namespace Web.Controllers
 
             if (w.ReturnPosts)
             {
-                var posts = new List<Post>();
+              
+                var posts = _postrepository.GetPosts(new PostSearch
+                {
+                    PostIds = !string.IsNullOrEmpty(w.Posts) ? w.Posts.ToGuids() : null,
+                    PostTypeId = !string.IsNullOrEmpty(w.PostType) ? Guid.Parse(w.PostType) : (Guid?)null,
+                    Status = PostSatusEnum.Published
+                }, 1, w.PostCount).ToList();
 
-                if (!string.IsNullOrEmpty(w.Posts))
-                    posts = _postrepository.GetByIds(w.Posts.ToGuids(), true).ToList();
-                else if (!string.IsNullOrEmpty(w.PostType))
-                    posts =_postrepository.GetPosts(Guid.Parse(w.PostType), PostSatusEnum.Published,1, w.PostCount).ToList();
                 //else if (!string.IsNullOrEmpty(w.Categories))
                 //    posts = _postrepository.GetByIds(w.Categories.ToGuids(), true).ToList();
                 //else if (!string.IsNullOrEmpty(w.Tags))

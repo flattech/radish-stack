@@ -43,7 +43,7 @@ namespace Web.Extentions
                 // SeName = post.GetSeName(),
                 PostTerms = post.PostTerms,
                 CreationDate = post.CreationDate,
-                TemplateViewPath = !string.IsNullOrEmpty(post.ViewPath) ? post.ViewPath : (post.PostType != null ? post.PostType.ViewPath : "PostDetail.Simple")
+                TemplateViewPath = !string.IsNullOrEmpty(post.ViewPath) ? post.ViewPath : (post.PostType != null && !string.IsNullOrEmpty(post.PostType.ViewPath) ? post.PostType.ViewPath : "PostDetail.Simple")
             };
 
             if (post.PostType != null && !string.IsNullOrEmpty(post.PostType.PostMetaFields))

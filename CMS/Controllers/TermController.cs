@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web.Mvc;
 using CMS.Models;
 using Core;
+using Core.Extentions;
 using Core.Repositories;
 using Core.Repositories.Enums;
 
@@ -24,13 +25,13 @@ namespace CMS.Controllers
             var q = Query("PostTypeId", posttypeid.ToString()) +
                     Query("and TaxonomyId", taxonomyid.ToString()) + QueryLike("and Title", query);
 
-            var tax = (TermTypeEnum) taxonomyid;
+            var tax = (TermTypeEnum)taxonomyid;
             List<Term> terms;
 
             if (tax == TermTypeEnum.Tree)
             {
                 var list = _repository.GetTree(posttypeid);
-                terms = list.Select(x => new Term {Id = x.Id, Title = x.GetFormattedBreadCrumb(list, "--")}).ToList();
+                terms = list.Select(x => new Term { Id = x.Id, Title = x.GetFormattedBreadCrumb(list, "--") }).ToList();
                 if (!string.IsNullOrEmpty(query))
                     terms = terms.Where(x => x.Title.Contains(query)).ToList();
             }
@@ -60,7 +61,7 @@ namespace CMS.Controllers
                 PostTypeId = posttypeid,
                 IsActive = true,
                 TaxonomyId = taxonomyId,
-                Taxonomy = (TermTypeEnum) taxonomyId
+                Taxonomy = (TermTypeEnum)taxonomyId
             };
             PrepareAllTermsModel(model);
             return View(model);
@@ -70,6 +71,9 @@ namespace CMS.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(TermForm form)
         {
+            if (string.IsNullOrEmpty(form.Title) || string.IsNullOrEmpty(form.UrlKey))
+                ModelState.AddModelError("", "Title and UrlKey are Required");
+
             if (ModelState.IsValid)
             {
                 var model = Map(form);
@@ -77,7 +81,7 @@ namespace CMS.Controllers
                 UOW.Commit();
                 AlertSuccessMessage("Term is Successfully Saved");
                 // LogActivity("CreateTerm", string.Format("{0} | {1}| {2} ", model.PostType.Name, model.Title, model.Id));
-                return RedirectToAction("Edit", new {id = model.Id});
+                return RedirectToAction("Edit", new { id = model.Id });
             }
             form.PostType = UOW.PostTypes.Get(form.PostTypeId);
             PrepareAllTermsModel(form);
@@ -122,6 +126,8 @@ namespace CMS.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(TermForm termForm)
         {
+            if (string.IsNullOrEmpty(termForm.Title) || string.IsNullOrEmpty(termForm.UrlKey))
+                ModelState.AddModelError("", "Title and UrlKey are Required");
             if (ModelState.IsValid)
             {
                 var t = Map(termForm);
@@ -129,7 +135,7 @@ namespace CMS.Controllers
                 UOW.Commit();
                 AlertSuccessMessage("Term is Successfully Saved");
                 //LogActivity("EditTerm", string.Format("{0} | {1}| {2} ", t.PostType.Name, t.Title, t.Id));
-                return RedirectToAction("Edit", new {id = termForm.Id});
+                return RedirectToAction("Edit", new { id = termForm.Id });
             }
             PrepareAllTermsModel(termForm);
             return View(termForm);
@@ -177,7 +183,7 @@ namespace CMS.Controllers
                 Id = term.Id,
                 PostType = UOW.PostTypes.Get(term.PostTypeId),
                 Title = term.Title,
-                Taxonomy = (TermTypeEnum) term.TaxonomyId,
+                Taxonomy = (TermTypeEnum)term.TaxonomyId,
                 DisplayOrder = term.DisplayOrder,
                 IsActive = term.IsActive,
                 UrlKey = term.UrlKey,

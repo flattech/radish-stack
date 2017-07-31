@@ -30,49 +30,77 @@ namespace Core.Repositories
 
         public Post GetObject(Guid id)
         {
-            var p = "Select * from Post where Id=@Id and Status!=-100;";
-            var pt = "Select * From PostTerm WHERE PostId=@Id and Status!=-100;";
-            var t = "Select t.Id,t.Title,t.TaxonomyId From Term t inner join PostTerm pt on t.id=pt.TermId WHERE  " +
-                    " pt.Status!=-100 and pt.PostId=@Id ;";
+            var qp = $"Select * FROM [Post] WHERE Id='{id}';";
+            var qpt = $"Select * FROM [PostTerm] WHERE PostId='{id}' AND Status!=-100;";
+            var qt = "Select t.* FROM Term t INNER JOIN [PostTerm] pt " +
+                     $"ON t.id=pt.TermId WHERE pt.Status!=-100 and pt.PostId='{id}' ;";
 
-            using (var results = QueryMultiple(t + pt + p, new { id }))
+            var qptype = "Select pt.* FROM [PostType] pt INNER JOIN [Post] p " +
+                           $"ON pt.id=p.PostTypeId WHERE p.Id ='{id}' ;";
+
+            using (var results = QueryMultiple(qptype + qt + qpt + qp))
             {
+                var type = results.Read<PostType>().SingleOrDefault();
                 var terms = results.Read<Term>().ToList();
                 var postterms = results.Read<PostTerm>().Select(x => Map(x, terms)).ToList();
                 var post = results.Read<Post>().SingleOrDefault();
-                if (post != null)
-                {
-                    post.PostTerms = postterms;
-                    return post;
-                }
-                return null;
+                if (post == null) return null;
+                post.PostTerms = postterms;
+                post.PostType = type;
+                return post;
             }
         }
-        private Post Map(Post p, List<PostTerm> terms)
+        public IList<Post> GetPosts(PostSearch critiria, int page, int size = 12)
+        {
+            string where = "WHERE p.Status!=-100 ";
+            string order = "p.PublishedDate desc ";
+
+            if (critiria.PostTypeId.HasValue)
+                where += $"AND p.PostTypeId='{critiria.PostTypeId.Value}' ";
+            if (critiria.Status != PostSatusEnum.NotSet)
+                where += $"AND p.Status={(int)critiria.Status} ";
+            if (!string.IsNullOrEmpty(critiria.Order))
+                order = $" {critiria.Order} ";
+
+            var qpids = "SELECT p.Id FROM [Post] p ";
+            if (critiria.PostIds != null && critiria.PostIds.Any())
+                qpids += $"{where} AND p.Id IN ('{string.Join("','", critiria.PostIds)}') ";
+            else if (critiria.Terms != null && critiria.Terms.Any())
+                qpids += "INNER JOIN [PostTerm] pt ON p.id=pt.PostId  " +
+                        $"{where} AND pt.TermId IN ('{string.Join("','", critiria.Terms)}') ";
+            else
+                qpids += $"{where} ";
+
+            var qpposts = $"SELECT * FROM [Post] p WHERE p.Id IN ({qpids}) ORDER BY {order};";
+            var qppostterm = $"SELECT * FROM [PostTerm] pt WHERE pt.PostId IN ({qpids}) AND pt.Status!=-100;";
+            var qterm = "SELECT t.* FROM [Term] t inner join [PostTerm] " +
+                    $"pt ON t.id=pt.TermId WHERE pt.Status!=-100 and pt.PostId IN ({qpids}) ;";
+
+            var qposttype = "SELECT DISTINCT pt.* FROM [PostType] pt INNER JOIN Post p " +
+                $" ON pt.Id=p.PostTypeId WHERE p.Id IN ({qpids}) ;";
+
+            using (var results = QueryMultiple(qposttype + qterm + qppostterm + qpposts))
+            {
+                var posttypes = results.Read<PostType>().ToList();
+                var terms = results.Read<Term>().ToList();
+                var postterms = results.Read<PostTerm>().Select(x => Map(x, terms)).ToList();
+                return results.Read<Post>().Select(x => Map(x, posttypes, postterms)).ToList();
+            }
+        }
+
+        private Post Map(Post p, List<PostType> pts, List<PostTerm> terms)
         {
             p.PostTerms = terms.Where(x => x.PostId == p.Id).ToList();
+            p.PostType = pts.SingleOrDefault(x => x.Id == p.PostTypeId);
             return p;
         }
+
         private PostTerm Map(PostTerm pt, List<Term> postterms)
         {
-            pt.Term = postterms.SingleOrDefault(x => x.Id == pt.TermId);
+            pt.Term = postterms.FirstOrDefault(x => x.Id == pt.TermId);
             return pt;
         }
 
-        public IList<Post> GetPosts(Guid posttypeid, PostSatusEnum status, int page, int size = 12)
-        {
-            var postids = "Select Id from Post where PostTypeId=@Id and Status!=-100 order by PublishedDate desc";
-            var posts = $"Select * from Post where Id IN  ({postids})";
-            var pt = $"Select * From PostTerm WHERE PostId IN  ({postids}) and Status!=-100;";
-            var t = "Select t.Id,t.Title,t.TaxonomyId From Term t inner join PostTerm " +
-                    $"pt on t.id=pt.TermId WHERE   pt.Status!=-100 and pt.PostId IN  ({postids}) ;";
-            using (var results = QueryMultiple(t + pt + posts, new { Id= posttypeid }))
-            {
-                var terms = results.Read<Term>().ToList();
-                var postterms = results.Read<PostTerm>().Select(x => Map(x, terms)).ToList();
-                return results.Read<Post>().Select(x => Map(x, postterms)).ToList();
-            }
-        }
     }
 
     public class PostTermRepository : BaseRepository<PostTerm>
@@ -113,6 +141,19 @@ namespace Core.Repositories
         public Media FeaturedImage { get; set; }
         public string TemplateView { get; set; }
         public bool IsActive { get; set; }
+    }
+
+    public class PostSearch
+    {
+        public PostSearch()
+        {
+            Status = PostSatusEnum.NotSet;
+        }
+        public Guid? PostTypeId { get; set; }
+        public PostSatusEnum Status { get; set; }
+        public Guid[] PostIds { get; set; }
+        public Guid[] Terms { get; set; }
+        public string Order { get; set; }
     }
     public class PostAttachment
     {
