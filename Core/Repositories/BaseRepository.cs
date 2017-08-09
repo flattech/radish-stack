@@ -9,8 +9,11 @@ namespace Core.Repositories
 {
     public class BaseRepository<T> where T : BaseModel
     {
-#if  DEBUG
-        private string ConnectionString { get { return "Data Source=.;Initial Catalog=RadishStackDB;Integrated Security=True;MultipleActiveResultSets=True"; } }
+
+#if DEBUG
+        private string ConnectionString { get { return "Data Source=.;Initial Catalog=Communi8DB;Integrated Security=True;MultipleActiveResultSets=True"; } }
+
+        //private string ConnectionString { get { return "Data Source=.;Initial Catalog=RadishStackDB;Integrated Security=True;MultipleActiveResultSets=True"; } }
 #else
         private string ConnectionString { get { return "Data Source=148.72.232.166;Initial Catalog=RadishStackDB;User Id=radishstack;Password=Radish@AI123;MultipleActiveResultSets=True"; } }
 #endif

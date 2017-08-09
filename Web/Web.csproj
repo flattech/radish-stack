@@ -181,6 +181,55 @@
     <Content Include="FileNotFound.htm" />
     <Content Include="Global.asax" />
     <Content Include="App_Data\resource_en.json" />
+    <Content Include="Themes\Communi8\Content\css\et-builder.css" />
+    <Content Include="Themes\Communi8\Content\Font\font.css" />
+    <Content Include="Themes\Communi8\Content\Font\gothic-bg.png" />
+    <Content Include="Themes\Communi8\Content\Font\gothic-thumb.png" />
+    <Content Include="Themes\Communi8\Content\Font\gothic.png" />
+    <Content Include="Themes\Communi8\Content\Images\Blog_Workers-1-780x464.jpg" />
+    <Content Include="Themes\Communi8\Content\Images\clients\clients.jpg" />
+    <Content Include="Themes\Communi8\Content\Images\clients\Nissan-logo.png" />
+    <Content Include="Themes\Communi8\Content\Images\Home-Vis-1.jpg" />
+    <Content Include="Themes\Communi8\Content\Images\Home-Vis-2.jpg" />
+    <Content Include="Themes\Communi8\Content\Images\Home-Vis-7.jpg" />
+    <Content Include="Themes\Communi8\Content\Images\home.png" />
+    <Content Include="Themes\Communi8\Content\Images\line.png" />
+    <Content Include="Themes\Communi8\Content\Images\logo.png" />
+    <Content Include="Themes\Communi8\Content\Images\projects\Home-Vis-5a.jpg" />
+    <Content Include="Themes\Communi8\Content\Images\projects\Home-Vis-5b.jpg" />
+    <Content Include="Themes\Communi8\Content\Images\projects\Home-Vis-5c.jpg" />
+    <Content Include="Themes\Communi8\Content\Images\projects\Home-Vis-5d.jpg" />
+    <Content Include="Themes\Communi8\Content\Images\projects\Home-Vis-5e.jpg" />
+    <Content Include="Themes\Communi8\Content\Images\projects\Home-Vis-5f.jpg" />
+    <Content Include="Themes\Communi8\Content\Images\projects\Home-Vis-5g.jpg" />
+    <Content Include="Themes\Communi8\Content\Images\projects\Home-Vis-5h.jpg" />
+    <Content Include="Themes\Communi8\Content\Images\projects\Home-Vis-5i.jpg" />
+    <Content Include="Themes\Communi8\Content\Images\Services.jpg" />
+    <Content Include="Themes\Communi8\Content\movie\m.mp4" />
+    <Content Include="Themes\Communi8\Content\movie\movie.mov" />
+    <Content Include="Themes\Communi8\Content\css\pagenavi-css.css" />
+    <Content Include="Themes\Communi8\Content\css\shortcodes.css" />
+    <Content Include="Themes\Communi8\Content\css\shortcodes_responsive.css" />
+    <Content Include="Themes\Communi8\Content\Font\ETmodules_v2_4.svg" />
+    <Content Include="Themes\Communi8\Content\js\frontend-builder-global-functions.js" />
+    <Content Include="Themes\Communi8\Content\js\frontend-builder-scripts.js" />
+    <Content Include="Themes\Communi8\Content\js\jquery.easypiechart.js" />
+    <Content Include="Themes\Communi8\Content\js\jquery.fitvids.js" />
+    <Content Include="Themes\Communi8\Content\js\jquery.magnific-popup.js" />
+    <Content Include="Themes\Communi8\Content\js\jquery.mobile.custom.min.js" />
+    <Content Include="Themes\Communi8\Content\js\waypoints.min.js" />
+    <Content Include="Themes\Communi8\Content\css\magnific_popup.css" />
+    <Content Include="Themes\Communi8\Content\js\custom.js" />
+    <Content Include="Themes\Communi8\Content\js\smoothscroll.js" />
+    <Content Include="Themes\Communi8\Content\css\style.css" />
+    <Content Include="Themes\Communi8\Content\js\comment-reply.min.js" />
+    <Content Include="Themes\Communi8\Content\js\jquery-migrate.min.js" />
+    <Content Include="Themes\Communi8\Content\js\jquery.js" />
+    <Content Include="Themes\Communi8\Content\js\wp-embed.min.js" />
+    <Content Include="Themes\Communi8\Content\css\theme-customizer-css.css" />
+    <Content Include="Themes\Communi8\favicon.ico" />
+    <Content Include="Themes\Communi8\index.html" />
+    <Content Include="Themes\Communi8\news-details.html" />
     <Content Include="Themes\DailyNews\Content\css\bootstrap.min.css" />
     <Content Include="Themes\DailyNews\Content\css\font-awesome.min.css" />
     <Content Include="Themes\DailyNews\Content\css\magnific-popup.css" />
@@ -248,8 +297,8 @@
     <Compile Include="Helpers\Themes\ThemeableVirtualPathProviderViewEngine.cs" />
     <Compile Include="Helpers\WebHelper.cs" />
     <Compile Include="Helpers\WebViewPage.cs" />
-    <Compile Include="Extentions\HtmlExtensions.cs" />
-    <Compile Include="Extentions\MappingExtensions.cs" />
+    <Compile Include="obj\Extentions\HtmlExtensions.cs" />
+    <Compile Include="obj\Extentions\MappingExtensions.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\TermController.cs" />
@@ -330,6 +379,28 @@
     <Content Include="Themes\DailyNews\Views\web.config" />
     <Content Include="Themes\DailyNews\Views\Shared\Footer.cshtml" />
     <Content Include="Views\Shared\_Widgets.cshtml" />
+    <Content Include="Themes\Communi8\Views\_ViewStart.cshtml" />
+    <Content Include="Themes\Communi8\Views\Common\Footer.cshtml" />
+    <Content Include="Themes\Communi8\Views\Common\Search.cshtml" />
+    <Content Include="Themes\Communi8\Views\Home\Index.cshtml" />
+    <Content Include="Themes\Communi8\Views\Post\PostDetail.Simple.cshtml" />
+    <Content Include="Themes\Communi8\Views\Shared\_Root.cshtml" />
+    <Content Include="Themes\Communi8\Views\Shared\Footer.cshtml" />
+    <Content Include="Themes\Communi8\Views\Shared\Header.cshtml" />
+    <Content Include="Themes\Communi8\Views\Shared\photo.cshtml" />
+    <Content Include="Themes\Communi8\Views\Shared\slider.cshtml" />
+    <Content Include="Themes\Communi8\Views\Shared\widget.Slider.cshtml" />
+    <Content Include="Themes\Communi8\Views\web.config" />
+    <Content Include="Themes\Communi8\Content\Font\ETmodules_v2_4.eot" />
+    <Content Include="Themes\Communi8\Content\Font\ETmodules_v2_4.ttf" />
+    <Content Include="Themes\Communi8\Content\Font\ETmodules_v2_4.woff" />
+    <Content Include="Themes\Communi8\Content\Font\gothic.eot" />
+    <Content Include="Themes\Communi8\Content\Font\gothic.ttf" />
+    <Content Include="Themes\Communi8\Content\Font\gothic.woff" />
+    <Content Include="Themes\Communi8\Content\movie\m.webm" />
+    <Content Include="Themes\Communi8\Views\Shared\mainbanner.cshtml" />
+    <Content Include="Themes\Communi8\Views\Shared\aboutus.cshtml" />
+    <Content Include="Themes\Communi8\Views\Shared\ourservices.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -361,6 +432,9 @@
     <OutputPath>bin\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Communi8|AnyCPU'">
     <OutputPath>bin\</OutputPath>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

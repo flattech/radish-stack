@@ -1,0 +1,123 @@
+﻿@model Web.Models.Post.PageViewModel.WidgetViewModel
+@if (Model != null && Model.posts != null && Model.posts.Count > 0)
+{
+
+    <div id="services" class="et_pb_section et_pb_section_parallax  et_pb_section_3 et_pb_with_background" style="height: 100vh;">
+        <div class="et_parallax_bg" style="background-image: url(/Themes/Communi8/Content/Images/Services.jpg);"></div>
+
+
+        <div class="et_pb_row">
+
+            <div class="et_pb_column et_pb_column_4_4 ">
+
+                <hr class="et_pb_module et_pb_space et_pb_divider_0 et-hide-mobile" />
+            </div> <!-- .et_pb_column -->
+
+        </div> <!-- .et_pb_row -->
+        <div class="et_pb_row et_pb_row_3" style="background: #404041; width: 100%; max-width: 100%;">
+            <div class="et_pb_row et_pb_row_2">
+
+                <div class="et_pb_column et_pb_column_4_4  et_pb_column_5">
+
+                    <hr class="et_pb_module et_pb_space et_pb_divider_0 et-hide-mobile" />
+                </div> <!-- .et_pb_column -->
+
+            </div> <!-- .et_pb_row -->
+            <div class="et_pb_row">
+                <h1 style="font-size: 4em; font-weight: bold; color: #FFF;">
+                    <img src="/Themes/Communi8/Content/Images/line.png" /><br />
+                    OUR<br />
+                    SERVICES
+                </h1>
+
+                @for (var i = 0; i < Math.Ceiling((double)Model.posts.Count / 3); i++)
+                {
+                    <div class="et_pb_column et_pb_column_1_2" style="font-weight: bold;">
+                        @for (var j = 0; j < 3; j++)
+                        {
+                            if ((i * 3) + j < Model.posts.Count)
+                             {
+                                 <div class="et_pb_column et_pb_column_1_3" style="text-transform: uppercase;">
+                                     <img src="/Themes/Communi8/Content/Images/line.png" style="width: 20%;"/><br/>
+                                     @Model.posts[(i * 3) + j].Title
+                                 </div>
+                             }
+                        }
+                    </div>
+
+                }
+
+
+
+                @*<div class="et_pb_column et_pb_column_1_2" style="font-weight: bold;">
+
+                        <div class="et_pb_column et_pb_column_1_3" style="text-transform: uppercase;">
+
+                            <img src="Content/Images/line.png" style="width: 20%;"/><br/>
+                            Advertising<br/>
+                            essentials
+
+                        </div> <!-- .et_pb_column -->
+                        <div class="et_pb_column et_pb_column_1_3" style="text-transform: uppercase;">
+                            <img src="Content/Images/line.png" style="width: 20%;"/><br/>
+                            Printing<br/>
+                            requisites
+
+                        </div> <!-- .et_pb_column -->
+                        <div class="et_pb_column et_pb_column_1_3" style="text-transform: uppercase;">
+                            <img src="Content/Images/line.png" style="width: 20%;"/><br/>
+                            Trading<br/>
+                            ideas
+
+                        </div> <!-- .et_pb_column -->
+
+                    </div> <!-- .et_pb_column -->
+                    <div class="et_pb_column et_pb_column_1_2">
+
+                        <div class="et_pb_column et_pb_column_1_3" style="text-transform: uppercase;">
+                            <img src="Content/Images/line.png" style="width: 20%;"/><br/>
+                            Design<br/>
+                            materials
+
+                        </div> <!-- .et_pb_column -->
+                        <div class="et_pb_column et_pb_column_1_3" style="text-transform: uppercase;">
+                            <img src="Content/Images/line.png" style="width: 20%;"/><br/>
+                            Identity<br/>
+                            Management
+
+                        </div> <!-- .et_pb_column -->
+                        <div class="et_pb_column et_pb_column_1_3" style="text-transform: uppercase;">
+                            <img src="Content/Images/line.png" style="width: 20%;"/><br/>
+                            Internal<br/>
+                            Communication
+
+                        </div> <!-- .et_pb_column -->
+
+                    </div> <!-- .et_pb_column -->*@
+
+
+
+            </div>
+            <div class="et_pb_row et_pb_row_2">
+
+                <div class="et_pb_column et_pb_column_4_4  et_pb_column_5">
+
+                    <hr class="et_pb_module et_pb_space et_pb_divider_0 et-hide-mobile" />
+                </div> <!-- .et_pb_column -->
+
+            </div> <!-- .et_pb_row -->
+        </div>
+
+        <!-- .et_pb_row -->
+        <div class="et_pb_row et_pb_row_4">
+
+            <div class="et_pb_column et_pb_column_4_4  et_pb_column_9">
+
+                <hr class="et_pb_module et_pb_space et_pb_divider_3 et-hide-mobile" />
+            </div> <!-- .et_pb_column -->
+
+        </div> <!-- .et_pb_row -->
+
+    </div>
+
+}
