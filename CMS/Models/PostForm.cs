@@ -14,6 +14,7 @@ namespace CMS.Models
             AvailableTerms = new List<Term>();
             PostAttachments = new Dictionary<string, PostAttachment>();
             MediaGallery = new List<MediaMini>();
+            PostMedia = new List<PostFields>();
         }
         public Guid Id { get; set; }
         public bool IsActive { get; set; }
@@ -38,6 +39,7 @@ namespace CMS.Models
         public string Detail { get; set; }
         //public string PostMetaValues { get; set; }
         public List<PostFields> PostFields { get; set; }
+        public List<PostFields> PostMedia { get; set; }
         public string Photo { get; set; }
         public string Gallery { get; set; }
         public string Widgets { get; set; }

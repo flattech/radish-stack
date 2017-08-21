@@ -191,6 +191,7 @@
     <Content Include="Themes\Communi8\Content\Images\clients\Nissan-logo.png" />
     <Content Include="Themes\Communi8\Content\Images\Home-Vis-1.jpg" />
     <Content Include="Themes\Communi8\Content\Images\Home-Vis-2.jpg" />
+    <Content Include="Themes\Communi8\Content\Images\Home-Vis-5a.jpg" />
     <Content Include="Themes\Communi8\Content\Images\Home-Vis-7.jpg" />
     <Content Include="Themes\Communi8\Content\Images\home.png" />
     <Content Include="Themes\Communi8\Content\Images\line.png" />
@@ -334,6 +335,7 @@
     <Compile Include="Models\UI\Paging\Pager.cs" />
     <Compile Include="Models\UI\ResourceLocation.cs" />
     <Compile Include="Models\Widget\WidgetModel.cs" />
+    <Compile Include="Site.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -383,7 +385,7 @@
     <Content Include="Themes\Communi8\Views\Common\Footer.cshtml" />
     <Content Include="Themes\Communi8\Views\Common\Search.cshtml" />
     <Content Include="Themes\Communi8\Views\Home\Index.cshtml" />
-    <Content Include="Themes\Communi8\Views\Post\PostDetail.Simple.cshtml" />
+    <Content Include="Themes\Communi8\Views\Post\WorkDetails.cshtml" />
     <Content Include="Themes\Communi8\Views\Shared\_Root.cshtml" />
     <Content Include="Themes\Communi8\Views\Shared\Footer.cshtml" />
     <Content Include="Themes\Communi8\Views\Shared\Header.cshtml" />
@@ -401,6 +403,7 @@
     <Content Include="Themes\Communi8\Views\Shared\mainbanner.cshtml" />
     <Content Include="Themes\Communi8\Views\Shared\aboutus.cshtml" />
     <Content Include="Themes\Communi8\Views\Shared\ourservices.cshtml" />
+    <Content Include="Themes\Communi8\Views\Shared\ourwork.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

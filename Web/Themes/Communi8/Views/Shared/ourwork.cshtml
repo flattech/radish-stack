@@ -1,0 +1,70 @@
+﻿@{
+    var path = "/Themes/Communi8/Content/Images/";
+}
+
+
+<div id="ourwork" class="et_pb_section et_pb_fullwidth_section et_section_regular et_pb_scroll_3">
+
+    <div class="et_pb_row et_pb_row_2">
+
+        <div class="et_pb_column et_pb_column_4_4  et_pb_column_5">
+
+            <hr class="et_pb_module et_pb_space et_pb_divider_0 et-hide-mobile">
+        </div> <!-- .et_pb_column -->
+
+    </div> <!-- .et_pb_row -->
+
+    <section class="et_pb_fullwidth_header et_pb_module et_pb_bg_layout_light  et_pb_fullwidth_header_0">
+
+        <div class="et_pb_fullwidth_header_container">
+            <div class="header-content-container">
+                <div class="header-content" style="text-align: left;">
+
+                    <h1 style="font-size: 4em; font-weight: bold;">
+                        <img src="@(path+"line.png")"><br>
+                        OUR<br>
+                        WORK
+                    </h1>
+
+                    <p>
+                        We are thinkers, designers, concept developers, consultants, illustrators,
+                        visualizers, and makers.
+                        <br>
+                        <b>
+                            WE ARE COMMUNICATORS.
+                        </b>
+                    </p>
+
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+    <div class="et_pb_row et_pb_row_4">
+        <div class="et_pb_column et_pb_column_4_4  et_pb_column_9">
+            <hr class="et_pb_module et_pb_space et_pb_divider_3 et-hide-mobile">
+        </div>
+
+    </div>
+
+
+    <div class="et_pb_fullwidth_portfolio et_pb_fullwidth_portfolio_grid clearfix et_pb_module et_pb_bg_layout_dark" data-auto-rotate="off" data-auto-rotate-speed="7000">
+        <div class="et_pb_portfolio_items clearfix columns-3" data-portfolio-columns="">
+            @foreach (var post in Model.posts)
+            {
+                <div  class="et_pb_portfolio_item et_pb_grid_item project" style="height: 475.75px; width: 33.3333%;">
+                    <div class="et_pb_portfolio_image landscape">
+                        <img src="@(post.FeaturedImage)" alt="Shadow Inc.">
+                        <div class="meta">
+                            <a href="@Url.RouteUrl("Post", new {posttype = post.PostType.UrlKey, id = post.Id})">
+                                <span class="et_overlay"></span>
+                                <h3>@(post.Title)</h3>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

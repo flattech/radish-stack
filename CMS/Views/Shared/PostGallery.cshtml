@@ -74,7 +74,7 @@
                 }
         }).on("complete", function (event, id, name, responseJSON, xhr) {
             if (responseJSON.success) {
-                window.back.mulipleuploader.addItem({ Id: responseJSON.pictureId, Path: responseJSON.imageUrl + '?width=300' });
+                window.back.mulipleuploader.addItem({ Id: responseJSON.pictureId, Path: responseJSON.imageUrl });
                 postmediagallery.find(".qq-progress-bar-container-selector").hide();
             }
         });

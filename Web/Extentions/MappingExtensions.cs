@@ -24,6 +24,7 @@ namespace Web.Extentions
                 PostType = post.PostType,
                 Title = post.Title,
                 UrlKey = post.UrlKey,
+                Detail =  post.Detail
                 //Term = post.PostTerms.Select(x => x.Term).ToList()
             };
         }
@@ -42,6 +43,7 @@ namespace Web.Extentions
                 Detail = post.Detail.Replace("/content/uploaded/", mediahost + "/content/uploaded/"),
                 // SeName = post.GetSeName(),
                 PostTerms = post.PostTerms,
+                Gallery = Newtonsoft.Json.JsonConvert.DeserializeObject<List<PostAttachment>>(post.Gallery),
                 CreationDate = post.CreationDate,
                 TemplateViewPath = !string.IsNullOrEmpty(post.ViewPath) ? post.ViewPath : (post.PostType != null && !string.IsNullOrEmpty(post.PostType.ViewPath) ? post.PostType.ViewPath : "PostDetail.Simple")
             };
@@ -66,7 +68,7 @@ namespace Web.Extentions
                     if (!string.IsNullOrEmpty(metavalue.Value))
                         model.MediaList.Add(metavalue.Key, mediahost + metavalue.Value);
                 }
-                model.FeaturedImage = model.GetMedia("Standard");
+                //model.FeaturedImage = model.GetMedia("Standard");
             }
 
             return model;

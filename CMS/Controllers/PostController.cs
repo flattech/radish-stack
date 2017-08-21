@@ -221,6 +221,9 @@ namespace CMS.Controllers
         {
             if (!string.IsNullOrEmpty(model.PostType.PostMetaFields))
                 model.PostFields = JsonConvert.DeserializeObject<List<PostFields>>(model.PostType.PostMetaFields);
+
+            if (!string.IsNullOrEmpty(model.PostType.PostMediaList))
+                model.PostMedia = JsonConvert.DeserializeObject<List<PostFields>>(model.PostType.PostMediaList);
         }
 
         private void SyncMeta(Post post)
@@ -308,18 +311,20 @@ namespace CMS.Controllers
 
         private void SyncAttachments(PostForm form, Post post)
         {
-            //if (!string.IsNullOrEmpty(post.PostType.PostMediaList))
-            //{
-            //    var postfields = JsonConvert.DeserializeObject<PostAttachment[]>(post.PostType.PostMediaList);
-            //    foreach (var pf in postfields)
-            //    {
-            //        pf.Value = Request.Form[string.Format("Attachments[{0}].Value", pf.Key)];
-            //        pf.Id = Request.Form[string.Format("Attachments[{0}].Id", pf.Key)] != null
-            //            ? Convert.ToInt32(Request.Form[string.Format("Attachments[{0}].Id", pf.Key)])
-            //            : 0;
-            //    }
-            //    post.Attachments = JsonConvert.SerializeObject(postfields);
-            //}
+            if (!string.IsNullOrEmpty(post.PostType.PostMediaList))
+            {
+                var postfields = JsonConvert.DeserializeObject<PostAttachment[]>(post.PostType.PostMediaList);
+                foreach (var pf in postfields)
+                {
+                    var value = Request.Form[string.Format("Attachments[{0}].Value", pf.Key)];
+                    if (value != null)
+                    {
+                        pf.Value = value;
+                        pf.Id = Guid.Parse(Request.Form[string.Format("Attachments[{0}].Id", pf.Key)]);
+                    }
+                }
+                post.Attachments = JsonConvert.SerializeObject(postfields);
+            }
         }
 
         private void SyncTerms(PostForm form, Post post)

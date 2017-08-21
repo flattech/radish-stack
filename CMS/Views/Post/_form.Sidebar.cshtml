@@ -138,30 +138,6 @@
     </div>
 
 }
-
-   
-    @if (Model.PostAttachments.ContainsKey("Big"))
-    {
-        <div class="panel-group accordion" id="accordionattachmentbig">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a class="accordion-toggle accordion-toggle-styled" data-toggle="collapse" data-parent="#accordionattachmentbig" href="#collapse_attachmentbig">
-                            @AppResources.Instance.Get("SliderImage")
-                        </a>
-                    </h4>
-                </div>
-                <div id="collapse_attachmentbig" class="panel-collapse in">
-                    <div class="panel-body">
-                        @Html.Partial("PostAttachment", Model.PostAttachments["Big"])
-                    </div>
-                </div>
-            </div>
-        </div>
-    }
-
-
-
 @if (Model.PostType.EnableGallery)
 {
     <div class="panel-group accordion" id="accordionattachmentbig">
@@ -181,3 +157,30 @@
         </div>
     </div>
 }
+   
+    @if (Model.PostAttachments != null)
+    {
+        foreach (var media in Model.PostAttachments)
+        {
+            <div class="panel-group accordion" id="accordionattachment@(media.Key)">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordionattachment@(media.Key)" href="#collapse_attachment@(media.Key)">
+                                @media.Key
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapse_attachment@(media.Key)"  class="panel-collapse collapse">
+                        <div class="panel-body">
+                            @Html.Partial("PostAttachment", Model.PostAttachments[media.Key])
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+    }
+
+
+

@@ -1,0 +1,186 @@
+﻿@model Web.Models.Post.PostDetailsModel
+@using Core
+@using Web
+@using Web.Models.UI
+
+@{
+    string mediahost = Site.MediaHost;
+
+    var path = "/Themes/Communi8/Content/Images/";
+
+
+    //title, meta
+    Html.AddTitleParts(!String.IsNullOrEmpty(Model.MetaTitle) ? Model.MetaTitle : Model.Title);
+    Html.AddMetaDescriptionParts(Model.MetaDescription);
+    Html.AddMetaKeywordParts(Model.MetaKeywords);
+
+    var seoSettings = AppSettings.Instance.SeoSettings;
+
+    //canonical URL
+    if (seoSettings.CanonicalUrlsEnabled)
+    {
+        var productUrl = Url.RouteUrl("Post", new { SeName = Model.SeName }, this.Request.Url.Scheme);
+        Html.AddCanonicalUrlParts(productUrl);
+    }
+
+    //open graph META tags
+    if (seoSettings.OpenGraphMetaTags)
+    {
+        Html.AddHeadCustomParts("<meta property=\"og:type\" content=\"product\" />");
+        Html.AddHeadCustomParts("<meta property=\"og:title\" content=\"" + Html.Encode(Model.Title) + "\" />");
+        Html.AddHeadCustomParts("<meta property=\"og:description\" content=\"" + Html.Encode(Model.MetaDescription) + "\" />");
+        Html.AddHeadCustomParts("<meta property=\"og:image\" content=\"" + Model.FeaturedImage + "\" />");
+        Html.AddHeadCustomParts("<meta property=\"og:url\" content=\"" + Request.Url.AbsoluteUri + "\" />");
+        Html.AddHeadCustomParts("<meta property=\"og:site_name\" content=\"" + Html.Encode("") + "\" />");
+    }
+
+    //Twitter META tags
+    if (seoSettings.TwitterMetaTags)
+    {
+        var website = seoSettings.Site;
+        Html.AddHeadCustomParts("<meta property=\"twitter:card\" content=\"summary\" />");
+        Html.AddHeadCustomParts("<meta property=\"twitter:site\" content=\"" + Html.Encode(website) + "\" />");
+        Html.AddHeadCustomParts("<meta property=\"twitter:title\" content=\"" + Html.Encode(Model.Title) + "\" />");
+        Html.AddHeadCustomParts("<meta property=\"twitter:description\" content=\"" + Html.Encode(Model.MetaDescription) + "\" />");
+        Html.AddHeadCustomParts("<meta property=\"twitter:image\" content=\"" + "" + "\" />");
+        Html.AddHeadCustomParts("<meta property=\"twitter:url\" content=\"" + Request.Url.AbsoluteUri + "\" />");
+    }
+}
+
+
+
+
+
+<div id="aboutus" class="et_pb_section et_pb_section_parallax et_pb_fullwidth_section et_pb_with_background">
+    <div class="et_pb_module et_pb_slider et_pb_preload ">
+        <div class="et_pb_slides">
+            @foreach (var slide in Model.Gallery)
+            {
+                <div class="et_pb_slide et_pb_bg_layout_dark et_pb_media_alignment_center et-pb-active-slide" style='background-image: url(@(mediahost + slide.Value)); padding: 0px;'>
+                    <img src="@(mediahost + slide.Path)" style="width: 100%;" />
+                </div>
+            }
+        </div>
+    </div>
+    <section class="et_pb_fullwidth_header et_pb_module et_pb_bg_layout_light ">
+        <div class="et_pb_fullwidth_header_container">
+            <div class="header-content-container">
+                <div class="header-content" style="text-align: left;">
+                    <h1 style="font-size: 4em; text-transform: uppercase">
+                        <img src="@(path+"line.png")"><br />
+                        @Model.Title<br />
+                        @Model.GetMetaField("SubTitle")
+                    </h1>
+                    <p>
+                        @Html.Raw(Model.Detail)
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <div class="et_pb_row" style="width: 100%; max-width: 100%;">
+     <div class="et_pb_column et_pb_column_4_4 ">
+            <img src="@(Model.GetMedia("Image1"))" style="width: 100%;" />
+        </div> <!-- .et_pb_column -->
+    </div> <!-- .et_pb_row -->
+    <div class="et_pb_row" style="width: 100%; max-width: 100%;">
+
+        <div class="et_pb_column et_pb_column_4_4 ">
+            <img src="@Model.GetMedia("Image2")" style="width: 100%;" />
+
+        </div> <!-- .et_pb_column -->
+
+    </div> <!-- .et_pb_row -->
+    <div class="et_pb_row" style="width: 100%; max-width: 100%;">
+
+        <div class="et_pb_column et_pb_column_1_3 " style="width: 33.333%; margin: 0px;">
+            <img src="projects/QB/QB-Vis-4a.jpg" style="width: 100%;" />
+
+        </div> <!-- .et_pb_column -->
+        <div class="et_pb_column et_pb_column_1_3 " style="width: 33.333%; margin: 0px;">
+            <img src="projects/QB/QB-Vis-4b.jpg" style="width: 100%;" />
+
+        </div> <!-- .et_pb_column -->
+        <div class="et_pb_column et_pb_column_1_3 " style="width: 33.333%; margin: 0px;">
+            <img src="projects/QB/QB-Vis-4c.jpg" style="width: 100%;" />
+
+        </div> <!-- .et_pb_column -->
+
+    </div> <!-- .et_pb_row -->
+    <div class="et_pb_row" style="width: 100%; max-width: 100%;">
+
+        <div class="et_pb_column et_pb_column_4_4 ">
+            <img src="projects/QB/QB-Vis-5.jpg" style="width: 100%;" />
+
+        </div> <!-- .et_pb_column -->
+
+    </div> <!-- .et_pb_row -->
+
+
+    <div class="et_pb_row" style="width: 100%; max-width: 100%;">
+
+        <div class="et_pb_column et_pb_column_1_2" style="width: 50%; margin: 0px;">
+            <img src="projects/QB/QB-Vis-6a.jpg" style="width: 100%;" />
+
+        </div> <!-- .et_pb_column -->
+        <div class="et_pb_column et_pb_column_1_2 " style="width: 50%; margin: 0px;">
+            <img src="projects/QB/QB-Vis-6b.jpg" style="width: 100%;" />
+
+        </div> <!-- .et_pb_column -->
+
+
+    </div> <!-- .et_pb_row -->
+    <div class="et_pb_row" style="width: 100%; max-width: 100%;">
+
+        <div class="et_pb_column et_pb_column_1_2" style="width: 50%; margin: 0px;">
+            <img src="projects/QB/QB-Vis-6c.jpg" style="width: 100%;" />
+
+        </div> <!-- .et_pb_column -->
+        <div class="et_pb_column et_pb_column_1_2 " style="width: 50%; margin: 0px;">
+            <img src="projects/QB/QB-Vis-6d.jpg" style="width: 100%;" />
+
+        </div> <!-- .et_pb_column -->
+
+
+    </div> <!-- .et_pb_row -->
+
+    <div class="et_pb_row" style="width: 100%; max-width: 100%;">
+
+        <div class="et_pb_column et_pb_column_4_4 ">
+            <img src="projects/QB/QB-Vis-7.jpg" style="width: 100%;" />
+
+        </div> <!-- .et_pb_column -->
+
+    </div> <!-- .et_pb_row -->
+    <div class="et_pb_row" style="width: 100%; max-width: 100%;">
+
+        <div class="et_pb_column et_pb_column_4_4 ">
+            <img src="projects/QB/QB-Vis-8.jpg" style="width: 100%;" />
+
+        </div> <!-- .et_pb_column -->
+
+    </div> <!-- .et_pb_row -->
+    <div class="et_pb_row" style="margin-bottom: 100px;">
+
+        <div class="et_pb_column et_pb_column_4_4 ">
+
+            <a href="index.html#ourwork" style="background: #666666; color: #ffffff; padding: 30px; font-size: 16px;">
+                BACK TO WORK
+            </a>
+        </div> <!-- .et_pb_column -->
+
+    </div> <!-- .et_pb_row -->
+    <!--<div class="et_pb_row">
+
+        <div class="et_pb_column et_pb_column_4_4 ">
+
+            <hr class="et_pb_module et_pb_space et_pb_divider_3 et-hide-mobile" />
+        </div>
+
+    </div>-->
+</div>
+
+
