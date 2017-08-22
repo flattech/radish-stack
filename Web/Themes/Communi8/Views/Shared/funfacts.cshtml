@@ -1,0 +1,55 @@
+﻿@{
+    var path = "/Themes/Communi8/Content/Images/";
+}
+
+@model Web.Models.Post.PageViewModel.WidgetViewModel
+
+
+
+<div id="facts" class="et_pb_section et_pb_fullwidth_section  et_pb_scroll_5">
+
+
+
+    <div class="et_pb_module et_pb_slider et_pb_slider_parallax et_pb_bg_layout_dark">
+        <div class="et_pb_slides">
+            <div class="et_pb_slide et_pb_bg_layout_dark et_pb_media_alignment_center et-pb-active-slide">
+                <div class="et_parallax_bg" style="background-image: url('@(path +"Home-Vis-7.jpg")'); height: 862.3px; transform: translate(0px, 70.125px);"></div>
+
+                <div class="et_pb_container clearfix" style="min-height: 730px;">
+
+                    <div class="et_pb_slide_description" style="padding-left: 0px; padding-right: 0px;">
+                        <h1 style="font-size: 4em; font-weight: bold; text-align: left; padding-bottom: 80px;">
+                            <img src="@(path +"line.png")"><br>
+                            FUN<br>
+                            FACTS
+                        </h1>
+
+                        <div class="et_pb_row et_pb_row_4col" style="width: 100%;">
+
+                            @foreach (var post in Model.posts)
+                            {
+
+                                <div class="et_pb_column et_pb_column_1_4 ">
+
+                                    <div class="et_pb_blurb et_pb_module et_pb_bg_layout_dark et_pb_text_align_center  et_pb_blurb_0 et_pb_blurb_position_top">
+                                        <div class="et_pb_blurb_content">
+                                            <div class="et_pb_main_blurb_image">
+                                                <h1 style="font-size: 3em; font-weight: bold;">@post.GetMetaField("Count")</h1>
+                                            </div>
+                                            <div class="et_pb_blurb_container">
+
+                                                <h3>
+                                                    @Html.Raw(post.Title.Replace(" ", "<br>"))
+                                                </h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

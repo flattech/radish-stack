@@ -72,7 +72,7 @@ namespace Web.Models.Post
         {
             public WidgetViewModel()
             {
-                posts = new List<PostModel>();
+                posts = new List<PostDetailsModel>();
             }
 
             public Guid widgetid { get; set; }
@@ -80,7 +80,7 @@ namespace Web.Models.Post
             public int location { get; set; }
             public string moreUrl { get; set; }
             public string viewPath { get; set; }
-            public List<PostModel> posts { get; set; }
+            public List<PostDetailsModel> posts { get; set; }
             public List<TermModel> categories { get; set; }
             public List<TermModel> tags { get; set; }
             public bool returnPosts { get; set; }

@@ -228,6 +228,7 @@
     <Content Include="Themes\Communi8\Content\js\jquery.js" />
     <Content Include="Themes\Communi8\Content\js\wp-embed.min.js" />
     <Content Include="Themes\Communi8\Content\css\theme-customizer-css.css" />
+    <Content Include="Themes\Communi8\Data\script.sql" />
     <Content Include="Themes\Communi8\favicon.ico" />
     <Content Include="Themes\Communi8\index.html" />
     <Content Include="Themes\Communi8\news-details.html" />
@@ -404,6 +405,9 @@
     <Content Include="Themes\Communi8\Views\Shared\aboutus.cshtml" />
     <Content Include="Themes\Communi8\Views\Shared\ourservices.cshtml" />
     <Content Include="Themes\Communi8\Views\Shared\ourwork.cshtml" />
+    <Content Include="Themes\Communi8\Views\Shared\clients.cshtml" />
+    <Content Include="Themes\Communi8\Views\Shared\funfacts.cshtml" />
+    <Content Include="Themes\Communi8\Views\Shared\getintouch.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

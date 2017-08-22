@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMS", "CMS\CMS.csproj", "{0D3559FC-44CA-4F54-AF3D-B4614C717399}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{DA123762-D2B1-4837-AD32-86C99E0B0D39}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "API\API.csproj", "{6C722BC2-B2C8-43D3-BBC8-342A0C90D3FF}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "DB", "DB\DB.sqlproj", "{26B2995A-E209-499B-A5A8-4BE36BAFF6EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,6 +44,15 @@ Global
 		{6C722BC2-B2C8-43D3-BBC8-342A0C90D3FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C722BC2-B2C8-43D3-BBC8-342A0C90D3FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6C722BC2-B2C8-43D3-BBC8-342A0C90D3FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26B2995A-E209-499B-A5A8-4BE36BAFF6EE}.Communi8|Any CPU.ActiveCfg = Debug|Any CPU
+		{26B2995A-E209-499B-A5A8-4BE36BAFF6EE}.Communi8|Any CPU.Build.0 = Debug|Any CPU
+		{26B2995A-E209-499B-A5A8-4BE36BAFF6EE}.Communi8|Any CPU.Deploy.0 = Debug|Any CPU
+		{26B2995A-E209-499B-A5A8-4BE36BAFF6EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26B2995A-E209-499B-A5A8-4BE36BAFF6EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26B2995A-E209-499B-A5A8-4BE36BAFF6EE}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{26B2995A-E209-499B-A5A8-4BE36BAFF6EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26B2995A-E209-499B-A5A8-4BE36BAFF6EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26B2995A-E209-499B-A5A8-4BE36BAFF6EE}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,52 @@
+﻿@{
+    var path = "/Themes/Communi8/Content/Images/";
+}
+
+
+<div id="clients" class="et_pb_section et_pb_fullwidth_section et_pb_scroll_4">
+
+    <div class="et_pb_row">
+
+        <div class="et_pb_column et_pb_column_4_4 ">
+
+            <hr class="et_pb_module et_pb_space et_pb_divider_0 et-hide-mobile">
+        </div> <!-- .et_pb_column -->
+
+    </div> <!-- .et_pb_row -->
+
+    <section class="et_pb_fullwidth_header et_pb_module et_pb_bg_layout_light">
+
+        <div class="et_pb_fullwidth_header_container">
+            <div class="header-content-container">
+                <div class="header-content" style="text-align: left;">
+
+                    <h1 style="font-size: 4em; font-weight: bold;">
+                        <img src="@(path+"line.png")"><br>
+                        OUR<br>
+                        CLIENTS
+                    </h1>
+
+                    <p>
+                        OUR PASSION IS MAKING CUSTOMER HAPPY
+
+                    </p>
+
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    @foreach (var post in Model.posts)
+            {
+
+        <div class="et_pb_row et_pb_row_4col" style="padding-bottom: 30px;">
+            <div class="">
+                <img src="@(post.FeaturedImage)">
+
+            </div>
+
+        </div> <!-- .et_pb_row -->
+    }
+</div>

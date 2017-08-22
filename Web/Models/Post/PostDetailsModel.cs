@@ -20,6 +20,7 @@ namespace Web.Models.Post
         }
         public Guid Id { get; set; }
         public int PublicId { get; set; }
+        public PostType PostType { get; set; }
 
         public string Title { get; set; }
         public string GetMedia(string key)

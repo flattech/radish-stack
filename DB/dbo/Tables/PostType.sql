@@ -1,0 +1,28 @@
+﻿CREATE TABLE [dbo].[PostType] (
+    [Id]                 UNIQUEIDENTIFIER NOT NULL,
+    [Title]              NVARCHAR (400)   NOT NULL,
+    [UrlKey]             NVARCHAR (255)   NULL,
+    [ViewPath]           NVARCHAR (400)   NULL,
+    [DisplayOrder]       INT              NOT NULL,
+    [EnableFeatureImage] BIT              NOT NULL,
+    [EnableTags]         BIT              NOT NULL,
+    [EnableDescription]  BIT              NOT NULL,
+    [EnableSummary]      BIT              NOT NULL,
+    [EnableDateChoose]   BIT              NULL,
+    [EnableGallery]      BIT              NOT NULL,
+    [CreationDate]       DATETIME         NOT NULL,
+    [EnableCategories]   BIT              NOT NULL,
+    [EnableWidgets]      BIT              NOT NULL,
+    [EnableViewPath]     BIT              NOT NULL,
+    [IsActive]           BIT              NOT NULL,
+    [Icon]               NVARCHAR (255)   NULL,
+    [IsSystem]           BIT              NOT NULL,
+    [Status]             INT              NOT NULL,
+    [PublicId]           INT              IDENTITY (1, 1) NOT NULL,
+    [TermViewPath]       NVARCHAR (255)   NULL,
+    [PostMetaFields]     NVARCHAR (MAX)   NULL,
+    [PostMediaList]      NVARCHAR (MAX)   NULL,
+    [TermTaxonomyList]   NVARCHAR (MAX)   NULL,
+    CONSTRAINT [PK_PostType_1] PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+

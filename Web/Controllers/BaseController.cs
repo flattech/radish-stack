@@ -63,7 +63,7 @@ namespace Web.Controllers
                 //    posts = _postrepository.GetByIds(w.Categories.ToGuids(), true).ToList();
                 //else if (!string.IsNullOrEmpty(w.Tags))
                 //    posts = _postrepository.GetByIds(w.Tags.ToGuids(), true).ToList();
-                widgetview.posts = posts.Select(s => s.ToModel()).ToList();
+                widgetview.posts = posts.Select(s => s.ToDetailsModel(true,false)).ToList();
             }
             return widgetview;
             //if (w.Widget.ReturnCategories)

@@ -12,24 +12,7 @@ namespace Web.Extentions
 {
     public static class MappingExtensions
     {
-        public static PostModel ToModel(this Post post)
-        {
-            string mediahost = ConfigurationManager.AppSettings["Media"];
-            if (post == null)
-                throw new ArgumentNullException("post");
-            return new PostModel
-            {
-                FeaturedImage = mediahost + post.Photo,
-                Id = post.Id,
-                PostType = post.PostType,
-                Title = post.Title,
-                UrlKey = post.UrlKey,
-                Detail =  post.Detail
-                //Term = post.PostTerms.Select(x => x.Term).ToList()
-            };
-        }
-
-        public static PostDetailsModel ToDetailsModel(this Post post)
+        public static PostDetailsModel ToDetailsModel(this Post post, bool renderMetadata = false, bool renderMetaMedia = false)
         {
             string mediahost = ConfigurationManager.AppSettings["Media"];
             if (post == null)
@@ -40,16 +23,17 @@ namespace Web.Extentions
                 Id = post.Id,
                 Title = post.Title,
                 UrlKey = post.UrlKey,
-                Detail = post.Detail.Replace("/content/uploaded/", mediahost + "/content/uploaded/"),
-                // SeName = post.GetSeName(),
+                PostType = post.PostType,
+                Detail = string.IsNullOrEmpty(post.Detail) ?"": post.Detail.Replace("/content/uploaded/", mediahost + "/content/uploaded/"),
                 PostTerms = post.PostTerms,
-                Gallery = Newtonsoft.Json.JsonConvert.DeserializeObject<List<PostAttachment>>(post.Gallery),
                 CreationDate = post.CreationDate,
                 TemplateViewPath = !string.IsNullOrEmpty(post.ViewPath) ? post.ViewPath : (post.PostType != null && !string.IsNullOrEmpty(post.PostType.ViewPath) ? post.PostType.ViewPath : "PostDetail.Simple")
             };
 
-            if (post.PostType != null && !string.IsNullOrEmpty(post.PostType.PostMetaFields))
+            if (renderMetadata && post.PostType != null && !string.IsNullOrEmpty(post.PostType.PostMetaFields))
             {
+                if (!string.IsNullOrEmpty(post.Gallery))
+                    model.Gallery = Newtonsoft.Json.JsonConvert.DeserializeObject<List<PostAttachment>>(post.Gallery);
                 var t = post.PostMetaValues;
                 if (!string.IsNullOrEmpty(t))
                 {
@@ -60,7 +44,7 @@ namespace Web.Extentions
                     }
                 }
             }
-            if (post.PostType != null && !string.IsNullOrEmpty(post.PostType.PostMediaList) && !string.IsNullOrEmpty(post.Attachments))
+            if (renderMetaMedia && post.PostType != null && !string.IsNullOrEmpty(post.PostType.PostMediaList) && !string.IsNullOrEmpty(post.Attachments))
             {
                 var metavalues = Newtonsoft.Json.JsonConvert.DeserializeObject<PostAttachment[]>(post.Attachments);
                 foreach (var metavalue in metavalues)
